@@ -1,0 +1,62 @@
+{
+  "id": "7e08f4c6-9ac8-4de0-bf12-3911d2a8a1c0",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.hero": {
+      "name": "hero",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "aya": {
+          "name": "aya",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aya_source": {
+          "name": "aya_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hadith": {
+          "name": "hadith",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hadith_source": {
+          "name": "hadith_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
