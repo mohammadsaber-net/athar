@@ -2,7 +2,7 @@
 import Link from 'next/link'
 export default function page() {
   return (
-    <section className="">
+    <section className="mt-16 md:mt-4">
       <div className='flex items-center gap-6 flex-wrap justify-center'>
         <Link href={"/admin/hero"} className="bg-[#c9a24d] text-white hover:bg-[#a88230] px-4 py-2 rounded-md">
           محتويات الصفحة الرئيسية

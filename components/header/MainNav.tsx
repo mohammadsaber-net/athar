@@ -37,10 +37,13 @@ export default function MainNav() {
                          opacity-0 invisible transition translate-y-4
                          group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"
                          >
+                            <Link href={"/"} className="px-4 py-1 hover:bg-[#0f3d2e] hover:text-white cursor-pointer block">
+                                الصفحة الرئيسية
+                            </Link>
                             {item.subItems.map((subItem) => (
-                                <a href={subItem.href} key={subItem.name} className="px-4 py-1 hover:bg-[#0f3d2e] hover:text-white cursor-pointer block">
+                                <Link href={subItem.href} key={subItem.name} className="px-4 py-1 hover:bg-[#0f3d2e] hover:text-white cursor-pointer block">
                                     {subItem.name}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     )}
@@ -50,9 +53,9 @@ export default function MainNav() {
     </header>
     <Menu 
         onClick={()=>setMobileMenuOpen(true)}
-        className="md:hidden absolute
-        cursor-pointer
-        top-4 right-4 size-6 text-white" />
+        className={`md:hidden fixed
+        cursor-pointer ${mobileMenuOpen&&"hidden"}
+        top-4 right-4 p-1 size-10 z-50 font-bold rounded bg-cyan-600/80 `} />
     <MobileNav 
     setMobileMenuOpen={setMobileMenuOpen}
     mobileMenuOpen={mobileMenuOpen}

@@ -1,7 +1,7 @@
 import Hero from "@/components/hero/Hero";
 import Names from "@/components/names/Names";
 import Wakafat from "@/components/wakafat/Wakafat";
-import { isAdmin } from "@/lib/utls";
+import { isAdmin } from "@/lib/isAdmin";
 import Link from "next/link";
 export default async function Home() {
   const admin=await isAdmin()

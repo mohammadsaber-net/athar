@@ -4,6 +4,20 @@ import jwt from "jsonwebtoken";
 import { usersTable, userTableZodSchema } from "@/db/schema";
 import db from "@/db";
 import { eq } from "drizzle-orm";
+export async function GET(req:NextRequest) {
+    try {
+        const data=await db.select().from(usersTable)
+        return NextResponse.json({
+            success:true,
+            data
+        })
+    } catch (error) {
+        return NextResponse.json({
+            success:false,
+            message:(error as Error).message
+        })
+    }
+}
 export async function POST(req:NextRequest){
     try {
         const body =await req.json() as any;

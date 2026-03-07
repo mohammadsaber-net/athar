@@ -1,6 +1,5 @@
 "use client"
 import MainNav from "@/components/header/MainNav";
-import { isAdmin } from "@/lib/utls";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -20,8 +19,27 @@ export default function UserForm() {
   };
   const [admin,setAdmin]=useState(false)
   useEffect(()=>{
-    isAdmin().then(value=>setAdmin(value))
-  },[])
+
+    const isAdminClient = async () => {
+      try {
+        const res = await fetch("/api/users/admin", {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store"
+      });
+      
+      const data = await res.json();
+      
+      if (!data.user || data.user.role !== "admin") {
+        return setAdmin(false);
+      }
+      return setAdmin(true);
+    } catch {
+      return setAdmin(false);
+    }
+  };
+  isAdminClient()
+},[])
   const handleSubmit = async(e: React.FormEvent) => {
     try {
     e.preventDefault();
