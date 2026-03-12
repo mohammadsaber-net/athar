@@ -3,7 +3,8 @@ import { heroTable, heroTableZodSchema } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(req:NextRequest,{ params }: { params: { id: string } }) {
+export async function DELETE(req:NextRequest,
+    { params }: { params: Promise<{ id: string }> }) {
     try {
         const {id}=await params
         if(!id){
@@ -23,7 +24,8 @@ export async function DELETE(req:NextRequest,{ params }: { params: { id: string 
         })
     }
 }
-export async function PATCH(req:NextRequest,{params}:{params:{id:string}}){
+export async function PATCH(req:NextRequest,
+    { params }: { params: Promise<{ id: string }> }){
     try {
        const {id}=await params 
        if(!id){
