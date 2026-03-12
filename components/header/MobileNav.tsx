@@ -1,12 +1,17 @@
-import { X } from "lucide-react";
+import { ArrowDown, ArrowUp, X } from "lucide-react";
 import Logo from "./Logo";
-import { navItems } from "./MainNav";
+import { features, pages } from "./MainNav";
 import Link from "next/link";
 type Props={
     setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>,
     mobileMenuOpen: boolean
+    setOpenList: React.Dispatch<React.SetStateAction<boolean>>,
+    openList: boolean
 }
-export default function MobileNav({setMobileMenuOpen, mobileMenuOpen}: Props) {
+export default function MobileNav(
+  {setMobileMenuOpen, mobileMenuOpen,setOpenList,openList}
+  : Props) {
+    const Icon=openList?ArrowUp:ArrowDown
   return (
     <div className=" md:hidden">
     <Logo />
@@ -15,73 +20,43 @@ export default function MobileNav({setMobileMenuOpen, mobileMenuOpen}: Props) {
     ${mobileMenuOpen?"translate-x-0":"translate-x-full"}
     right-0 top-0 z-40 h-[100vh] 
     backdrop-blur-sm w-full`}>
-    <nav className={`
+    <nav className={`flex flex-col
     transform transition-transform duration-500 delay-200 ease-in-out
     ${mobileMenuOpen?"translate-x-0":"translate-x-full"}
-    w-[70%] px-4 bg-[#0f3d2e]/20 relative min-h-[100vh] pt-4 text-start`}>
+    w-[70%] px-4 bg-white/20 relative min-h-[100vh] pt-8 text-start`}>
     <X 
     className={`
-    absolute top-4 cursor-pointer left-4 size-8 text-white`} 
+    absolute top-0 cursor-pointer left-4 size-8 text-white`} 
     onClick={()=>setMobileMenuOpen(false)} />
-    {navItems.map((item) => (
-  <div
-    key={item.name}
-    className="group cursor-pointer me-10 transition
-    px-6 mb-4 relative block hover:bg-white hover:text-[#0f3d2e] font-bold rounded py-1"
-  >
-    <Link href={item.href} className="block w-full">
-      {item.name}
-    </Link>
-
-    {item.subItems && (
-      <div
-        className="absolute bg-black/70 text-white backdrop-blur-sm
-        top-7 right-0 z-50 rounded-lg shadow-lg transform py-2 w-48 
-        opacity-0 invisible transition translate-y-4
-        group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"
-      >
-        <Link
-          href="/"
-          className="px-4 py-1 hover:bg-[#0f3d2e] hover:text-white block"
-        >
-          الصفحة الرئيسية
-        </Link>
-
-        {item.subItems.map((subItem) => (
-          <Link
-            key={subItem.name}
-            href={subItem.href}
-            className="px-4 py-1 hover:bg-[#0f3d2e] hover:text-white block"
-          >
-            {subItem.name}
-          </Link>
-        ))}
-      </div>
-    )}
-  </div>
-))}
-        {/* {navItems.map((item) => (
-            <div key={item.name} className="group cursor-pointer me-10 transition
-            px-6 mb-4 relative block hover:bg-white hover:text-[#0f3d2e] font-bold rounded py-1 transition">
-            {item.name}
-            {item.subItems && (
-                <div 
-                className="absolute bg-black/70 text-white backdrop-blur-sm
-                top-7 right-0 z-50 rounded-lg shadow-lg transform py-2 w-48 
-                opacity-0 invisible transition translate-y-4
-                group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"
-                >
-                    <Link href={"/"} className="px-4 py-1 hover:bg-[#0f3d2e] hover:text-white cursor-pointer block">
-                         الصفحة الرئيسية
+    {pages.map((item) => (
+      <Link key={item.name} href={item.href}
+        className="cursor-pointer px-3 py-1 rounded hover:bg-gray-800 hover:text-white transition">
+          {item.name}
+      </Link>
+    ))}
+    <div
+    onClick={()=>setOpenList(!openList)}
+    className="cursor-pointer px-3 py-1 rounded hover:bg-gray-800 
+    flex items-center hover:text-white transition">
+      الاقسام
+      <Icon />
+    </div>
+    <div 
+            className={`flex absolute right-4 top-48 w-40 p-2 flex-col 
+            bg-white/60 backdrop-blur-sm transform transition shadow-lg
+            ${openList?
+            "opacity-100 translate-y-0":
+            "opacity-0 pointer-events-none translate-y-8"} rounded-lg `}
+            >
+            {
+                features.map((item)=>(
+                    <Link href={item.href} key={item.name} 
+                    className="hover:bg-[#0f3d2e] px-2 rounded hover:text-white py-2">
+                        {item.name}
                     </Link>
-                    {item.subItems.map((subItem) => (
-                        <Link key={subItem.name} href={subItem.href} className="px-4 py-1 hover:bg-[#0f3d2e] hover:text-white cursor-pointer block">
-                            {subItem.name}
-                        </Link>
-                    ))}
-                </div>)}
+                ))
+            }
             </div>
-        ))} */}
       </nav>
     </header>
     </div>
