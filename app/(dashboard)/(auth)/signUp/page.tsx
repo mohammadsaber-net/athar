@@ -92,7 +92,7 @@ export default function UserForm() {
       {admin&&<input
         type="text"
         name="role"
-        placeholder=" الدور (مثال: author أو user)"
+        placeholder=" الدور (مثال: admin أو user)"
         value={formData.role}
         onChange={handleChange}
         className="px-4 py-2 rounded-md border border-white/50 text-black focus:outline-none focus:border-[#c9a24d]"
