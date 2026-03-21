@@ -1,6 +1,6 @@
 "use client"
 import FixedModal from "@/components/animation/FixedModal"
-import { WakafatType } from "@/lib/type"
+import { SunnaType } from "@/lib/type"
 import { fetchWakafat } from "@/redux/slice/wakafatData"
 import { AppDispatch } from "@/redux/store"
 import toast from "react-hot-toast"
@@ -8,13 +8,13 @@ import { useDispatch } from "react-redux"
 
 type Props ={
     setDelete:any,
-    deletion:WakafatType|null
+    deletion:SunnaType|null
 }
 export default function ConfirmDelete({setDelete,deletion}:Props) {
     const dispatch=useDispatch<AppDispatch>()
     const handleDelete=async()=>{
         try {
-        const res=await fetch(`/api/wakafat/${deletion?.id}`,{method:"DELETE"})
+        const res=await fetch(`/api/sunna/${deletion?.id}`,{method:"DELETE"})
         const data=await res.json()
         if(data.success){
             toast.success("تم الحذف بنجاح")
@@ -30,7 +30,7 @@ export default function ConfirmDelete({setDelete,deletion}:Props) {
   return (
     <FixedModal isOpen={!!deletion} onClose={()=>setDelete(null)}>
         <h2 className="text-xl text-gray-800 mb-4 md-text-2xl">
-            تأكيد حذف {deletion?.ayaSource} و  التفسير - { deletion?.tafsir.slice(0,30)}... ؟
+            تأكيد حذف {deletion?.sunna} و  التفسير - { deletion?.tafsir.slice(0,30)}... ؟
         </h2>
         <div className="flex gap-4 justify-start items-center">
             <button

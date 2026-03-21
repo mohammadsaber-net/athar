@@ -17,6 +17,13 @@ export const wakafatTable=pgTable("wakafat",{
     tafsirSource:text("tafsir_source")
 })
 export const wakafatTableZodSchema=createSelectSchema(wakafatTable)
+export const sunnaTable=pgTable("sunna",{
+    id:text("id").primaryKey(),
+    sunna:text("sunna").notNull(),
+    sunnaSource:text("sunna_source").notNull(),
+    tafsir:text("tafsir")
+})
+export const sunnaTableZodSchema=createSelectSchema(sunnaTable)
 export const namesTable=pgTable("names",{
     id:text("id").primaryKey(),
     name:text("name").notNull(),

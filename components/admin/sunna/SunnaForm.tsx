@@ -1,7 +1,7 @@
 "use client";
 
 import FixedModal from "@/components/animation/FixedModal";
-import { WakafatFormData, WakafatType } from "@/lib/type";
+import { SunnaFormData,SunnaType} from "@/lib/type";
 import { fetchWakafat } from "@/redux/slice/wakafatData";
 import { AppDispatch } from "@/redux/store";
 import { useState } from "react";
@@ -9,16 +9,15 @@ import toast from "react-hot-toast"
 import { useDispatch } from "react-redux";
 type Props={
   setCreate?:(value:boolean)=>void|undefined,
-  setEdit?:(value:WakafatType|null)=>void,
-  edit?:WakafatType|null,
+  setEdit?:(value:SunnaType|null)=>void,
+  edit?:SunnaType|null,
   create?:boolean
 }
 export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
-  const [formData, setFormData] = useState<WakafatFormData>({
-    aya: edit?.aya||"",
-    ayaSource: edit?.ayaSource||"",
-    tafsir: edit?.tafsir||"",
-    tafsirSource: edit?.tafsirSource||"",
+  const [formData, setFormData] = useState<SunnaFormData>({
+    sunna: edit?.sunna||"",
+    sunnaSource: edit?.sunnaSource||"",
+    tafsir: edit?.tafsir||""
   });
 
   function handleChange(
@@ -35,7 +34,7 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
     e.preventDefault();
     if(!edit){
       try {
-        const res=await fetch("/api/wakafat",{
+        const res=await fetch("/api/sunna",{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
@@ -54,7 +53,7 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
     }
   }else{
     try {
-      const res=await fetch(`/api/wakafat/${edit?.id}`,{
+      const res=await fetch(`/api/sunna/${edit?.id}`,{
         method:"PATCH",
         headers:{
           "Content-Type":"application/json"
@@ -73,7 +72,6 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
     }
   }
   }
-
   return (
     <FixedModal isOpen={!!edit || !!create} onClose={()=>{setEdit?.(null);setCreate?.(false)}}>
     <form
@@ -82,9 +80,9 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
     >
       <h2 className="text-center text-xl md:text-2xl mb-4 text-blue-800 font-bold">{edit?"تعديل":"إضافة"} محتوى</h2>
       <textarea
-        name="aya"
-        placeholder="الآية"
-        value={formData.aya}
+        name="sunna"
+        placeholder="السنه"
+        value={formData.sunna}
         onChange={handleChange}
         required
         className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 resize-none rounded min-h-[80px]"
@@ -92,9 +90,9 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
 
       <input
         type="text"
-        name="ayaSource"
-        placeholder="مصدر الآية (السورة : الآية)"
-        value={formData.ayaSource}
+        name="sunnaSource"
+        placeholder="مصدر السنه"
+        value={formData.sunnaSource}
         onChange={handleChange}
         required
         className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded"
@@ -102,21 +100,11 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
 
       <textarea
         name="tafsir"
-        placeholder="التفصيل"
+        placeholder="الشرح"
         value={formData.tafsir}
         onChange={handleChange}
         required
-        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 resize-none min-h-[80px]"
-        />
-
-      <input
-        type="text"
-        name="tafsirSource"
-        placeholder="مصدر التفصيل"
-        value={formData.tafsirSource}
-        onChange={handleChange}
-        required
-        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded"
+        className="w-full p-2 rounded focus:border-blue-500 outline-none border border-gray-300 resize-none min-h-[80px]"
         />
       <div className="flex gap-4 justify-start items-center">
       <button

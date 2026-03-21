@@ -13,6 +13,9 @@ export default function page() {
         <Link href={"/admin/names"} className="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-md">
          أسماء الله الحسنى
         </Link>
+        <Link href={"/admin/sunna"} className="bg-cyan-600 text-white hover:bg-cyan-700 px-4 py-2 rounded-md">
+        سنن مهجورة
+        </Link>
       </div>
     </section>
   )

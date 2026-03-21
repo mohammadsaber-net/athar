@@ -19,3 +19,9 @@ export type NamesFormData = {
   meaningSource: string;
 };
 export type NamesType =NamesFormData &{id:string}
+export type SunnaFormData = {
+  sunna: string;
+  sunnaSource: string;
+  tafsir: string;
+};
+export type SunnaType =SunnaFormData &{id:string}

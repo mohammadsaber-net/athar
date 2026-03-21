@@ -27,7 +27,7 @@ export default function Hero() {
     <section className="relative min-h-[90vh] bg-[#0f3d2e] px-4 text-center pt-2 text-white">
         <MainNav />
       <div className="relative mb-4 z-10 md:w-fit w-[90%] m-auto space-y-8">
-        <div className="mt-16">
+        <div className="mt-16 pt-10 md:pt-4">
           <p className="mb-2 text-3xl max-w-2xl leading-relaxed md:text-4xl">
             ﴿ {tableData?.aya || "الآية"} ﴾
           </p>

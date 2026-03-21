@@ -20,7 +20,7 @@ export default function HeroContent() {
       }
     },[data])
   return (
-    <section>
+    <section className="mt-16">
       <button 
       onClick={()=>setCreate(true)}
       className="px-3 py-2 rounded cursor-pointer 

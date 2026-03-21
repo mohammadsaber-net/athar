@@ -1,18 +1,18 @@
 "use client"
-import WakafatData from "@/components/admin/wakafat/WakafatData"
-import WakafatForm from "@/components/admin/wakafat/WakafatForm"
-import { WakafatType } from "@/lib/type"
-import { fetchWakafat } from "@/redux/slice/wakafatData"
+import SunnaData from "@/components/admin/sunna/SunnaData"
+import SunnaForm from "@/components/admin/sunna/SunnaForm"
+import { SunnaType} from "@/lib/type"
+import { fetchSunna } from "@/redux/slice/sunnaData"
 import { AppDispatch ,RootState} from "@/redux/store"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-export default function WakafatContent() {
+export default function SunnaContent() {
   const [create,setCreate]=useState(false)
-  const [tableData, setTableData] = useState<WakafatType[]|null>(null)
+  const [tableData, setTableData] = useState<SunnaType[]|null>(null)
     const dispatch=useDispatch<AppDispatch>()
-    const {data}=useSelector((state:RootState)=>state.wakafatData)
+    const {data}=useSelector((state:RootState)=>state.sunnaData)
     useEffect(()=>{
-      dispatch(fetchWakafat())
+      dispatch(fetchSunna())
     },[])
     useEffect(()=>{
       if(data){
@@ -28,11 +28,11 @@ export default function WakafatContent() {
       text-white bg-[#0f3d2e] hover:bg-[#0f3d2e]/70">
         اضافة محتوي جديد
       </button>
-      <WakafatForm
+      <SunnaForm
       setCreate={setCreate}
       create={create}
       />
-      <WakafatData
+      <SunnaData
       tableData={tableData}
       />
     </section>
