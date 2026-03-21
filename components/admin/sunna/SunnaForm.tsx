@@ -13,7 +13,7 @@ type Props={
   edit?:WakafatType|null,
   create?:boolean
 }
-export default function WakafatForm({setCreate,setEdit,edit,create}:Props) {
+export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
   const [formData, setFormData] = useState<WakafatFormData>({
     aya: edit?.aya||"",
     ayaSource: edit?.ayaSource||"",

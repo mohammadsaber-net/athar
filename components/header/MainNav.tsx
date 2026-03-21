@@ -2,13 +2,15 @@
 import Link from "next/link";
 import Logo from "./Logo";
 import MobileNav from "./MobileNav";
-import { useState } from "react";
-import { ArrowDown, ArrowUp, Menu } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { ArrowDown, ArrowUp, Loader2, Menu } from "lucide-react";
+import FixedModal from "../animation/FixedModal";
+import toast from "react-hot-toast";
 export const pages = [
+    { name: "الصفحة الرئيسية", href: "/" },
     { name: "من نحن", href: "/about" },
     { name: "اتصل بنا", href: "/contact" },
-    { name: "تسجيل", href: "/signIn" },
-    { name: "الصفحة الرئيسية", href: "/" }
+    { name: "تسجيل", href: "/signIn" }
 ];
 export const features=[
     { name: "وقفات قرآنية", href: "/#Wakafat" },
@@ -19,20 +21,47 @@ export const features=[
 export default function MainNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openList, setOpenList] = useState(false);
+  const [openLogout,setOpenLogout]=useState(false)
+  const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  useEffect(() => {
+    fetch("/api/users/isLogged")
+      .then(res => res.json())
+      .then(data => {
+        setIsLoggedIn(data.user)
+    }).finally(() => setLoading(false));;
+  }, []);
+  const handleLogOut=async()=>{
+    const res = await fetch("/api/users/logout", {
+    method: "POST",
+  });
+    const data = await res.json();
+    if(data.success){
+        toast.success(data.message)
+        setIsLoggedIn(null)
+        setOpenLogout(false)
+    }else{
+        toast.error(data.message)
+    }
+  }
   const Icon=openList?ArrowUp:ArrowDown
-  return (
+  return loading?(
+    <header className="relative hidden md:block z-20">
+        <Logo />
+        <nav 
+        className="bg-white/20 relative rounded-full px-8 mb-8 py-3 mt-6 shadow-lg
+         text-center flex gap-6 items-center w-40 justify-center text-[#c9a24d] mx-auto">
+            <Loader2 className="animate-spin transition"/>
+        </nav>
+    </header>
+  ): (
     <>
     <header className="relative hidden md:block z-20">
         <Logo />
         <nav 
         className="bg-white/20 relative rounded-full px-8 mb-8 py-3 mt-6 shadow-lg
          text-center flex gap-6 items-center justify-center text-[#c9a24d] w-max mx-auto">
-            {pages.map((item) => (
-                <Link key={item.name} href={item.href}
-                className="cursor-pointer hover:text-gray-900 transition">
-                    {item.name}
-                </Link>
-            ))}
+            
             <div 
             onClick={()=>setOpenList(!openList)}
             className="cursor-pointer 
@@ -57,6 +86,40 @@ export default function MainNav() {
                 ))
             }
             </div>
+            {pages.map((item:any) =>{
+            if(item.href==="/signIn"&&isLoggedIn)
+                {
+                return <React.Fragment key={item.name}>
+                <div 
+                className="cursor-pointer hover:text-gray-900 transition"
+                onClick={()=>setOpenLogout(true)}
+                >
+                    تسجيل خروج
+                </div>
+                <FixedModal
+                    onClose={()=>setOpenLogout(false)}
+                    isOpen={openLogout}>
+                       <h2 className="text-xl font-bold">هل تريد تسجيل الخروج ؟</h2>
+                       <div className="flex gap-2 mt-4">
+                            <button 
+                            onClick={handleLogOut}
+                            className="text-white cursor-pointer py-2 px-4 rounded bg-red-500">تأكيد</button>
+                            <button 
+                            onClick={()=>setOpenLogout(false)}
+                            className="text-white cursor-pointer py-2 px-4 rounded bg-blue-500">إلغاء</button>
+                       </div>
+                    </FixedModal>
+                </React.Fragment>
+            }else{
+                return(
+                <Link key={item.name} 
+                href={item.href}
+                className="cursor-pointer hover:text-gray-900 transition">
+                    {item.name}
+                </Link>
+                )
+            }})}
+            {}
         </nav>
     </header>
     <Menu 
@@ -68,6 +131,10 @@ export default function MainNav() {
     setMobileMenuOpen={setMobileMenuOpen}
     mobileMenuOpen={mobileMenuOpen}
     openList={openList}
+    isLoggedIn={isLoggedIn}
+    setOpenLogout={setOpenLogout}
+    handleLogOut={handleLogOut}
+    openLogout={openLogout}
     setOpenList={setOpenList}
     />
     </>

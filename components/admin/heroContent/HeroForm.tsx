@@ -1,19 +1,12 @@
 "use client";
 
-import { HeroType } from "@/app/admin/hero/page";
 import FixedModal from "@/components/animation/FixedModal";
+import { HeroFormData, HeroType } from "@/lib/type";
 import { fetchHero } from "@/redux/slice/heroData";
 import { AppDispatch } from "@/redux/store";
-import { X } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast"
 import { useDispatch } from "react-redux";
-export type HeroFormData = {
-  aya: string;
-  ayaSource: string;
-  hadith: string;
-  hadithSource: string;
-};
 type Props={
   setCreate?:(value:boolean)=>void|undefined,
   setEdit?:(value:HeroType|null)=>void,

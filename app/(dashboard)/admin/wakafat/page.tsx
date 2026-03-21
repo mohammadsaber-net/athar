@@ -1,11 +1,11 @@
 "use client"
 import WakafatData from "@/components/admin/wakafat/WakafatData"
-import WakafatForm, { WakafatFormData } from "@/components/admin/wakafat/WakafatForm"
+import WakafatForm from "@/components/admin/wakafat/WakafatForm"
+import { WakafatType } from "@/lib/type"
 import { fetchWakafat } from "@/redux/slice/wakafatData"
 import { AppDispatch ,RootState} from "@/redux/store"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-export type WakafatType =WakafatFormData &{id:string}
 export default function WakafatContent() {
   const [create,setCreate]=useState(false)
   const [tableData, setTableData] = useState<WakafatType[]|null>(null)

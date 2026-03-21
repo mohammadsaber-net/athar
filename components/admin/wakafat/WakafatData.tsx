@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import ConfirmDelete from './ConfirmDelete'
 import HeroForm from './WakafatForm'
-import { NamesType } from '@/app/(dashboard)/admin/names/page'
-import { WakafatType } from '@/app/(dashboard)/admin/wakafat/page'
+import { WakafatType } from '@/lib/type'
 type Props={
     tableData:WakafatType[]|null
 }

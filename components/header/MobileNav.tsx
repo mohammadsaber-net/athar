@@ -2,14 +2,24 @@ import { ArrowDown, ArrowUp, X } from "lucide-react";
 import Logo from "./Logo";
 import { features, pages } from "./MainNav";
 import Link from "next/link";
+import { AnyARecord } from "dns";
+import React from "react";
+import FixedModal from "../animation/FixedModal";
 type Props={
     setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>,
     mobileMenuOpen: boolean
     setOpenList: React.Dispatch<React.SetStateAction<boolean>>,
     openList: boolean
+    isLoggedIn:any
+    handleLogOut:()=>void
+    setOpenLogout:React.Dispatch<React.SetStateAction<boolean>>
+    openLogout:boolean
 }
 export default function MobileNav(
-  {setMobileMenuOpen, mobileMenuOpen,setOpenList,openList}
+  {
+    setMobileMenuOpen, mobileMenuOpen,setOpenList,isLoggedIn,openList,
+  openLogout,setOpenLogout,handleLogOut
+  }
   : Props) {
     const Icon=openList?ArrowUp:ArrowDown
   return (
@@ -28,12 +38,6 @@ export default function MobileNav(
     className={`
     absolute top-0 cursor-pointer left-4 size-8 text-white`} 
     onClick={()=>setMobileMenuOpen(false)} />
-    {pages.map((item) => (
-      <Link key={item.name} href={item.href}
-        className="cursor-pointer px-3 py-1 rounded hover:bg-gray-800 hover:text-white transition">
-          {item.name}
-      </Link>
-    ))}
     <div
     onClick={()=>setOpenList(!openList)}
     className="cursor-pointer px-3 py-1 rounded hover:bg-gray-800 
@@ -42,23 +46,59 @@ export default function MobileNav(
       <Icon />
     </div>
     <div 
-            className={`flex absolute right-4 top-48 w-40 p-2 flex-col 
-            bg-white/60 backdrop-blur-sm transform transition shadow-lg
-            ${openList?
-            "opacity-100 translate-y-0":
-            "opacity-0 pointer-events-none translate-y-8"} rounded-lg `}
-            >
-            {
-                features.map((item)=>(
-                    <Link href={item.href} key={item.name} 
-                    className="hover:bg-[#0f3d2e] px-2 rounded hover:text-white py-2">
-                        {item.name}
-                    </Link>
-                ))
-            }
-            </div>
+      className={`flex absolute left-4 top-16 w-40 p-2 flex-col 
+      bg-white/60 backdrop-blur-sm transform transition shadow-lg
+      ${openList?
+      "opacity-100 translate-y-0":
+      "opacity-0 pointer-events-none translate-y-8"} rounded-lg `}
+      >
+        {
+          features.map((item)=>(
+            <Link 
+            href={item.href} 
+            onClick={()=>setMobileMenuOpen(false)}
+            key={item.name} 
+            className="hover:bg-[#0f3d2e] px-2 rounded hover:text-white py-2">
+              {item.name}
+            </Link>
+        ))}
+      </div>
+        {pages.map((item:any) =>{
+            if(item.href==="/signIn"&&isLoggedIn)
+                {
+                return <div 
+                key={item.name}
+                className="cursor-pointer px-3 py-1 rounded hover:bg-gray-800 hover:text-white transition"
+                onClick={()=>{setMobileMenuOpen(false);setOpenLogout(true)}}
+                >
+                    تسجيل خروج
+                </div>
+            }else{
+                return(
+                <Link 
+                onClick={()=>setMobileMenuOpen(false)}
+                key={item.name} 
+                href={item.href}
+                className="cursor-pointer px-3 py-1 rounded hover:bg-gray-800 hover:text-white transition">
+                    {item.name}
+                </Link>
+                )
+            }})}
       </nav>
     </header>
+    <FixedModal
+      onClose={()=>setOpenLogout(false)}
+      isOpen={openLogout}>
+          <h2 className="text-xl text-[#c9a24d] font-bold">هل تريد تسجيل الخروج ؟</h2>
+          <div className="flex gap-2 mt-4">
+              <button 
+              onClick={handleLogOut}
+              className="text-white cursor-pointer py-2 px-4 rounded bg-red-500">تأكيد</button>
+              <button 
+              onClick={()=>setOpenLogout(false)}
+              className="text-white cursor-pointer py-2 px-4 rounded bg-blue-500">إلغاء</button>
+          </div>
+      </FixedModal>
     </div>
     )
 }

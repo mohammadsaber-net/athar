@@ -1,6 +1,6 @@
 "use client"
-import { NamesType } from "@/app/admin/names/page"
 import FixedModal from "@/components/animation/FixedModal"
+import { NamesType } from "@/lib/type"
 import { fetchNames } from "@/redux/slice/namesData"
 import { AppDispatch } from "@/redux/store"
 import toast from "react-hot-toast"

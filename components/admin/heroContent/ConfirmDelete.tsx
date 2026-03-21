@@ -1,6 +1,6 @@
 "use client"
-import { HeroType } from "@/app/admin/hero/page"
 import FixedModal from "@/components/animation/FixedModal"
+import { HeroType } from "@/lib/type"
 import { fetchHero } from "@/redux/slice/heroData"
 import { AppDispatch } from "@/redux/store"
 import toast from "react-hot-toast"

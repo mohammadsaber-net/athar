@@ -1,11 +1,13 @@
 "use client"
 import MainNav from "@/components/header/MainNav";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function UserForm() {
+  const redirect=useRouter()
   const [formData, setFormData] = useState({
-    id: "",
     email: "",
     password: "",
   });
@@ -14,7 +16,8 @@ export default function UserForm() {
   };
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-    const res=await fetch("/api/users", {
+    try {
+    const res=await fetch("/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +25,15 @@ export default function UserForm() {
       body: JSON.stringify(formData),
     });
     const data = await res.json();
-    console.log("Response from API:", data);
+    if(data.success){
+      toast.success("تم انشاء المستخدم بنجاح")
+      redirect.push("/")
+    }else{
+      toast.error(data.message||"خطأ في التسجيل")
+    }
+    } catch (error) {
+      toast.error((error as Error).message||"خطأ في التسجيل")
+    }
   };
 
   return (

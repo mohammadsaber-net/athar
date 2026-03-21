@@ -1,11 +1,11 @@
 "use client"
 import NamesData from "@/components/admin/names/NamesData"
-import NamesForm, { NamesFormData } from "@/components/admin/names/NamesForm"
+import NamesForm from "@/components/admin/names/NamesForm"
+import { NamesType } from "@/lib/type"
 import { fetchNames } from "@/redux/slice/namesData"
 import { AppDispatch ,RootState} from "@/redux/store"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-export type NamesType =NamesFormData &{id:string}
 export default function NamesContent() {
   const [create,setCreate]=useState(false)
   const [tableData, setTableData] = useState<NamesType[]|null>(null)

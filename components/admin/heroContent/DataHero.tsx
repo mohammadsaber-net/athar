@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import { HeroType } from '@/app/admin/hero/page'
-import { Settings } from 'lucide-react'
+import { useState } from 'react'
 import ConfirmDelete from './ConfirmDelete'
 import HeroForm from './HeroForm'
+import { HeroType } from '@/lib/type'
 type Props={
     tableData:HeroType[]|null
 }

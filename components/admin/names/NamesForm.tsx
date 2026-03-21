@@ -1,18 +1,11 @@
 "use client";
-
-import { NamesType } from "@/app/admin/names/page";
 import FixedModal from "@/components/animation/FixedModal";
+import { NamesFormData, NamesType } from "@/lib/type";
 import { fetchNames } from "@/redux/slice/namesData";
 import { AppDispatch } from "@/redux/store";
 import { useState } from "react";
 import toast from "react-hot-toast"
 import { useDispatch } from "react-redux";
-export type NamesFormData = {
-  name: string;
-  image: File | null;
-  meaning: string;
-  meaningSource: string;
-};
 type Props={
   setCreate?:(value:boolean)=>void|undefined,
   setEdit?:(value:NamesType|null)=>void,
