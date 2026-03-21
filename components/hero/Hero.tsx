@@ -1,5 +1,5 @@
 "use client"
-import { HeroType } from "@/app/admin/hero/page";
+import { HeroType } from "@/lib/type";
 import MainNav from "../header/MainNav";
 import { useEffect, useState } from "react";
 export default function Hero() {
