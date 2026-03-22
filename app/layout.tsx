@@ -3,7 +3,9 @@ import { Amiri, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import ReduxProvider from "@/redux/ReduxProvider";
-
+import { isAdmin } from "@/lib/isAdmin";
+import Link from "next/link";
+import { PencilIcon } from "lucide-react";
 const AmiriSans = Amiri({
   weight: "400",
   variable: "--font-amiri",
@@ -22,11 +24,12 @@ export const metadata: Metadata = {
   `
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const admin=await isAdmin()
   return (
     <html lang="ar" dir="rtl">
       <body
@@ -34,6 +37,12 @@ export default function RootLayout({
       >
         <ReduxProvider>
         <Toaster position="top-center"/>
+        {admin&&<Link
+          className="fixed top-4 z-[100000] items-center bg-[#6366f1]/90 shadow
+           left-1/2 -translate-x-1/2 text-white md:text-xl px-3 py-2 rounded flex"
+          href={"/admin"}>
+             إدارة الموقع <PencilIcon />
+        </Link>}
         {children}
         </ReduxProvider>
       </body>

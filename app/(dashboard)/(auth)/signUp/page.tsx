@@ -1,6 +1,7 @@
 "use client"
 import MainNav from "@/components/header/MainNav";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -18,18 +19,17 @@ export default function UserForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const [admin,setAdmin]=useState(false)
+  const [user,setUser]=useState(false)
   useEffect(()=>{
-
     const isAdminClient = async () => {
       try {
-        const res = await fetch("/api/users/admin", {
+        const res = await fetch("/api/users/isLogged", {
         method: "GET",
         credentials: "include",
         cache: "no-store"
       });
-      
       const data = await res.json();
-      
+      if(data.user&&data.user.role==="user") setUser(true)
       if (!data.user || data.user.role !== "admin") {
         return setAdmin(false);
       }
@@ -40,6 +40,12 @@ export default function UserForm() {
   };
   isAdminClient()
 },[])
+const redirect=useRouter()
+useEffect(()=>{
+  if(user){
+    redirect.push("/")
+  }
+},[user])
   const handleSubmit = async(e: React.FormEvent) => {
     try {
     e.preventDefault();

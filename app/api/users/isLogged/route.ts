@@ -3,6 +3,7 @@ import { NextRequest } from "next/server"
 export async function GET(req:NextRequest){
     try{
     const token=req.cookies.get("token")?.value
+    console.log("token==>",token)
     if(!token){
         return Response.json({user:null})
     }
@@ -15,6 +16,7 @@ export async function GET(req:NextRequest){
         }
     })
     } catch (error) {
+          console.log("JWT ERROR:", error);
     return Response.json(
       { user: null },
       { status: 401 }

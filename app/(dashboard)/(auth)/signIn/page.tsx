@@ -2,7 +2,7 @@
 import MainNav from "@/components/header/MainNav";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function UserForm() {
@@ -26,7 +26,7 @@ export default function UserForm() {
     });
     const data = await res.json();
     if(data.success){
-      toast.success("تم انشاء المستخدم بنجاح")
+      toast.success("تم تسجيل الدخول بنجاح")
       redirect.push("/")
     }else{
       toast.error(data.message||"خطأ في التسجيل")
@@ -35,7 +35,24 @@ export default function UserForm() {
       toast.error((error as Error).message||"خطأ في التسجيل")
     }
   };
-
+  const [user,setUser]=useState(false)
+    useEffect(()=>{
+      const isAdminClient = async () => {
+          const res = await fetch("/api/users/isLogged", {
+          method: "GET",
+          credentials: "include",
+          cache: "no-store"
+        });
+        const data = await res.json();
+        if(data.user&&data.user.role==="user") setUser(true)
+    };
+    isAdminClient()
+  },[])
+  useEffect(()=>{
+    if(user){
+      redirect.push("/")
+    }
+  },[user])
   return (
     <section className="bg-gray-100 min-h-screen py-6 px-4">
     <MainNav />

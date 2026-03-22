@@ -19,16 +19,15 @@ export default function Hero() {
     },[])
   const itemsBtn=[
     {name:"وقفات قرآنية", href:"/#Wakafat"},
-    {name:"الأذكار", href:"/#"},
     {name:"أسماء الله الحسنى", href:"/#Names"},
-    {name:"سنن مهجورة", href:"/#"}
+    {name:"سنن مهجورة", href:"/#Sunna"}
   ]
   return (
     <section className="relative min-h-[90vh] bg-[#0f3d2e] px-4 text-center pt-2 text-white">
         <MainNav />
       <div className="relative mb-4 z-10 md:w-fit w-[90%] m-auto space-y-8">
         <div className="mt-16 pt-10 md:pt-4">
-          <p className="mb-2 text-3xl max-w-2xl leading-relaxed md:text-4xl">
+          <p className="mb-2 text-xl max-w-2xl leading-relaxed md:text-3xl">
             ﴿ {tableData?.aya || "الآية"} ﴾
           </p>
           <span className="text-sm block text-left italic text-[#c9a24d]">

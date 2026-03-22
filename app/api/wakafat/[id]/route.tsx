@@ -2,7 +2,35 @@ import db from "@/db";
 import { wakafatTable, wakafatTableZodSchema } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-
+export async function GET(req:NextRequest,{ params }: { params: Promise<{ id: string }> }) {
+    try {
+        const {id}=await params
+        console.log("id",id)
+        if(!id){
+           return NextResponse.json({
+                success:false,
+                message:'الايه غير متوفرة'
+            },{status:404}) 
+        }
+        const [data]=await db.select().from(wakafatTable)
+        .where(eq(wakafatTable.id,id))
+        if(!data){
+            return NextResponse.json({
+                success:false,
+                message:'الايه غير متوفرة'
+            },{status:404}) 
+        }
+        return NextResponse.json({
+            success:true,
+            data
+        })
+    } catch (error) {
+        return NextResponse.json({
+            success:false,
+            message:(error as Error).message
+        })
+    }
+}
 export async function DELETE(req:NextRequest,{ params }: { params: Promise<{ id: string }> }) {
     try {
         const {id}=await params
