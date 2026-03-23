@@ -2,7 +2,7 @@ export type WakafatFormData = {
   aya: string;
   ayaSource: string;
   tafsir: string;
-  tafsirSource: string;
+  tafsirSource?: string|null;
 };
 export type WakafatType =WakafatFormData &{id:string}
 export type HeroFormData = {
