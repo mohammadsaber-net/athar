@@ -11,13 +11,13 @@ export default function Aya({aya}:Props) {
     <div className='max-w-xl relative z-10 mx-auto bg-white/90 shadow-lg border border-blue-100
       overflow-hidden rounded-md p-3'>
         <div className="group transition">
-            <h2 className="text-gray-900 mb-0 group-hover:text-blue-700">
+            <h2 className="text-gray-900 text-xl md:text-3xl mb-0 group-hover:text-blue-700">
                " {aya?.aya} "
             </h2>
             <span className="text-end block mt-0 text-italic text-sm text-gray-800">
                 {aya?.ayaSource}
             </span>
-            <div className={`mt-2 border-t overflow-hidden transition-all duration-300
+            <div className={`mt-2 border-t md:text-xl overflow-hidden transition-all duration-300
              pt-2 border-gray-200
             ${changeHieght?"max-h-screen":"max-h-14"}`}>
                 {aya?.tafsir} 
