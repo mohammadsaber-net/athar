@@ -1,37 +1,65 @@
+"use client"
 import { WakafatType } from "@/lib/type";
+import Aya from "./Aya";
+import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
-import Link from "next/link";
 type Props={
-    aya:WakafatType
+    content:WakafatType[]
 }
-export default function WakafatContent({aya}:Props) {
+export default function WakafatContent({content}:Props) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [stars, setStars] = useState<any[]>([]);
+    useEffect(() => {
+  if (!containerRef.current) return;
+
+  const element = containerRef.current;
+
+  function generateStars() {
+    const width = element.offsetWidth;
+    const height = element.offsetHeight;
+
+    const density = 8000;
+    const count = Math.floor((width * height) / density);
+
+    const newStars = Array.from({ length: count }).map(() => ({
+      top: Math.random() * height,
+      left: Math.random() * width,
+      size: Math.random() * 10 + 10,
+      opacity: Math.random(),
+    }));
+
+    setStars(newStars);
+  }
+  generateStars();
+  const observer = new ResizeObserver(() => {
+    generateStars();
+  });
+  observer.observe(element);
+  return () => observer.disconnect();
+}, []);
   return (
-      <div className="bg-white p-2 rounded-md shadow">
-        <div className="flex justify-center mb-2 
-        items-center text-xl md:text-2xl gap-2">
-            <Star 
-            className="fill-[#22c55e] stroke-none"
-            /><Star 
-            className="fill-[#22c55e] stroke-none"
-            /><Star 
-            className="fill-[#22c55e] stroke-none"
-            />
-        </div>
-        <div className="group transition">
-            <h2 className="text-gray-900 mb-0 group-hover:text-blue-700">
-               " {aya.aya} "
-            </h2>
-            <span className="text-end block mt-0 text-italic text-sm text-gray-800">
-                {aya.ayaSource}
-            </span>
-            <div className="mt-2 border-t pt-2 border-gray-200">
-                {aya.tafsir.slice(0,150)} ..... 
-                <Link
-                href={`/aya/${aya.id}`}
-                className="text-blue-600 transition hover:text-blue-800
-                ">عرض المزيد</Link>
-            </div>
-        </div>
+    <div
+        ref={containerRef}
+        className="relative pb-8 border-t-2 pt-3 border-gray-300"
+    >
+    <div className="absolute inset-0 overflow-hidden">
+    {stars.map((star, i) => (
+        <Star
+        key={i}
+        className="absolute text-blue-400"
+        style={{
+            top: star.top,
+            left: star.left,
+            width: star.size,
+            height: star.size,
+            opacity: star.opacity,
+        }}
+        />
+    ))}
+    </div>
+      {content.map((aya)=>(
+        <Aya key={aya.id} aya={aya}/>
+      )) }
       </div>
   )
 }
