@@ -113,7 +113,7 @@ export default function WakafatForm({setCreate,setEdit,edit,create}:Props) {
         type="text"
         name="tafsirSource"
         placeholder="مصدر التفصيل"
-        value={formData.tafsirSource}
+        value={formData.tafsirSource || ""}
         onChange={handleChange}
         required
         className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded"
