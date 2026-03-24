@@ -1,6 +1,6 @@
 "use client"
 import { WakafatTypeWithComments,comments } from '@/lib/type'
-import { LoaderIcon, Upload } from 'lucide-react';
+import { LoaderIcon, Pencil, Upload } from 'lucide-react';
 import { useState } from "react";
 import toast from 'react-hot-toast';
 type Props={
@@ -8,9 +8,22 @@ type Props={
 }
 export default function Aya({aya}:Props) {
     const [changeHieght,setChangeHieght]=useState(false)
-    const [addComment,setAddComment]=useState(false)
     const [show,setShow]=useState(false)
-    const [comment,setComment]=useState("")
+    const [comment,setComment]=useState<string>("")
+    const [fetchComments,setfetchComments]=useState<any>(null)
+    const getComments=async(id:string)=>{
+        try {
+            const res=await fetch(`api/comments/wakafat/${id}`)
+            const data=await res.json()
+            if(data.success){
+                setfetchComments(data.data)
+            }else{
+                toast.error(data.message||"خطأ في جلب التعليقات")
+            }
+        } catch (error) {
+            toast.error((error as Error).message||"خطأ في جلب التعليقات")
+        }
+    }
     const onSubmit=async(e:any)=>{
         e.preventDefault()
         try {
@@ -21,7 +34,10 @@ export default function Aya({aya}:Props) {
             })
             const data=await res.json()
             if(data.success){
+                setComment("")
                 toast.success("تم إضافة تعليقك 👍")
+                getComments(aya.id)
+                setShow(true)
             }else{
                 toast.error(data.message||"خطأ في التعليق")
             }
@@ -54,51 +70,52 @@ export default function Aya({aya}:Props) {
              pt-2 border-t-2 border-gray-200
              transition-all delay-300 duration-300`}
             >
-                <button 
-                className='text-indigo-700 text-semibold cursor-pointer'
-                onClick={()=>setAddComment(!addComment)}
-               >
-                   {addComment?"إخفاء":" اضف تعليقا"}
-                </button>
                 <form 
                 onSubmit={onSubmit}
-                className={`flex shadow gap-2 items-center transition
-                    ${addComment?"opacity-100":"opacity-0 pointer-event-none"}`}>
+                className={`flex shadow gap-2 items-center`}>
                 <input 
                 onChange={(e)=>setComment(e.target.value)}
+                value={comment}
                 placeholder='أضف تعليقا'
                 className={`border-gray-200 rounded
-                    border text-gray-900 p-1 w-full
+                    border text-gray-900 p-1
                     focus:outline-none bg-gray-100`}/>
                 <button
                 className='flex gap-1 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
                 type="submit"
                 >
-                    ارسال <Upload />
+                 إرسال <Pencil className='size-5'/>
                 </button>
                 </form>
             </div>
             <div className={`${changeHieght?"block":"hidden"} transition-all delay-300 duration-300`}>
 
-            <button 
-            onClick={()=>setShow(!show)}
+            {!show&&<button 
+            onClick={()=>{setShow(true);getComments(aya.id)}}
             className='text-indigo-600 cursor-pointer'
             >
-                {show?"إخفاء التعليقات":" عرض التعليقات"}
-            </button>
+                عرض التعليقات
+            </button>}
+            {show&&<button 
+            onClick={()=>setShow(false)}
+            className='text-indigo-600 cursor-pointer'
+            >
+               إخفاء التعليقات
+            </button>}
             <div
-            className={`transition ${show?"max-h-[700vh]":"max-h-0"}`}
+            className={`transition-all duration-400 overflow-hidden ${show?"max-h-[700vh]":"max-h-0"}`}
             >
                 {
-                    aya?.comments.map((comment:comments)=>(
+                    fetchComments&&fetchComments.map((comment:comments)=>(
                         <div
-                    
-                        key={comment.id}>
-                            <div>
-                                {comment.user?.firstName }
-                                {comment.user?.lastName }
+                        key={comment.id}
+                        className='border border-gray-200 mb-2 px-2 py-1 rounded'
+                        >
+                            <div className='text-zinc-600'>
+                                {`${comment.user?.firstName}
+                                 ${comment.user?.lastName}` }
                             </div>
-                            <div>
+                            <div className='text-gray-900 text-end'>
                                 {comment.comment}
                             </div>
                         </div>
