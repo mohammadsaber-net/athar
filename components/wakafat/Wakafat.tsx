@@ -1,11 +1,17 @@
-import { WakafatType } from '@/lib/type'
 import db from "@/db";
 import WakafatContent from './WakafatContent'
-import { wakafatTable } from '@/db/schema';
 export default async function Wakafat() {
-  // const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/wakafat`)
-  // const data = (await res.json()).data
-  const data = await db.select().from(wakafatTable);
+  const data = await db.query.wakafatTable.findMany({
+    with: {
+      comments: {
+        with: {
+          user:  {
+          columns: {firstName:true, lastName:true},
+        },
+        },
+      },
+    },
+  });
   return (
     <div
     id='Wakafat'

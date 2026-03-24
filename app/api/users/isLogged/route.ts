@@ -3,7 +3,6 @@ import { NextRequest } from "next/server"
 export async function GET(req:NextRequest){
     try{
     const token=req.cookies.get("token")?.value
-    console.log("token==>",token)
     if(!token){
         return Response.json({user:null})
     }

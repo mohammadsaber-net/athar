@@ -1,10 +1,10 @@
 "use client"
-import { WakafatType } from "@/lib/type";
+import { WakafatTypeWithComments } from '@/lib/type'
 import Aya from "./Aya";
 import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
 type Props={
-    content:WakafatType[]
+    content:WakafatTypeWithComments[]
 }
 export default function WakafatContent({content}:Props) {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -57,7 +57,7 @@ export default function WakafatContent({content}:Props) {
         />
     ))}
     </div>
-      {content.map((aya)=>(
+      {content.map((aya:WakafatTypeWithComments)=>(
         <Aya key={aya.id} aya={aya}/>
       )) }
       </div>

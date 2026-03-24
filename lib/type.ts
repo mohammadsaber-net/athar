@@ -5,6 +5,18 @@ export type WakafatFormData = {
   tafsirSource?: string|null;
 };
 export type WakafatType =WakafatFormData &{id:string}
+export type comments={
+  id:string,
+  userId:string|null,
+  wakafatId:string,
+  createdAt:Date|null,
+  comment:String,
+  user:{
+    firstName:string,
+    lastName:string,
+  }|null
+}
+export type WakafatTypeWithComments =WakafatType & { comments:comments[] }
 export type HeroFormData = {
   aya: string;
   ayaSource: string;
