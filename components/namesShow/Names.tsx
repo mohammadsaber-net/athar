@@ -1,21 +1,12 @@
+import NamesContent from "./NamesContent";
 import db from "@/db";
-import WakafatContent from './WakafatContent'
-export default async function Wakafat() {
-  const data = await db.query.wakafatTable.findMany({
-    with: {
-      comments: {
-        with: {
-          user:  {
-          columns: {firstName:true, lastName:true},
-        },
-        },
-      },
-    },
-  });
+import { namesTable} from "@/db/schema";
+export default async function Names() {
+  const data = await db.select().from(namesTable)
   return (
     <div
-    id='Wakafat'
-    className='bg-gray-100 px-6 pt-8 max-w-7xl'>
+    id='Names'
+    className='bg-slate-100 px-6 pt-8 max-w-7xl'>
       <div className='mb-2 pb-2'>
         <h1 className='text-2xl md:text-3xl text-[#0f3d2e] font-bold mb-2'>وقفات مع آيات من كتاب ربنا</h1>
         <p className='max-w-md'>
@@ -28,7 +19,7 @@ export default async function Wakafat() {
           </span>
         </p>
       </div>
-      <WakafatContent content={data}/>
+      <NamesContent content={data}/>
     </div>
   )
 }

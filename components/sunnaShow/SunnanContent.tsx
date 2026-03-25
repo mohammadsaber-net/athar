@@ -1,15 +1,28 @@
 "use client"
-import { WakafatTypeWithComments } from '@/lib/type'
-import Aya from "./Aya";
+import { SunnaType} from '@/lib/type'
 import { useEffect, useRef, useState } from "react";
-import { Star } from "lucide-react";
+import {  Moon} from "lucide-react";
+import Sunna from './Sunna';
 type Props={
-    content:WakafatTypeWithComments[]
+    content:SunnaType[]
 }
-export default function WakafatContent({content}:Props) {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [stars, setStars] = useState<any[]>([]);
-    useEffect(() => {
+export default function SunnanContent({content}:Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [stars, setStars] = useState<any[]>([]);
+  const [admin,setAdmin]=useState(false)
+  useEffect(()=>{
+    const isAdminClient = async () => {
+      const res = await fetch("/api/users/isLogged", {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store"
+      });
+      const data = await res.json();
+      if (data.user.role === "admin") return setAdmin(true);
+    };
+    isAdminClient()
+  },[])
+  useEffect(() => {
   if (!containerRef.current) return;
 
   const element = containerRef.current;
@@ -24,7 +37,7 @@ export default function WakafatContent({content}:Props) {
     const newStars = Array.from({ length: count }).map(() => ({
       top: Math.random() * height,
       left: Math.random() * width,
-      size: Math.random() * 10 + 10,
+      size: Math.random() * 5 + 5,
       opacity: Math.random(),
     }));
 
@@ -39,14 +52,14 @@ export default function WakafatContent({content}:Props) {
 }, []);
   return (
     <div
-        ref={containerRef}
-        className="relative pb-8 border-t-2 pt-3 border-gray-300"
+      ref={containerRef}
+      className="relative pb-8 border-t-2 pt-3 border-gray-300"
     >
     <div className="absolute inset-0 overflow-hidden">
     {stars.map((star, i) => (
-        <Star
+        <Moon
         key={i}
-        className="absolute text-blue-400"
+        className="absolute rounded-full text-indigo-500"
         style={{
             top: star.top,
             left: star.left,
@@ -57,9 +70,9 @@ export default function WakafatContent({content}:Props) {
         />
     ))}
     </div>
-      {content.map((aya:WakafatTypeWithComments)=>(
-        <Aya key={aya.id} aya={aya}/>
+      {content.map((sunna:SunnaType)=>(
+        <Sunna admin={admin} key={sunna.id} sunna={sunna}/>
       )) }
-      </div>
+  </div>
   )
 }

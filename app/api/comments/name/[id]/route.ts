@@ -1,5 +1,5 @@
 import db from "@/db"
-import { wakafatCommentTable } from "@/db/schema"
+import { namesCommentTable } from "@/db/schema"
 import { isAdmin } from "@/lib/isAdmin"
 import { eq } from "drizzle-orm"
 import { NextRequest, NextResponse } from "next/server"
@@ -14,8 +14,8 @@ export async function GET(req:NextRequest,
                 message:'الداتا غير متوفرة'
             },{status:404}) 
         }
-        const data=await db.query.wakafatCommentTable.findMany({
-            where:(eq(wakafatCommentTable.wakafatId,id)),
+        const data=await db.query.namesCommentTable.findMany({
+            where:(eq(namesCommentTable.nameId,id)),
             with:{
                 user:{
                     columns:{firstName:true , lastName:true}
@@ -50,7 +50,7 @@ export async function DELETE(req:NextRequest
                 message:'غير مصرح'
             },{status:401}) 
         }
-        await db.delete(wakafatCommentTable).where(eq(wakafatCommentTable.id,id))
+        await db.delete(namesCommentTable).where(eq(namesCommentTable.id,id))
         return NextResponse.json({
             success:true,
         }) 

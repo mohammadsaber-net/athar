@@ -26,14 +26,14 @@ export type HeroFormData = {
 export type HeroType =HeroFormData &{id:string}
 export type NamesFormData = {
   name: string;
-  image: File | null;
+  image: File | string | null;
   meaning: string;
-  meaningSource: string;
+  meaningSource?: string | null;
 };
 export type NamesType =NamesFormData &{id:string}
 export type SunnaFormData = {
   sunna: string;
   sunnaSource: string;
-  tafsir: string;
+  tafsir: string | null;
 };
 export type SunnaType =SunnaFormData &{id:string}

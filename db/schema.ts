@@ -58,9 +58,7 @@ export const wakafatCommentRelations = relations(
     }),
   })
 );
-export const usersRelations = relations(usersTable, ({ many }) => ({
-  comments: many(wakafatCommentTable),
-}));
+
 export const sunnaTable=pgTable("sunna",{
     id:text("id").primaryKey(),
     sunna:text("sunna").notNull(),
@@ -68,6 +66,31 @@ export const sunnaTable=pgTable("sunna",{
     tafsir:text("tafsir")
 })
 export const sunnaTableZodSchema=createSelectSchema(sunnaTable)
+export const sunnaCommentTable=pgTable("sunnaComment",{
+    id:text("id").primaryKey(),
+    comment:text("comment").notNull(),
+    createdAt:timestamp("created_at").defaultNow(),
+    sunnaId: text("sunna").references(()=>sunnaTable.id,{
+        onDelete:"cascade"
+    }).notNull(),
+    userId: text("user_id").references(()=>usersTable.id,{
+        onDelete:"set null"
+    })
+})
+export const sunnaCommentTableZodSchema=createInsertSchema(sunnaCommentTable)
+export const sunnaRelations=relations(sunnaTable,({many})=>({
+  comment:many(sunnaCommentTable)
+}))
+export const sunnaCommentRelations=relations(sunnaCommentTable,({one})=>({
+  sunna:one(sunnaTable,{
+    fields:[sunnaCommentTable.sunnaId],
+    references:[sunnaTable.id]
+  }),
+  user:one(usersTable,{
+    fields:[sunnaCommentTable.userId],
+    references:[usersTable.id]
+  })
+}))
 export const namesTable=pgTable("names",{
     id:text("id").primaryKey(),
     name:text("name").notNull(),
@@ -76,3 +99,33 @@ export const namesTable=pgTable("names",{
     meaningSource:text("meaning_source")
 })
 export const namesTableZodSchema=createSelectSchema(namesTable)
+export const namesCommentTable=pgTable("namesComment",{
+    id:text("id").primaryKey(),
+    comment:text("comment").notNull(),
+    createdAt:timestamp("created_at").defaultNow(),
+    nameId: text("nameId").references(()=>namesTable.id,{
+        onDelete:"cascade"
+    }).notNull(),
+    userId: text("user_id").references(()=>usersTable.id,{
+        onDelete:"set null"
+    })
+})
+export const namesCommentTableZodSchema=createInsertSchema(namesCommentTable)
+export const nameRelations=relations(namesTable,({many})=>({
+  comment:many(namesCommentTable)
+}))
+export const namesCommentRelations=relations(namesCommentTable,({one})=>({
+  sunna:one(namesTable,{
+    fields:[namesCommentTable.nameId],
+    references:[namesTable.id]
+  }),
+  user:one(usersTable,{
+    fields:[namesCommentTable.userId],
+    references:[usersTable.id]
+  })
+}))
+export const usersRelations = relations(usersTable, ({ many }) => ({
+  wakafatComments: many(wakafatCommentTable),
+  sunnaComments: many(sunnaCommentTable),
+  namesComments: many(namesCommentTable),
+}));
