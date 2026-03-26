@@ -1,7 +1,7 @@
 import db from "@/db"
 import { wakafatCommentTable } from "@/db/schema"
-import { isAdmin } from "@/lib/isAdmin"
-import { eq } from "drizzle-orm"
+import { isLogged } from "@/lib/logged"
+import { and, eq } from "drizzle-orm"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(req:NextRequest,
@@ -43,14 +43,20 @@ export async function DELETE(req:NextRequest
                 message:'الداتا غير متوفرة'
             },{status:404}) 
         }
-        const admin=await isAdmin() 
-        if(!admin){
+        const user=await isLogged() 
+        if(!user){
             return NextResponse.json({
                 success:false,
                 message:'غير مصرح'
             },{status:401}) 
         }
-        await db.delete(wakafatCommentTable).where(eq(wakafatCommentTable.id,id))
+        const [data]=await db.delete(wakafatCommentTable).where(and(eq(wakafatCommentTable.id,id),eq(wakafatCommentTable.userId,user.id))).returning()
+        if(!data){
+            return NextResponse.json({
+                success:false,
+                message:'غير مصرح'
+            },{status:401}) 
+        }
         return NextResponse.json({
             success:true,
         }) 

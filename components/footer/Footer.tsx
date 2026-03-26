@@ -68,8 +68,8 @@ export default function Footer() {
         </ul>
       </div>
     </div>
-    <div className='pt-2 mt-2 border-t-2 text-center border-gray-400'>
-        جميع الحقوق محفوظة <FaCopyright className='inline'/> 
+    <div className='pt-2 mt-2 border-t-2 flex items-center gap-1 justify-center border-gray-400'>
+        جميع الحقوق محفوظة <FaCopyright /> {new Date().getFullYear()}
     </div>
           
     </div>

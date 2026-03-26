@@ -6,7 +6,7 @@ import { useState } from "react";
 import toast from 'react-hot-toast';
 type Props={
     sunna:SunnaType,
-    admin:boolean
+    admin:any
 }
 export default function Sunna({sunna,admin}:Props) {
     const [changeHieght,setChangeHieght]=useState(false)
@@ -141,9 +141,9 @@ export default function Sunna({sunna,admin}:Props) {
                                         ?handleDate(comment.createdAt)
                                         : ""}
                                 </span>
-                                {admin&&<button
+                                {comment.userId===admin.id&&<button
                                 onClick={()=>deleteComment(comment.id)}
-                                 className='text-red-600'>حذف</button>}
+                                className='text-red-500'>حذف</button>}
                                 <span className='text-gray-900'>{comment.comment}</span>
                             </div>
                         </div>

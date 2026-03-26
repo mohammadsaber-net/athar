@@ -9,7 +9,7 @@ type Props={
 export default function NamesContent({content}:Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [stars, setStars] = useState<any[]>([]);
-  const [admin,setAdmin]=useState(false)
+  const [admin,setAdmin]=useState<any>(null)
   useEffect(()=>{
     const isAdminClient = async () => {
       const res = await fetch("/api/users/isLogged", {
@@ -18,7 +18,7 @@ export default function NamesContent({content}:Props) {
         cache: "no-store"
       });
       const data = await res.json();
-      if (data.user.role === "admin") return setAdmin(true);
+      if (data.user) return setAdmin(data.user);
     };
     isAdminClient()
   },[])

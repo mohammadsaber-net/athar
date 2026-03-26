@@ -6,7 +6,7 @@ import { useState } from "react";
 import toast from 'react-hot-toast';
 type Props={
     aya:WakafatType,
-    admin:boolean
+    admin:any
 }
 export default function Aya({aya,admin}:Props) {
     const [changeHieght,setChangeHieght]=useState(false)
@@ -72,7 +72,7 @@ export default function Aya({aya,admin}:Props) {
             <h2 className="group-hover:text-rose-900 text-xl md:text-3xl mb-0 text-blue-900">
                " {aya?.aya} "
             </h2>
-            
+
             <span className="text-end block mt-0 text-italic text-sm text-gray-800">
                 {aya?.ayaSource}
             </span>
@@ -151,9 +151,9 @@ export default function Aya({aya,admin}:Props) {
                                     </div>
                                     <Heart className='stroke-0 fill-rose-500 size-4'/>
                                 </div> */}
-                                <button
+                                {comment.userId===admin.id&&<button
                                 onClick={()=>deleteComment(comment.id)}
-                                className='text-red-500'>حذف</button>
+                                className='text-red-500'>حذف</button>}
                             </div>
                         </div>
                     ))

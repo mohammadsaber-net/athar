@@ -6,7 +6,7 @@ import { useState } from "react";
 import toast from 'react-hot-toast';
 type Props={
     searchedName:NamesType,
-    admin:boolean
+    admin:any
 }
 export default function Name({searchedName,admin}:Props) {
     const [changeHieght,setChangeHieght]=useState(false)
@@ -142,9 +142,9 @@ export default function Name({searchedName,admin}:Props) {
                                         ?handleDate(comment.createdAt)
                                         : ""}
                                 </span>
-                                {admin&&<button
+                                {comment.userId===admin.id&&<button
                                 onClick={()=>deleteComment(comment.id)}
-                                 className='text-red-600'>حذف</button>}
+                                className='text-red-500'>حذف</button>}
                                 <span className='text-gray-900'>{comment.comment}</span>
                             </div>
                         </div>
