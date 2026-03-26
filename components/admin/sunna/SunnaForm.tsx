@@ -101,7 +101,7 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
       <textarea
         name="tafsir"
         placeholder="الشرح"
-        value={formData.tafsir}
+        value={formData.tafsir!}
         onChange={handleChange}
         required
         className="w-full p-2 rounded focus:border-blue-500 outline-none border border-gray-300 resize-none min-h-[80px]"

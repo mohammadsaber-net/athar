@@ -72,10 +72,11 @@ export default function Aya({aya,admin}:Props) {
             <h2 className="group-hover:text-rose-900 text-xl md:text-3xl mb-0 text-blue-900">
                " {aya?.aya} "
             </h2>
+            
             <span className="text-end block mt-0 text-italic text-sm text-gray-800">
                 {aya?.ayaSource}
             </span>
-            <div className={`mt-2 border-t md:text-xl overflow-hidden transition-all duration-300
+            <div className={`mt-3 border-t md:text-xl overflow-hidden transition-all duration-300
              pt-2 border-gray-200
             ${changeHieght?"max-h-[700vh]":"max-h-14"}`}>
                 {aya?.tafsir} 
