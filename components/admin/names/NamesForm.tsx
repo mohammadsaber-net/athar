@@ -40,7 +40,7 @@ export default function NamesForm({setCreate,setEdit,edit,create}:Props) {
     const formPayload = new FormData();
     formPayload.append("name", formData.name);
     formPayload.append("meaning", formData.meaning);
-    formPayload.append("meaningSource", formData.meaningSource);
+    formPayload.append("meaningSource", formData.meaningSource!);
     if(formData.image){
       formPayload.append("image", formData.image);
     }
@@ -117,7 +117,7 @@ export default function NamesForm({setCreate,setEdit,edit,create}:Props) {
         type="text"
         name="meaningSource"
         placeholder="مصدر التفسير"
-        value={formData.meaningSource}
+        value={formData.meaningSource!}
         onChange={handleChange}
         required
         className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded"

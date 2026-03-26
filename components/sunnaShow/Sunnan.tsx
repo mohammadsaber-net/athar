@@ -6,7 +6,7 @@ export default async function Sunnan() {
   return (
     <div
     id='Sunna'
-    className='bg-zinc-200 px-6 pt-8 max-w-7xl'>
+    className='bg-zinc-100 px-6 pt-8 max-w-7xl'>
       <div className='mb-2 pb-2'>
         <h1 className='text-2xl md:text-3xl text-[#0f3d2e] font-bold mb-2'>وقفات مع آيات من كتاب ربنا</h1>
         <p className='max-w-md'>
