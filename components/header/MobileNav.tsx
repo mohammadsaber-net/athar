@@ -1,13 +1,12 @@
-import { ArrowDown, ArrowUp, X } from "lucide-react";
+"use client"
+import { useState } from "react";
+import { ArrowDown, ArrowUp, Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import { features, pages } from "./MainNav";
 import Link from "next/link";
-import { AnyARecord } from "dns";
 import React from "react";
 import FixedModal from "../animation/FixedModal";
 type Props={
-    setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    mobileMenuOpen: boolean
     setOpenList: React.Dispatch<React.SetStateAction<boolean>>,
     openList: boolean
     isLoggedIn:any
@@ -17,23 +16,29 @@ type Props={
 }
 export default function MobileNav(
   {
-    setMobileMenuOpen, mobileMenuOpen,setOpenList,isLoggedIn,openList,
+    setOpenList,isLoggedIn,openList,
   openLogout,setOpenLogout,handleLogOut
   }
   : Props) {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const Icon=openList?ArrowUp:ArrowDown
   return (
     <div className=" md:hidden">
     <Logo />
-    <header className={`bg-black/30 fixed 
+    <Menu 
+      onClick={()=>setMobileMenuOpen(true)}
+      className={`md:hidden absolute text-cyan-600
+      cursor-pointer ${mobileMenuOpen&&"hidden"}
+      top-4 right-4 p-1 size-10 z-50 font-bold shadow rounded bg-white/60 `} />
+    <header className={`bg-black/30 absolute inset-0
     transform transition-transform duration-300 ease-in-out
-    ${mobileMenuOpen?"translate-x-0":"translate-x-full"}
-    right-0 top-0 z-40 h-[100vh] 
+    ${mobileMenuOpen?"translate-x-0  opacity-100":"translate-x-full opacity-0 pointer-events-none"}
+    right-0 top-0 z-40 
     backdrop-blur-sm w-full`}>
     <nav className={`flex flex-col
-    transform transition-transform duration-500 delay-200 ease-in-out
-    ${mobileMenuOpen?"translate-x-0":"translate-x-full"}
-    w-[70%] px-4 bg-white/20 relative min-h-[100vh] pt-8 text-start`}>
+    transform transition-transform h-screen duration-500 delay-200 ease-in-out
+    ${mobileMenuOpen?"translate-x-0 opacity-100":"translate-x-full opacity-0 pointer-events-none"}
+    w-[70%] px-4 bg-white/20 relative pt-8 text-start`}>
     <X 
     className={`
     absolute top-0 cursor-pointer left-4 size-8 text-white`} 

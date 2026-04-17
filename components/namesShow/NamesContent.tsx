@@ -57,9 +57,9 @@ export default function NamesContent({content}:Props) {
     >
     <div className="absolute inset-0 overflow-hidden">
     {stars.map((star, i) => (
-        <span
+        <Moon
         key={i}
-        className="absolute rounded-full size-4 bg-rose-300"
+        className="absolute rounded-full size-4"
         style={{
             top: star.top,
             left: star.left,

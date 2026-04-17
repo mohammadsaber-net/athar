@@ -6,7 +6,7 @@ import { useState } from "react";
 import toast from 'react-hot-toast';
 type Props={
     searchedName:NamesType,
-    admin:any
+    admin?:any
 }
 export default function Name({searchedName,admin}:Props) {
     const [changeHieght,setChangeHieght]=useState(false)
@@ -66,11 +66,18 @@ export default function Name({searchedName,admin}:Props) {
         }
     }
   return (
-    <div className='md:max-w-xl max-w-[90%] mb-10 relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
+    <div className='md:max-w-xl max-w-[90%] mb-5 relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
       overflow-hidden rounded-md p-3'>
         <div className="group transition">
-            <h2 className="group-hover:text-rose-900 text-xl md:text-3xl mb-0 text-blue-900">
-               " {searchedName?.name} "
+            <div className="h-40 w-full overflow-hidden">
+                <img
+                  className='w-[100%] h-[100%]'
+                  src={searchedName?.image ?? undefined}
+                  alt={typeof searchedName?.image === 'string' ? searchedName.image : ''}
+                />
+            </div>
+            <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">
+                {searchedName?.name} 
             </h2>
             
             <div className={`mt-2 border-t md:text-xl overflow-hidden transition-all duration-300

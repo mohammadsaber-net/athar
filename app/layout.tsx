@@ -6,6 +6,7 @@ import ReduxProvider from "@/redux/ReduxProvider";
 import { isAdmin } from "@/lib/isAdmin";
 import Link from "next/link";
 import { PencilIcon } from "lucide-react";
+import Footer from "@/components/footer/Footer";
 const AmiriSans = Amiri({
   weight: "400",
   variable: "--font-amiri",
@@ -33,7 +34,7 @@ export default async function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body
-        className={`${AmiriSans.variable} ${geistMono.variable} antialiased`}
+        className={`${AmiriSans.variable} ${geistMono.variable} relative antialiased`}
       >
         <ReduxProvider>
         <Toaster position="top-center"/>
@@ -44,6 +45,7 @@ export default async function RootLayout({
              إدارة الموقع <PencilIcon />
         </Link>}
         {children}
+        <Footer />
         </ReduxProvider>
       </body>
     </html>

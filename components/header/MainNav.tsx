@@ -13,13 +13,12 @@ export const pages = [
     { name: "تسجيل", href: "/signIn" }
 ];
 export const features=[
-    { name: "وقفات قرآنية", href: "/#Wakafat" },
-    { name: "الأذكار", href: "/#adhkar" },
-    { name: "أسماء الله الحسنى", href: "/#Names" },
-    { name: "سنن مهجورة", href: "/#suna" }
+    { name: "وقفات قرآنية", href: "/wakafat" },
+    { name: "أسماء الله الحسنى", href: "/name" },
+    { name: "سنن مهجورة", href: "/sunna" }
 ]
 export default function MainNav() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   const [openList, setOpenList] = useState(false);
   const [openLogout,setOpenLogout]=useState(false)
   const [loading, setLoading] = useState(true);
@@ -29,7 +28,7 @@ export default function MainNav() {
       .then(res => res.json())
       .then(data => {
         setIsLoggedIn(data.user)
-    }).finally(() => setLoading(false));;
+    }).finally(() => setLoading(false));
   }, []);
   const handleLogOut=async()=>{
     const res = await fetch("/api/users/logout", {
@@ -121,15 +120,9 @@ export default function MainNav() {
             }})}
             {}
         </nav>
+        
     </header>
-    <Menu 
-        onClick={()=>setMobileMenuOpen(true)}
-        className={`md:hidden fixed
-        cursor-pointer ${mobileMenuOpen&&"hidden"}
-        top-4 right-4 p-1 size-10 z-50 font-bold rounded bg-cyan-600/80 `} />
     <MobileNav 
-    setMobileMenuOpen={setMobileMenuOpen}
-    mobileMenuOpen={mobileMenuOpen}
     openList={openList}
     isLoggedIn={isLoggedIn}
     setOpenLogout={setOpenLogout}

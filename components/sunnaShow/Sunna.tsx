@@ -6,7 +6,7 @@ import { useState } from "react";
 import toast from 'react-hot-toast';
 type Props={
     sunna:SunnaType,
-    admin:any
+    admin?:any
 }
 export default function Sunna({sunna,admin}:Props) {
     const [changeHieght,setChangeHieght]=useState(false)

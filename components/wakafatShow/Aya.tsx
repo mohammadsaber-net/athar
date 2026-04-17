@@ -6,7 +6,7 @@ import { useState } from "react";
 import toast from 'react-hot-toast';
 type Props={
     aya:WakafatType,
-    admin:any
+    admin?:any
 }
 export default function Aya({aya,admin}:Props) {
     const [changeHieght,setChangeHieght]=useState(false)

@@ -1,12 +1,13 @@
-import NamesContent from "./NamesContent";
+import MainNav from "@/components/header/MainNav";
+import WakafatContent from "@/components/wakafatShow/WakafatContent";
 import db from "@/db";
-import { namesTable} from "@/db/schema";
-export default async function Names() {
-  const data = await db.select().from(namesTable)
+import { wakafatTable } from "@/db/schema";
+export default async function Wakafat() {
+  const data = await db.select().from(wakafatTable)
   return (
-    <div
-    id='Names'
-    className='bg-slate-100 px-6 pt-8 max-w-7xl'>
+    <section
+    className='bg-gray-50 min-h-screen px-6 md:pt-8 pt-20 max-w-7xl'>
+      <MainNav />
       <div className='mb-2 pb-2'>
         <h1 className='text-2xl md:text-3xl text-[#0f3d2e] font-bold mb-2'>وقفات مع آيات من كتاب ربنا</h1>
         <p className='max-w-md'>
@@ -19,7 +20,7 @@ export default async function Names() {
           </span>
         </p>
       </div>
-      <NamesContent content={data}/>
-    </div>
+      <WakafatContent content={data}/>
+    </section>
   )
 }

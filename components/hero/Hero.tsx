@@ -1,8 +1,9 @@
 "use client"
 import { HeroType } from "@/lib/type";
 import MainNav from "../header/MainNav";
-import { useEffect, useMemo, useState } from "react";
-import { Moon, Star } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Star } from "lucide-react";
+import Link from "next/link";
 export default function Hero() {
   const [tableData, setTableData] = useState<HeroType|null>(null)
   const fetchData=async()=>{
@@ -10,7 +11,7 @@ export default function Hero() {
         const res=await fetch("/api/hero")
         const data=await res.json()
         if(data.success){
-          setTableData(data.data[Math.floor(Math.random()*data.data.length)])
+          setTableData(data.data)
         }
       } catch (error) {
       }
@@ -19,9 +20,9 @@ export default function Hero() {
       fetchData()
     },[])
   const itemsBtn=[
-    {name:"وقفات قرآنية", href:"/#Wakafat"},
-    {name:"أسماء الله الحسنى", href:"/#Names"},
-    {name:"سنن مهجورة", href:"/#Sunna"}
+    {name:"وقفات قرآنية", href:"/wakafat"},
+    {name:"أسماء الله الحسنى", href:"/name"},
+    {name:"سنن مهجورة", href:"/sunna"}
   ]
   const [stars, setStars] = useState<any[]>([]);
 
@@ -53,7 +54,9 @@ export default function Hero() {
         />
       ))}
       <div className="relative z-10 md:w-fit w-[90%] m-auto space-y-8">
-        <div className="mt-16 pt-10 md:pt-4">
+        
+        {tableData?
+        <><div className="mt-16 pt-8 md:pt-4">
           <p className="mb-2 text-xl max-w-2xl leading-relaxed md:text-3xl">
             ﴿ {tableData?.aya || "الآية"} ﴾
           </p>
@@ -61,16 +64,22 @@ export default function Hero() {
            {tableData?.ayaSource || "مصدر الآية"}
           </span>
         </div>
-        <div className="rounded-xl bg-white/60 max-w-2xl px-6 py-4 backdrop-blur">
+        <div className="rounded-xl bg-white/40 max-w-2xl px-6 py-4 backdrop-blur">
           <p className="text-lg">
             « {tableData?.hadith || "الحديث"} »
           </p>
           <p className="text-sm text-blue-900 text-left italic">{tableData?.hadithSource || "مصدر الحديث"}</p>
         </div>
+        </>:
+        <>
+        <p className="h-20 animate-pulse mt-20 mx-4 rounded pt-6 md:pt-8 bg-white/40 max-w-4xl" />
+        <p className="animate-pulse h-20 px-6 mx-4 rounded py-4 bg-white/40 max-w-4xl" />
+        </>
+        }
         <div className="overflow-hidden md:w-fit m-auto w-[90%] whitespace-nowrap">
           <div className="inline-flex animate-marquee gap-8">
             {itemsBtn.map((item,index) => (
-                <a
+                <Link
                 key={index}
                 href={item.href}
                 className="mx-2 rounded-full border border-blue-600
@@ -78,7 +87,7 @@ export default function Hero() {
                 hover:bg-white hover:border-[#0f3d2e] hover:text-[#0f3d2e]"
                 >
                   {item.name}
-                </a>
+                </Link>
             ))}
           </div>
         </div>

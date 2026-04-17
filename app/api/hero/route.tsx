@@ -1,9 +1,11 @@
 import db from "@/db";
 import { heroTable, heroTableZodSchema } from "@/db/schema";
+import { sql } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(req:NextRequest) {
     try {
-        const data=await db.select().from(heroTable)
+        const [data]=await db.select().from(heroTable)
+        .orderBy(sql`RANDOM()`).limit(1)
         return NextResponse.json({
             success:true,
             data
