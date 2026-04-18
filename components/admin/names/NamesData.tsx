@@ -37,7 +37,9 @@ export default function NamesData({tableData}:Props) {
                 className='w-10 h-10' 
                 alt={item.name} />}
               </td>
-              <td className="p-3 border border-gray-300 min-w-[250px]">{item.meaning.slice(0,100)}...</td>
+              <td className="p-3 border border-gray-300 min-w-[250px]">
+                <div dangerouslySetInnerHTML={{ __html: item.meaning.slice(0,100) }} />
+                </td>
               <td className="p-3 border border-gray-300 whitespace-nowrap">
                 {item.meaningSource}
               </td>

@@ -76,9 +76,9 @@ export default function Sunna({sunna,admin}:Props) {
                 {sunna?.sunnaSource}
             </span>
             <div className={`mt-2 border-t md:text-xl overflow-hidden transition-all duration-300
-             pt-2 border-gray-200
+             pt-2 border-gray-200 whitespace-pre-wrap
             ${changeHieght?"max-h-[700vh]":"max-h-14"}`}>
-                {sunna?.tafsir} 
+                <div dangerouslySetInnerHTML={{ __html: sunna?.tafsir||"" }} />  
             </div>
               <button
               onClick={()=>setChangeHieght(!changeHieght)}

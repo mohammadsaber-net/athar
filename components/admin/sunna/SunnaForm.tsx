@@ -4,9 +4,12 @@ import FixedModal from "@/components/animation/FixedModal";
 import { SunnaFormData,SunnaType} from "@/lib/type";
 import { fetchWakafat } from "@/redux/slice/wakafatData";
 import { AppDispatch } from "@/redux/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast"
+import { useQuill } from "react-quilljs";
 import { useDispatch } from "react-redux";
+// @ts-ignore
+import "quill/dist/quill.snow.css";
 type Props={
   setCreate?:(value:boolean)=>void|undefined,
   setEdit?:(value:SunnaType|null)=>void,
@@ -44,6 +47,7 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
     const data=await res.json()
     if(data.success){
       setCreate?.(false)
+      setEdit?.(null)
       dispatch(fetchWakafat())
     }else{
       toast.error(data.message||"خطأ في اضافة محتوي جديد")
@@ -62,6 +66,7 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
       })
       const data=await res.json()
       if(data.success){
+        setCreate?.(false)
         setEdit?.(null)
         dispatch(fetchWakafat())
       }else{
@@ -72,6 +77,32 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
     }
   }
   }
+  const { quill, quillRef } = useQuill({
+      modules: {
+        toolbar: [
+          ["bold", "italic", "underline"],
+          [{ color: [] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["link"],
+          ["clean"],
+        ],
+      },
+    });
+    useEffect(() => {
+    if (quill) {
+      quill.on("text-change", () => {
+        setFormData((prev) => ({
+          ...prev,
+          tafsir: quill.root.innerHTML,
+        }));
+      });
+    }
+  }, [quill]);
+    useEffect(() => {
+      if (quill && edit?.tafsir) {
+        quill.clipboard.dangerouslyPasteHTML(edit.tafsir);
+      }
+    }, [quill, edit]);
   return (
     <FixedModal isOpen={!!edit || !!create} onClose={()=>{setEdit?.(null);setCreate?.(false)}}>
     <form
@@ -98,14 +129,11 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
         className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded"
         />
 
-      <textarea
-        name="tafsir"
-        placeholder="الشرح"
-        value={formData.tafsir!}
-        onChange={handleChange}
-        required
-        className="w-full p-2 rounded focus:border-blue-500 outline-none border border-gray-300 resize-none min-h-[80px]"
-        />
+      <div className="border rounded-md bg-white">
+          <div className="h-[200px] overflow-y-auto">
+            <div ref={quillRef} />
+          </div>
+        </div>
       <div className="flex gap-4 justify-start items-center">
       <button
         type="submit"

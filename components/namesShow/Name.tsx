@@ -81,9 +81,9 @@ export default function Name({searchedName,admin}:Props) {
             </h2>
             
             <div className={`mt-2 border-t md:text-xl overflow-hidden transition-all duration-300
-             pt-2 border-gray-200
+             pt-2 border-gray-200 whitespace-pre-wrap
             ${changeHieght?"max-h-[700vh]":"max-h-14"}`}>
-                {searchedName?.meaning} 
+                <div dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} /> 
             </div>
             <span className="text-end block mt-0 text-italic text-sm text-gray-800">
                 {searchedName?.meaningSource}

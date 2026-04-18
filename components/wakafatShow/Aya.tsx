@@ -77,9 +77,9 @@ export default function Aya({aya,admin}:Props) {
                 {aya?.ayaSource}
             </span>
             <div className={`mt-3 border-t md:text-xl overflow-hidden transition-all duration-300
-             pt-2 border-gray-200
+             pt-2 border-gray-200 whitespace-pre-wrap
             ${changeHieght?"max-h-[700vh]":"max-h-14"}`}>
-                {aya?.tafsir} 
+                <div dangerouslySetInnerHTML={{ __html: aya?.tafsir||"" }} /> 
             </div>
               <button
               onClick={()=>setChangeHieght(!changeHieght)}

@@ -32,7 +32,9 @@ export default function WakafatData({tableData}:Props) {
               <td className="p-3 border border-gray-300 whitespace-nowrap">
                 {item.ayaSource}
               </td>
-              <td className="p-3 border border-gray-300 min-w-[250px]">{item.tafsir.slice(0,100)}...</td>
+              <td className="p-3 border border-gray-300 min-w-[250px]">
+                <div dangerouslySetInnerHTML={{ __html: item.tafsir.slice(0,100) }} />
+              </td>
               <td className="p-3 border border-gray-300 whitespace-nowrap">
                 {item.tafsirSource}
               </td>

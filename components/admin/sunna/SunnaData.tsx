@@ -28,7 +28,9 @@ export default function SunnaData({tableData}:Props) {
               className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition"
             >
               <td className="p-3 border border-gray-300 min-w-[250px]">{item.sunna}</td>
-              <td className="p-3 border border-gray-300 min-w-[250px]">{item.tafsir&&item.tafsir.slice(0,100)}...</td>
+              <td className="p-3 border border-gray-300 min-w-[250px]">
+                <div dangerouslySetInnerHTML={{ __html: item.tafsir?.slice(0,100)||"" }} />
+              </td>
               <td className="p-3 border border-gray-300 whitespace-nowrap">
                 {item.sunnaSource}
               </td>

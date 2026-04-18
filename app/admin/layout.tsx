@@ -16,7 +16,7 @@ export default async function layout({
     <section className='bg-gray-100 max-w-7xl min-h-screen py-6 px-4'>
         <MainNav />
       {children}
-      <Footer />
+      
     </section>
   )
 }
