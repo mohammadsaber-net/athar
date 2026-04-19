@@ -3,6 +3,7 @@ import { SunnaType} from '@/lib/type'
 import { useEffect, useRef, useState } from "react";
 import {  Moon} from "lucide-react";
 import Sunna from './Sunna';
+import AllSunna from './AllSunna';
 type Props={
     content:SunnaType[]
 }
@@ -71,7 +72,7 @@ export default function SunnanContent({content}:Props) {
     ))}
     </div>
       {content.map((sunna:SunnaType)=>(
-        <Sunna admin={admin} key={sunna.id} sunna={sunna}/>
+        <AllSunna key={sunna.id} sunna={sunna}/>
       )) }
   </div>
   )

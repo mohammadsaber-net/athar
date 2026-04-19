@@ -1,7 +1,8 @@
 "use client"
 import { handleDate } from '@/lib/handleDate';
-import { NamesType, SunnaType, comments } from '@/lib/type'
+import { NamesType, comments } from '@/lib/type'
 import {  Pencil } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from "react";
 import toast from 'react-hot-toast';
 type Props={
@@ -9,7 +10,6 @@ type Props={
     admin?:any
 }
 export default function Name({searchedName,admin}:Props) {
-    const [changeHieght,setChangeHieght]=useState(false)
     const [show,setShow]=useState(false)
     const [comment,setComment]=useState<string>("")
     const [fetchComments,setfetchComments]=useState<any>(null)
@@ -17,7 +17,7 @@ export default function Name({searchedName,admin}:Props) {
     const getComments=async(id:string)=>{
         setLoading(true)
         try {
-            const res=await fetch(`api/comments/name/${id}`)
+            const res=await fetch(`/api/comments/name/${id}`)
             const data=await res.json()
             if(data.success){
                 setfetchComments(data.data)
@@ -31,7 +31,7 @@ export default function Name({searchedName,admin}:Props) {
     }
     const deleteComment=async(id:string)=>{
         try {
-            const res=await fetch(`api/comments/name/${id}`,{method:"DELETE"})
+            const res=await fetch(`/api/comments/name/${id}`,{method:"DELETE"})
             const data=await res.json()
             if(data.success){
                 getComments(searchedName.id)
@@ -47,7 +47,7 @@ export default function Name({searchedName,admin}:Props) {
         e.preventDefault()
         if(!comment) return toast.error("من فضلك أضف تعليقا")
         try {
-            const res=await fetch("api/comments/name",{
+            const res=await fetch("/api/comments/name",{
                 method:"POST",
                 credentials:"include",
                 body:JSON.stringify({comment,nameId:searchedName.id})
@@ -66,13 +66,13 @@ export default function Name({searchedName,admin}:Props) {
         }
     }
   return (
-    <div className='md:max-w-xl max-w-[90%] mb-5 relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
+    <div className='md:max-w-xl max-w-[90%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
       overflow-hidden rounded-md p-3'>
         <div className="group transition">
             <div className="h-40 w-full overflow-hidden">
                 <img
                   className='w-[100%] h-[100%]'
-                  src={searchedName?.image ?? undefined}
+                  src={searchedName?.image || undefined}
                   alt={typeof searchedName?.image === 'string' ? searchedName.image : ''}
                 />
             </div>
@@ -80,22 +80,15 @@ export default function Name({searchedName,admin}:Props) {
                 {searchedName?.name} 
             </h2>
             
-            <div className={`mt-2 border-t md:text-xl overflow-hidden transition-all duration-300
-             pt-2 border-gray-200 whitespace-pre-wrap
-            ${changeHieght?"max-h-[700vh]":"max-h-14"}`}>
-                <div dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} /> 
+            <div className={`mt-2 border-t md:text-xl pt-2 border-gray-200 `}>
+                <div
+                dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} /> 
             </div>
             <span className="text-end block mt-0 text-italic text-sm text-gray-800">
                 {searchedName?.meaningSource}
             </span>
-              <button
-              onClick={()=>setChangeHieght(!changeHieght)}
-              className="text-blue-600 cursor-pointer transition hover:text-blue-800
-                ">{!changeHieght?"عرض المزيد .....":"عرض أقل"}
-              </button>
             <div
-             className={`${changeHieght?"block":"hidden"}
-             pt-2 border-t-2 border-gray-200
+             className={`pt-2 border-t-2 border-gray-200
              transition-all delay-300 duration-300`}
             >
                 <form 
@@ -116,7 +109,7 @@ export default function Name({searchedName,admin}:Props) {
                 </button>
                 </form>
             </div>
-            <div className={`${changeHieght?"block":"hidden"} mt-2 transition-all delay-300 duration-300`}>
+            <div className={` mt-2 transition-all delay-300 duration-300`}>
 
             {!show&&<button 
             onClick={()=>{setShow(true);getComments(searchedName.id)}}

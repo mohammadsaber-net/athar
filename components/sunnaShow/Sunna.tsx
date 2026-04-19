@@ -9,7 +9,6 @@ type Props={
     admin?:any
 }
 export default function Sunna({sunna,admin}:Props) {
-    const [changeHieght,setChangeHieght]=useState(false)
     const [show,setShow]=useState(false)
     const [comment,setComment]=useState<string>("")
     const [fetchComments,setfetchComments]=useState<any>(null)
@@ -17,7 +16,7 @@ export default function Sunna({sunna,admin}:Props) {
     const getComments=async(id:string)=>{
         setLoading(true)
         try {
-            const res=await fetch(`api/comments/sunna/${id}`)
+            const res=await fetch(`/api/comments/sunna/${id}`)
             const data=await res.json()
             if(data.success){
                 setfetchComments(data.data)
@@ -31,7 +30,7 @@ export default function Sunna({sunna,admin}:Props) {
     }
     const deleteComment=async(id:string)=>{
         try {
-            const res=await fetch(`api/comments/sunna/${id}`,{method:"DELETE"})
+            const res=await fetch(`/api/comments/sunna/${id}`,{method:"DELETE"})
             const data=await res.json()
             if(data.success){
                 getComments(sunna.id)
@@ -47,7 +46,7 @@ export default function Sunna({sunna,admin}:Props) {
         e.preventDefault()
         if(!comment) return toast.error("من فضلك أضف تعليقا")
         try {
-            const res=await fetch("api/comments/sunna",{
+            const res=await fetch("/api/comments/sunna",{
                 method:"POST",
                 credentials:"include",
                 body:JSON.stringify({comment,sunnaId:sunna.id})
@@ -69,24 +68,19 @@ export default function Sunna({sunna,admin}:Props) {
     <div className='md:max-w-xl max-w-[90%] mb-10 relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
       overflow-hidden rounded-md p-3'>
         <div className="group transition">
-            <h2 className="group-hover:text-rose-900 text-xl md:text-3xl mb-0 text-blue-900">
-               " {sunna?.sunna} "
+            <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">
+                {sunna?.sunna} 
             </h2>
+            
+            <div className={`mt-2 border-t md:text-xl pt-2 border-gray-200 `}>
+                <div
+                dangerouslySetInnerHTML={{ __html: sunna?.tafsir||"" }} /> 
+            </div>
             <span className="text-end block mt-0 text-italic text-sm text-gray-800">
                 {sunna?.sunnaSource}
             </span>
-            <div className={`mt-2 border-t md:text-xl overflow-hidden transition-all duration-300
-             pt-2 border-gray-200 whitespace-pre-wrap
-            ${changeHieght?"max-h-[700vh]":"max-h-14"}`}>
-                <div dangerouslySetInnerHTML={{ __html: sunna?.tafsir||"" }} />  
-            </div>
-              <button
-              onClick={()=>setChangeHieght(!changeHieght)}
-              className="text-blue-600 cursor-pointer transition hover:text-blue-800
-                ">{!changeHieght?"عرض المزيد .....":"عرض أقل"}
-              </button>
             <div
-             className={`${changeHieght?"block":"hidden"}
+             className={`
              pt-2 border-t-2 border-gray-200
              transition-all delay-300 duration-300`}
             >
@@ -108,8 +102,6 @@ export default function Sunna({sunna,admin}:Props) {
                 </button>
                 </form>
             </div>
-            <div className={`${changeHieght?"block":"hidden"} mt-2 transition-all delay-300 duration-300`}>
-
             {!show&&<button 
             onClick={()=>{setShow(true);getComments(sunna.id)}}
             className='text-indigo-600 cursor-pointer'
@@ -162,6 +154,5 @@ export default function Sunna({sunna,admin}:Props) {
             </div>
         </div>
         </div>
-      </div>
   )
 }

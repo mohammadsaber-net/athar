@@ -3,6 +3,7 @@ import { WakafatType } from '@/lib/type'
 import Aya from "./Aya";
 import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
+import AllWakafat from './AllWakafat';
 type Props={
     content:WakafatType[]
 }
@@ -71,7 +72,7 @@ export default function WakafatContent({content}:Props) {
     ))}
     </div>
       {content.map((aya:WakafatType)=>(
-        <Aya admin={admin} key={aya.id} aya={aya}/>
+        <AllWakafat key={aya.id} wakafat={aya}/>
       )) }
       </div>
   )

@@ -45,7 +45,7 @@ export default function MainNav() {
   }
   const Icon=openList?ArrowUp:ArrowDown
   return loading?(
-    <header className="relative hidden md:block z-20">
+    <header className="hidden md:block">
         <Logo />
         <nav 
         className="bg-white/20 relative rounded-full px-8 mb-8 py-3 mt-6 shadow-lg
@@ -55,10 +55,10 @@ export default function MainNav() {
     </header>
   ): (
     <>
-    <header className="relative hidden md:block z-20">
+    <header className="hidden md:block relative z-50">
         <Logo />
         <nav 
-        className="bg-white/20 relative rounded-full px-8 mb-8 py-3 mt-6 shadow-lg
+        className="bg-white/20 relative rounded-full px-8 mb-8 py-3 shadow-lg
          text-center flex gap-6 items-center justify-center text-[#c9a24d] w-max mx-auto">
             
             <div 

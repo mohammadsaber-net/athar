@@ -3,7 +3,6 @@ import { namesTable, namesTableZodSchema } from "@/db/schema";
 import cloudinary from "@/lib/utls";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-
 export async function DELETE(req:NextRequest,{ params }: { params: Promise<{ id: string }> }) {
     try {
         const {id}=await params

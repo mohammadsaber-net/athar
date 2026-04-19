@@ -4,6 +4,9 @@ import Link from "next/link";
 import Aya from "../wakafatShow/Aya";
 import Sunna from "../sunnaShow/Sunna";
 import { isAdmin } from "@/lib/isAdmin";
+import AllNames from "../namesShow/AllNames";
+import AllWakafat from "../wakafatShow/AllWakafat";
+import AllSunna from "../sunnaShow/AllSunna";
 
 export default async function Summary() {
     const admin = await isAdmin()
@@ -25,7 +28,7 @@ export default async function Summary() {
         <div className="pb-5 pt-2 border-t-2 border-zinc-300">
             <div >
                 {data?.name?.map((searchedName:NamesType)=>(
-                    <Name admin={admin} key={searchedName.id} searchedName={searchedName}/>
+                    <AllNames key={searchedName.id} searchedName={searchedName}/>
                 )) }
                 <Link className="font-semibold md:text-lg text-cyan-800 hover:text-cyan-900" href={"/name"}>
                      عرض المزيد من الأسماء الحسني
@@ -33,7 +36,7 @@ export default async function Summary() {
             </div>
             <div className="mt-2 pt-2 border-t border-slate-400">
                 {data?.wakafat?.map((aya:WakafatType)=>(
-                    <Aya admin={admin} key={aya.id} aya={aya}/>
+                    <AllWakafat key={aya.id} wakafat={aya}/>
                 )) }
                 <Link className="font-semibold md:text-lg text-cyan-800 hover:text-cyan-900" href={"/name"}>
                      عرض المزيد من الوقفات القرآنية
@@ -41,7 +44,7 @@ export default async function Summary() {
             </div>
             <div className="mt-2 pt-2 border-t border-slate-400">
                 {data?.sunna?.map((hadith:SunnaType)=>(
-                    <Sunna admin={admin} key={hadith.id} sunna={hadith}/>
+                    <AllSunna key={hadith.id} sunna={hadith}/>
                 )) }
                 <Link className="font-semibold md:text-lg text-cyan-800 hover:text-cyan-900" href={"/name"}>
                      عرض المزيد من سنن مهجورة

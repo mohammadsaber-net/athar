@@ -3,6 +3,8 @@ import { NamesType, SunnaType} from '@/lib/type'
 import { useEffect, useRef, useState } from "react";
 import {  Moon} from "lucide-react";
 import Name from './Name';
+import Link from 'next/link';
+import AllNames from './AllNames';
 type Props={
     content:NamesType[]
 }
@@ -71,7 +73,7 @@ export default function NamesContent({content}:Props) {
     ))}
     </div>
       {content.map((searchedName:NamesType)=>(
-        <Name admin={admin} key={searchedName.id} searchedName={searchedName}/>
+        <AllNames searchedName={searchedName} key={searchedName.id}/>
       )) }
   </div>
   )

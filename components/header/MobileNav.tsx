@@ -33,7 +33,7 @@ export default function MobileNav(
     <header className={`bg-black/30 absolute inset-0
     transform transition-transform duration-300 ease-in-out
     ${mobileMenuOpen?"translate-x-0  opacity-100":"translate-x-full opacity-0 pointer-events-none"}
-    right-0 top-0 z-40 
+    right-0 top-0 z-[100000]
     backdrop-blur-sm w-full`}>
     <nav className={`flex flex-col
     transform transition-transform h-screen duration-500 delay-200 ease-in-out
@@ -88,7 +88,7 @@ export default function MobileNav(
                     {item.name}
                 </Link>
                 )
-            }})}
+              }})}
       </nav>
     </header>
     <FixedModal
