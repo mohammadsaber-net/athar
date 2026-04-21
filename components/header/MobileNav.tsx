@@ -1,7 +1,6 @@
 "use client"
 import { useState } from "react";
 import { ArrowDown, ArrowUp, Menu, X } from "lucide-react";
-import Logo from "./Logo";
 import { features, pages } from "./MainNav";
 import Link from "next/link";
 import React from "react";
@@ -23,13 +22,12 @@ export default function MobileNav(
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const Icon=openList?ArrowUp:ArrowDown
   return (
-    <div className=" md:hidden">
-    <Logo />
+    <div className="md:hidden">
     <Menu 
       onClick={()=>setMobileMenuOpen(true)}
-      className={`md:hidden absolute text-cyan-600
+      className={`text-cyan-700
       cursor-pointer ${mobileMenuOpen&&"hidden"}
-      top-4 right-4 p-1 size-10 z-50 font-bold shadow rounded bg-white/60 `} />
+      p-1 size-10 font-bold rounded `} />
     <header className={`bg-black/30 absolute inset-0
     transform transition-transform duration-300 ease-in-out
     ${mobileMenuOpen?"translate-x-0  opacity-100":"translate-x-full opacity-0 pointer-events-none"}

@@ -1,4 +1,4 @@
-import MainNav from '@/components/header/MainNav'
+
 import Name from '@/components/namesShow/Name'
 import db from '@/db'
 import { namesTable } from '@/db/schema'
@@ -14,7 +14,6 @@ export default async function page({params}:Props) {
     .where(eq(namesTable.id,id))
   return (
     <div className='bg-slate-100 px-6 min-h-screen md:pt-8 pt-20 max-w-7xl'>
-        <MainNav />
         <Name admin={admin} searchedName={content}/>
     </div>
   )

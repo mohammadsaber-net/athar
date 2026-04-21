@@ -1,15 +1,13 @@
 "use client"
 
 import { motion,AnimatePresence } from "framer-motion"
-
 type ModalProps={
     isOpen:boolean,
     onClose:()=>void,
     children:React.ReactNode
 }
 export default function FixedModal({isOpen,onClose,children}:ModalProps) {
-  
-    return (
+  return (
     <AnimatePresence>
         {isOpen&&(
             <motion.div
@@ -18,7 +16,7 @@ export default function FixedModal({isOpen,onClose,children}:ModalProps) {
             exit={{opacity:0}}
             transition={{duration:0.25}}
             onClick={onClose}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm"
             >
                 <motion.div 
                 initial={{ scale: 0.85, y: -40 }}

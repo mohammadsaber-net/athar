@@ -1,6 +1,4 @@
-import MainNav from '@/components/header/MainNav'
-import Name from '@/components/namesShow/Name'
-import Sunna from '@/components/sunnaShow/Sunna'
+
 import Aya from '@/components/wakafatShow/Aya'
 import db from '@/db'
 import { namesTable, sunnaTable, wakafatTable } from '@/db/schema'
@@ -16,7 +14,6 @@ export default async function page({params}:Props) {
     .where(eq(wakafatTable.id,id))
   return (
     <div className='bg-slate-100 px-6 min-h-screen md:pt-8 pt-20 max-w-7xl'>
-        <MainNav />
         <Aya admin={admin} aya={content}/>
     </div>
   )

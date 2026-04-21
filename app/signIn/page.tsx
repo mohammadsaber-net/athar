@@ -1,5 +1,4 @@
 "use client"
-import MainNav from "@/components/header/MainNav";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -55,7 +54,6 @@ export default function UserForm() {
   },[user])
   return (
     <section className="bg-gray-100 min-h-screen py-6 px-4">
-    <MainNav />
     <form
       onSubmit={handleSubmit}
       className="max-w-md mx-auto mt-14 md:mt-10 bg-[#0f3d2e]/10 backdrop-blur-md rounded-xl p-6 flex flex-col gap-4"

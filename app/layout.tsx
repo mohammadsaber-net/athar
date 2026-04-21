@@ -40,6 +40,7 @@ export default async function RootLayout({
       >
         <ReduxProvider>
         <Toaster position="top-center"/>
+        <MainNav />
         {admin&&<Link
           className="fixed left-6 z-[100000] items-center bg-[#6366f1]/90 shadow
            top-1/2 -translate-y-1/2 font-bold text-white md:text-xl px-3 py-2 rounded flex"

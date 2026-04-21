@@ -1,4 +1,4 @@
-import MainNav from '@/components/header/MainNav'
+
 import NamesContent from '@/components/namesShow/NamesContent'
 import db from '@/db'
 import { namesTable } from '@/db/schema'
@@ -7,7 +7,6 @@ const data = await db.select().from(namesTable)
   return (
     <section
         className='bg-slate-100 px-6 min-h-screen md:pt-8 pt-20 max-w-7xl'>
-          <MainNav />
           <div className='mb-2 pb-2'>
             <h1 className='text-2xl md:text-3xl text-[#0f3d2e] font-bold mb-2'>
               أسماء الله الحسنى ومعانيها

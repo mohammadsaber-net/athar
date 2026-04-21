@@ -1,11 +1,11 @@
 "use client"
 import Link from "next/link";
-import Logo from "./Logo";
 import MobileNav from "./MobileNav";
 import React, { useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, Loader2, Menu } from "lucide-react";
 import FixedModal from "../animation/FixedModal";
 import toast from "react-hot-toast";
+import PcNav from "./PcNav";
 export const pages = [
     { name: "الصفحة الرئيسية", href: "/" },
     { name: "من نحن", href: "/about" },
@@ -46,7 +46,6 @@ export default function MainNav() {
   const Icon=openList?ArrowUp:ArrowDown
   return loading?(
     <header className="hidden md:block">
-        <Logo />
         <nav 
         className="bg-white/20 relative rounded-full px-8 mb-8 py-3 mt-6 shadow-lg
          text-center flex gap-6 items-center w-40 justify-center text-[#c9a24d] mx-auto">
@@ -54,74 +53,20 @@ export default function MainNav() {
         </nav>
     </header>
   ): (
-    <>
-    <header className="hidden md:block relative z-50">
-        <Logo />
-        <nav 
-        className="bg-white/20 relative rounded-full px-8 mb-8 py-3 shadow-lg
-         text-center flex gap-6 items-center justify-center text-[#c9a24d] w-max mx-auto">
-            
-            <div 
-            onClick={()=>setOpenList(!openList)}
-            className="cursor-pointer 
-            flex items-center 
-            hover:text-gray-900 transition">
-                الاقسام
-                <Icon />
-            </div>
-            <div 
-            className={`flex absolute left-6 top-12 w-48 p-2 flex-col 
-            bg-white/20 backdrop-blur-sm transform transition shadow-lg
-            ${openList?
-            "opacity-100 translate-y-0":
-            "opacity-0 pointer-events-none translate-y-8"} rounded-b-lg `}
-            >
-            {
-                features.map((item)=>(
-                    <Link href={item.href} key={item.name} 
-                    className="hover:bg-[#0f3d2e] rounded hover:text-white py-2">
-                        {item.name}
-                    </Link>
-                ))
-            }
-            </div>
-            {pages.map((item:any) =>{
-            if(item.href==="/signIn"&&isLoggedIn)
-                {
-                return <React.Fragment key={item.name}>
-                <div 
-                className="cursor-pointer hover:text-gray-900 transition"
-                onClick={()=>setOpenLogout(true)}
-                >
-                    تسجيل خروج
-                </div>
-                <FixedModal
-                    onClose={()=>setOpenLogout(false)}
-                    isOpen={openLogout}>
-                       <h2 className="text-xl font-bold">هل تريد تسجيل الخروج ؟</h2>
-                       <div className="flex gap-2 mt-4">
-                            <button 
-                            onClick={handleLogOut}
-                            className="text-white cursor-pointer py-2 px-4 rounded bg-red-500">تأكيد</button>
-                            <button 
-                            onClick={()=>setOpenLogout(false)}
-                            className="text-white cursor-pointer py-2 px-4 rounded bg-blue-500">إلغاء</button>
-                       </div>
-                    </FixedModal>
-                </React.Fragment>
-            }else{
-                return(
-                <Link key={item.name} 
-                href={item.href}
-                className="cursor-pointer hover:text-gray-900 transition">
-                    {item.name}
-                </Link>
-                )
-            }})}
-            {}
-        </nav>
-        
-    </header>
+    <section className="bg-[#c9a24d]/40 justify-between md:justify-center font-bold p-2 flex 
+    items-center gap-12 text-[#1a3636] shadow">
+    <Link href={"/"} className='text-2xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0f3d2e] to-[#f59e0b] drop-shadow-lg'>
+      أَثَارَ
+    </Link>
+    <PcNav 
+    Icon={Icon}
+    openList={openList}
+    setOpenList={setOpenList}
+    handleLogOut={handleLogOut}
+    openLogout={openLogout}
+    isLoggedIn={isLoggedIn}
+    setOpenLogout={setOpenLogout}
+    />
     <MobileNav 
     openList={openList}
     isLoggedIn={isLoggedIn}
@@ -130,6 +75,6 @@ export default function MainNav() {
     openLogout={openLogout}
     setOpenList={setOpenList}
     />
-    </>
+    </section>
   )
 }

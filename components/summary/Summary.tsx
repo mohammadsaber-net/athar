@@ -16,7 +16,7 @@ export default async function Summary() {
   });
   const {data} = await res.json();
   return (
-    <div className="min-h-screen bg-zinc-100">
+    <div className="min-h-screen bg-[#f9f8f3] pt-10">
       <div className="max-w-6xl pb-10 px-6">
         <h1 className="text-2xl md:text-4xl pt-4 mb-3 font-bold ">
             عرض ملخص لبعض ما تجدونه في هذا الموقع بإذن الله تعالي
