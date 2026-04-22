@@ -42,12 +42,12 @@ export default async function Summary() {
                 </div>
             </div>
             </div>
-            <div className="w-full overflow-x-auto">
+            <div className="w-full border-t-2 border-zinc-300 pt-2 overflow-x-auto">
             <div className="w-xl md:w-full m-auto flex gap-4 items-center justify-center mb-4">
                 {data?.wakafat?.map((aya:WakafatType)=>(
                     <AllWakafat key={aya.id} wakafat={aya}/>
                 )) }
-                <div className='  flex items-center justify-center 
+                <div className='whitespace-nowrap flex items-center justify-center 
                  max-w-sm h-70 p-2'>
                 <Link
                   className='text-[#1a3636] active:text-green-600 font-semibold inline'
@@ -57,12 +57,12 @@ export default async function Summary() {
                 </div>
                 </div>
             </div>
-            <div className="w-full overflow-x-auto">
+            <div className="w-full border-t-2 border-zinc-300 pt-2 overflow-x-auto">
             <div className="w-xl md:w-full m-auto flex gap-4 items-center justify-center mb-4">
                 {data?.sunna?.map((hadith:SunnaType)=>(
                     <AllSunna key={hadith.id} sunna={hadith}/>
                 )) }
-                <div className='  flex items-center justify-center 
+                <div className='whitespace-nowrap flex items-center justify-center 
                  max-w-sm h-70 p-2'>
                 <Link
                   className='text-[#1a3636] active:text-green-600 font-semibold inline'

@@ -13,7 +13,7 @@ export default async function page({params}:Props) {
     const [content]=await db.select().from(namesTable)
     .where(eq(namesTable.id,id))
   return (
-    <div className='bg-slate-100 px-6 min-h-screen md:pt-8 pt-20 max-w-7xl'>
+    <div className='bg-gray-100 px-6 min-h-screen md:pt-8 pt-20 max-w-7xl'>
         <Name admin={admin} searchedName={content}/>
     </div>
   )

@@ -21,7 +21,7 @@ export default function AllNames({searchedName}:Props) {
                 className='inline'
                 dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} />
                 <Link
-                  className='text-green-700 text-sm md:text-base active:text-green-900 inline'
+                  className='text-green-700 text-sm md:text-base active:text-red-600 inline'
                   href={`/name/${searchedName.id}`}>
                 قراءة المزيد
                 </Link>

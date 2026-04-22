@@ -66,7 +66,7 @@ export default function Name({searchedName,admin}:Props) {
         }
     }
   return (
-    <div className='md:max-w-xl max-w-[90%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
+    <div className='w-fit max-w-[90%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
       overflow-hidden rounded-md p-3'>
         <div className="group transition">
             <div className="h-40 w-full overflow-hidden">
@@ -84,7 +84,7 @@ export default function Name({searchedName,admin}:Props) {
                 <div
                 dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} /> 
             </div>
-            <span className="text-end block mt-0 text-italic text-sm text-gray-800">
+            <span className='text-end'>
                 {searchedName?.meaningSource}
             </span>
             <div

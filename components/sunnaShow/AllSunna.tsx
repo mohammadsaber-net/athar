@@ -5,28 +5,29 @@ type Props={
 }
 export default function AllSunna({sunna}:Props) {
   return (
-    <div>
-      <div className='md:max-w-xl max-w-[90%] mb-5 relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
-          overflow-hidden rounded-md p-3'>
-        <div className="group transition">
-            <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">
-                {sunna?.sunna} 
+    <div className='bg-white/70 w-fit flex-shrink-0 shadow-lg border border-[#c9a24d] rounded-md p-2'>
+            <div className='max-w-xs relative mb-2 overflow-hidden m-auto w-28 md:w-40 h-28 md:h-40 
+                 border bg-[#f8f3e6] border-[#c9a24d] 
+                rounded-lg shadow-lg flex items-center justify-center
+                text-center p-2'>
+              <p className='text-xs md:text-sm leading-relaxed'>
+                {sunna?.sunna}
+              </p>
+              </div>
+            <h2 className="italic text-center md:text-xl mb-0 text-cyan-800">
+                {sunna?.sunna.slice(0,20)}... 
             </h2>
             
-            <div className={`mt-2 h-[150px] overflow-hidden border-t md:text-xl pt-2 border-gray-200 `}>
+            <div className={`mt-1 flex max-h-[80px] overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
+               <span className='text-cyan-600'> الشرح :</span>
                 <div
-                dangerouslySetInnerHTML={{ __html: sunna?.tafsir||"" }} /> 
-            </div>
-            <span className="text-end block mt-0 text-italic text-sm text-gray-800">
-                {sunna?.sunnaSource}
-            </span>
-              <Link
-              className='text-blue-600 font-semibold'
-              href={`/sunna/${sunna.id}`}>
-             ... قراءة المزيد
-              </Link>
-            </div>
-        </div>
-    </div>
+                dangerouslySetInnerHTML={{ __html: sunna?.tafsir?.slice(0,20)||"" }} />
+          </div> 
+          <Link
+          className='text-green-700 text-sm md:text-base active:text-red-600'
+          href={`/sunna/${sunna.id}`}>
+           قراءة المزيد
+          </Link>
+          </div>
   )
 }

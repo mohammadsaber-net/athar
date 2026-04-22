@@ -74,7 +74,7 @@ export default function NamesContent({content}:Props) {
     </div>
       <div className='flex gap-4 flex-wrap items-center justify-center mb-4'>
         {content.map((searchedName:NamesType)=>(
-        <AllNames searchedName={searchedName} key={searchedName.id}/>
+        <Name searchedName={searchedName} key={searchedName.id}/>
       )) }
       </div>
   </div>
