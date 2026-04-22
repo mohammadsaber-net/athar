@@ -7,6 +7,7 @@ import { isAdmin } from "@/lib/isAdmin";
 import AllNames from "../namesShow/AllNames";
 import AllWakafat from "../wakafatShow/AllWakafat";
 import AllSunna from "../sunnaShow/AllSunna";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 export default async function Summary() {
     const admin = await isAdmin()
@@ -26,29 +27,50 @@ export default async function Summary() {
             لذلك لا تبخلوا علينا بملاحظاتكم وتعليقاتكم,
         </p>
         <div className="pb-5 pt-2 border-t-2 border-zinc-300">
-            <div >
+            <div className="w-full overflow-x-auto">
+            <div className="w-xl md:w-full m-auto flex gap-4 items-center justify-center mb-4">
                 {data?.name?.map((searchedName:NamesType)=>(
                     <AllNames key={searchedName.id} searchedName={searchedName}/>
-                )) }
-                <Link className="font-semibold md:text-lg text-cyan-800 hover:text-cyan-900" href={"/name"}>
-                     عرض المزيد من الأسماء الحسني
+                )) } 
+                <div className='whitespace-nowrap flex items-center justify-center 
+                 max-w-sm h-70 p-2'>
+                <Link
+                  className='text-[#1a3636] active:text-green-600 font-semibold inline'
+                  href={`/name}`}>
+                عرض المزيد من <br /> أسماء الله الحسني <br /> <ArrowBigLeft className="m-auto"/>
                 </Link>
+                </div>
             </div>
-            <div className="mt-2 pt-2 border-t border-slate-400">
+            </div>
+            <div className="w-full overflow-x-auto">
+            <div className="w-xl md:w-full m-auto flex gap-4 items-center justify-center mb-4">
                 {data?.wakafat?.map((aya:WakafatType)=>(
                     <AllWakafat key={aya.id} wakafat={aya}/>
                 )) }
-                <Link className="font-semibold md:text-lg text-cyan-800 hover:text-cyan-900" href={"/name"}>
-                     عرض المزيد من الوقفات القرآنية
+                <div className='  flex items-center justify-center 
+                 max-w-sm h-70 p-2'>
+                <Link
+                  className='text-[#1a3636] active:text-green-600 font-semibold inline'
+                  href={`/wakafat}`}>
+                عرض المزيد من <br /> الوقفات القرآنية<br /> <ArrowBigLeft className="m-auto"/>
                 </Link>
+                </div>
+                </div>
             </div>
-            <div className="mt-2 pt-2 border-t border-slate-400">
+            <div className="w-full overflow-x-auto">
+            <div className="w-xl md:w-full m-auto flex gap-4 items-center justify-center mb-4">
                 {data?.sunna?.map((hadith:SunnaType)=>(
                     <AllSunna key={hadith.id} sunna={hadith}/>
                 )) }
-                <Link className="font-semibold md:text-lg text-cyan-800 hover:text-cyan-900" href={"/name"}>
-                     عرض المزيد من سنن مهجورة
+                <div className='  flex items-center justify-center 
+                 max-w-sm h-70 p-2'>
+                <Link
+                  className='text-[#1a3636] active:text-green-600 font-semibold inline'
+                  href={`/sunna}`}>
+                عرض المزيد من <br /> السنن المهجورة<br /> <ArrowBigLeft className="m-auto"/>
                 </Link>
+                </div>
+                </div>
             </div>
         </div>
       </div>

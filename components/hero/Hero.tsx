@@ -1,14 +1,12 @@
 "use client"
 import { HeroType } from "@/lib/type";
 import { useEffect, useState } from "react";
-import { Share2, Star } from "lucide-react";
+import {  Star } from "lucide-react";
 import Link from "next/link";
 import SharePopup from "../shareButton/ShareButton";
-import FixedModal from "../animation/FixedModal";
 import SearchInput from "../search/SearchInput";
 export default function Hero() {
   const [tableData, setTableData] = useState<HeroType|null>(null)
-  const [open, setOpen] = useState(false)
   const fetchData=async()=>{
       try {
         const res=await fetch("/api/hero")
@@ -42,8 +40,15 @@ export default function Hero() {
   }, []);
   return (
     <>
-    <section className="relative min-h-[90vh] md:min-h-[80vh] px-4 text-center pt-2 text-gray-900">
-        <div className="absolute inset-0 bg-[url('/herrro.jpg')] bg-cover bg-center z-0 pointer-events-none" />
+    <section className="relative px-4 text-center pt-2 text-gray-900">
+        <picture>
+          <source media="(max-width: 768px)" srcSet="/hero-mobile.png" />
+          <img 
+            loading="lazy"
+            src="/hero-desktop.jpg"
+            className="absolute inset-0 w-full h-full object-cover object-top"
+          />
+        </picture>
          {stars.map((star, i) => (
         <Star
           key={i}
@@ -60,28 +65,28 @@ export default function Hero() {
       <div className="relative z-20 m-auto space-y-8">
         {tableData?
         <>
-        <div className="bg-white/30 max-w-xl mt-5 p-3 mx-auto md:p-6 md:mt-10 mb-4 rounded-2xl text-center shadow-lg border border-white/80">
+        <div className="bg-white/30 max-w-xl mt-5 p-2 mx-auto md:p-6 md:mt-10 mb-4 rounded-2xl text-center shadow-lg border border-white/80">
           <p className="text-white text-lg font-bold leading-relaxed">
             ﴿ {tableData?.aya || "الآية"} ﴾
           </p>
-          <span className="text-sm block text-left italic text-cyan-700">
+          <span className="text-sm block text-left italic text-white">
            {tableData?.ayaSource || "مصدر الآية"}
           </span>
           <SharePopup text={`« ${tableData?.aya || "الآية"} »\n${tableData?.ayaSource || "مصدر الآية"}`}/>
         </div>
-        <div className="bg-white/30 max-w-xl mx-auto p-6 rounded-2xl text-center shadow-lg border border-white/80">
+        <div className="bg-white/30 max-w-xl p-2 mx-auto md:p-6 rounded-2xl text-center shadow-lg border border-white/80">
           <p className="text-white text-lg font-bold leading-relaxed">
             « {tableData?.hadith || "الحديث"} »
           </p>
-          <span className="text-sm block text-left italic text-cyan-700">
+          <span className="text-sm block text-left italic text-white">
            {tableData?.hadithSource || "مصدر الحديث"}
           </span>
           <SharePopup text={`« ${tableData?.hadith || "الحديث"} »\n${tableData?.hadithSource || "مصدر الحديث"}`}/>
         </div>
         </>:
         <>
-        <p className="h-20 animate-pulse mt-20 mx-4 rounded pt-4 bg-white/40 max-w-4xl" />
-        <p className="animate-pulse h-20 px-6 mx-4 rounded py-4 bg-white/40 max-w-4xl" />
+        <p className="h-20 animate-pulse mx-4 rounded pt-4 bg-white/40 max-w-4xl" />
+        <p className="animate-pulse h-20 mx-4 rounded py-4 bg-white/40 max-w-4xl" />
         </>
         }
         <div className="overflow-hidden md:w-fit pb-16 m-auto w-[90%] whitespace-nowrap">
