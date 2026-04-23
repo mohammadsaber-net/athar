@@ -6,7 +6,7 @@ type Props={
 export default function AllNames({searchedName}:Props) {
   return (
     <div className=' bg-white/70 relative flex-shrink-0 shadow-lg 
-    m-auto w-28 md:w-40 md:h-60 h-40
+    m-auto w-32 md:w-44 md:h-60 h-40
     border border-[#c9a24d] rounded-md p-2'>
         {/* <img
         className='max-w-xs m-auto w-28 md:w-40 h-28 md:h-40'
@@ -22,17 +22,16 @@ export default function AllNames({searchedName}:Props) {
           <h2 className=" text-xl italic text-center md:text-3xl mb-0 text-blue-900">
             {searchedName?.name} 
         </h2>
-            
-        <div className={`mt-1 max-h-[80px] overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
-            <div
-            className='inline'
-            dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} />
+        <div className={`mt-1 h-22 w-28 md:w-40 overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
+                <div
+                dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} 
+                />
+          </div> 
             <Link
                className='text-green-700 text-sm md:text-base active:text-red-600 inline'
                href={`/name/${searchedName.id}`}>
              قراءة المزيد
         </Link>
-      </div> 
         </div>
     </div>
   )

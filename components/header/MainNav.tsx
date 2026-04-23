@@ -45,13 +45,10 @@ export default function MainNav() {
   }
   const Icon=openList?ArrowUp:ArrowDown
   return loading?(
-    <header className="hidden md:block">
-        <nav 
-        className="bg-white/20 relative rounded-full px-8 mb-8 py-3 mt-6 shadow-lg
-         text-center flex gap-6 items-center w-40 justify-center text-[#c9a24d] mx-auto">
+    <section className="bg-[#c9a24d]/40 justify-between md:justify-center font-bold p-2 flex 
+    items-center gap-12 text-[#1a3636] shadow">
             <Loader2 className="animate-spin transition"/>
-        </nav>
-    </header>
+    </section>
   ): (
     <section className="bg-[#c9a24d]/40 justify-between md:justify-center font-bold p-2 flex 
     items-center gap-12 text-[#1a3636] shadow">

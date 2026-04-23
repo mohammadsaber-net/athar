@@ -110,7 +110,7 @@ export default function WakafatContent({ content }: Props) {
     <div
       className="relative py-10 "
     >
-      <div className='absolute z-10 inset-0 bg-repeat opacity-20 bg-[url("/pattern.png")]'></div>
+      <div className='absolute z-10 inset-0 bg-repeat opacity-10 bg-[url("/pattern.png")]'></div>
       <div className="max-w-4xl bg-transparent z-20 relative mx-auto">
         {content.map((aya) => (
           <div className="mb-10 border-t-2 p-2 border-gray-300" key={aya.id}>

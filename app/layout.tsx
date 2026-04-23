@@ -9,6 +9,7 @@ import Link from "next/link";
 import { PencilIcon } from "lucide-react";
 import Footer from "@/components/footer/Footer";
 import MainNav from "@/components/header/MainNav";
+import { FaWhatsapp } from "react-icons/fa";
 const AmiriSans = Amiri({
   weight: "400",
   variable: "--font-amiri",
@@ -41,6 +42,16 @@ export default async function RootLayout({
         <ReduxProvider>
         <Toaster position="top-center"/>
         <MainNav />
+        <a 
+          href="https://wa.me/+201023966702" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="fixed bottom-10 right-4 z-[100000000]"
+        >
+          <span className="inline-flex p-1 text-green-600 rounded-full active:text-white active:bg-green-600 animate-float">
+            <FaWhatsapp size={28} />
+          </span>
+        </a>
         {admin&&<Link
           className="fixed left-6 z-[100000] items-center bg-[#6366f1]/90 shadow
            top-1/2 -translate-y-1/2 font-bold text-white md:text-xl px-3 py-2 rounded flex"

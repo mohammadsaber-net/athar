@@ -3,8 +3,8 @@ import { FaTelegramPlane,  FaWhatsapp, FaGithub, FaEnvelope, FaCopyright } from 
 export default function Footer() {
   return (
     <div className='py-4 md:px-8 px-4 bg-gray-900 text-white'>
-    <div className=' grid grid-cols-1
-    lg:grid-cols-4 gap-4 md:grid-cols-3'>
+    <div className=' grid grid-cols-1 sm:grid-cols-2
+    xl:grid-cols-4 gap-4 md:grid-cols-3'>
       
       <div>
         <h3 className='font-semibold mb-3 text-gray-100 text-xl md:text-2xl'>روابط سريعة</h3>
