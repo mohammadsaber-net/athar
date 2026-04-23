@@ -13,7 +13,7 @@ export default async function page({params}:Props) {
     const [content]=await db.select().from(sunnaTable)
     .where(eq(sunnaTable.id,id))
   return (
-    <div className='bg-zinc-100 px-6 min-h-screen md:pt-8 pt-20 max-w-7xl'>
+    <div className='bg-zinc-100 px-6 min-h-screen py-5 max-w-7xl'>
         <Sunna admin={admin} sunna={content}/>
     </div>
   )

@@ -6,7 +6,7 @@ export default async function Wakafat() {
   const data = await db.select().from(wakafatTable)
   return (
     <section
-    className='bg-gray-50 min-h-screen px-6 md:pt-8 pt-20 max-w-7xl'>
+    className='bg-zinc-100 min-h-screen px-6 md:pt-8 pt-20 max-w-7xl'>
       <div className='mb-2 pb-2'>
         <h1 className='text-2xl md:text-3xl text-[#0f3d2e] font-bold mb-2'>وقفات مع آيات من كتاب ربنا</h1>
         <p className='max-w-md'>

@@ -13,7 +13,7 @@ export default async function page({params}:Props) {
     const [content]=await db.select().from(wakafatTable)
     .where(eq(wakafatTable.id,id))
   return (
-    <div className='bg-slate-100 px-6 min-h-screen md:pt-8 pt-20 max-w-7xl'>
+    <div className='bg-zinc-100 px-6 min-h-screen py-5 max-w-7xl'>
         <Aya admin={admin} aya={content}/>
     </div>
   )

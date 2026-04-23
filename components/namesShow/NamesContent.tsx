@@ -9,8 +9,6 @@ type Props={
     content:NamesType[]
 }
 export default function NamesContent({content}:Props) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [stars, setStars] = useState<any[]>([]);
   const [admin,setAdmin]=useState<any>(null)
   useEffect(()=>{
     const isAdminClient = async () => {
@@ -24,59 +22,31 @@ export default function NamesContent({content}:Props) {
     };
     isAdminClient()
   },[])
-  useEffect(() => {
-  if (!containerRef.current) return;
-
-  const element = containerRef.current;
-
-  function generateStars() {
-    const width = element.offsetWidth;
-    const height = element.offsetHeight;
-
-    const density = 8000;
-    const count = Math.floor((width * height) / density);
-
-    const newStars = Array.from({ length: count }).map(() => ({
-      top: Math.random() * height,
-      left: Math.random() * width,
-      size: Math.random() * 5 + 5,
-      opacity: Math.random(),
-    }));
-
-    setStars(newStars);
-  }
-  generateStars();
-  const observer = new ResizeObserver(() => {
-    generateStars();
-  });
-  observer.observe(element);
-  return () => observer.disconnect();
-}, []);
   return (
     <div
-      ref={containerRef}
-      className="relative pb-8 border-t-2 pt-3 border-gray-300"
+      className="pb-8 pt-3"
     >
-    <div className="absolute inset-0 overflow-hidden">
-    {stars.map((star, i) => (
-        <Moon
-        key={i}
-        className="absolute rounded-full size-4"
-        style={{
-            top: star.top,
-            left: star.left,
-            width: star.size,
-            height: star.size,
-            opacity: star.opacity,
-        }}
-        />
-    ))}
-    </div>
-      <div className='flex gap-4 flex-wrap items-center justify-center mb-4'>
         {content.map((searchedName:NamesType)=>(
-        <Name searchedName={searchedName} key={searchedName.id}/>
+          <div className="mb-10 flex gap-2 max-w-2xl border-t-2 p-2 border-gray-300" key={searchedName.id}>
+            <img
+              className='h-20 rounded-full w-20'
+              src={searchedName?.image || undefined}
+              alt={typeof searchedName?.image === 'string' ? searchedName.image : ''}
+            />
+            <div className=''>
+            <h2 className="text-xl md:max-w-xl max-w-md text-indigo-900 md:text-2xl">
+                {searchedName.name}
+            </h2>
+            <div className="mt-2 text-gray-700 max-w-2xl 
+            ">
+            <div dangerouslySetInnerHTML={{__html:searchedName.meaning.slice(0,200)}}/>
+            <Link className="text-blue-600 active:text-blue-800" href={`name/${searchedName.id}`}>
+               عرض المزيد...
+            </Link>
+            </div>
+          </div>
+          </div>
       )) }
-      </div>
   </div>
   )
 }

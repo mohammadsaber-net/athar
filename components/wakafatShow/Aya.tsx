@@ -65,7 +65,7 @@ export default function Aya({aya,admin}:Props) {
         }
     }
   return (
-    <div className='md:max-w-xl max-w-[90%] mb-10 relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
+    <div className='md:max-w-xl max-w-[90%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
       overflow-hidden rounded-md p-3'>
         <div className="group transition">
             <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">

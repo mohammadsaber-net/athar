@@ -66,20 +66,16 @@ export default function Name({searchedName,admin}:Props) {
         }
     }
   return (
-    <div className='w-fit max-w-[90%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
-      overflow-hidden rounded-md p-3'>
-        <div className="group transition">
-            <div className="h-40 w-full overflow-hidden">
-                <img
-                  className='w-[100%] h-[100%]'
-                  src={searchedName?.image || undefined}
-                  alt={typeof searchedName?.image === 'string' ? searchedName.image : ''}
-                />
-            </div>
+    <div className='w-fit md:max-w-2xl relative max-w-[90%] shadow relative z-10 p-3'>
+        <img
+        className='w-[100%] absolute inset-0 z-10 h-[100%] opacity-10'
+        src={searchedName?.image || undefined}
+        alt={typeof searchedName?.image === 'string' ? searchedName.image : ''}
+        />
+        <div className="group relative z-20 transition">
             <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">
                 {searchedName?.name} 
             </h2>
-            
             <div className={`mt-2 border-t md:text-xl pt-2 border-gray-200 `}>
                 <div
                 dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} /> 

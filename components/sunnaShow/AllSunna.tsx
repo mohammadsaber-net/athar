@@ -7,10 +7,11 @@ export default function AllSunna({sunna}:Props) {
   return (
     <div className='bg-white/70 w-fit flex-shrink-0 shadow-lg border border-[#c9a24d] rounded-md p-2'>
             <div className='max-w-xs relative mb-2 overflow-hidden m-auto w-28 md:w-40 h-28 md:h-40 
-                 border bg-[#f8f3e6] border-[#c9a24d] 
+                 border border-[#1a3636] 
                 rounded-lg shadow-lg flex items-center justify-center
                 text-center p-2'>
-              <p className='text-xs md:text-sm leading-relaxed'>
+              <div className='absolute z-20 inset-0 opacity-20 bg-[url("/pattern1.png")] bg-cover'></div>
+              <p className='text-xs md:text-sm text-black leading-relaxed'>
                 {sunna?.sunna}
               </p>
               </div>
