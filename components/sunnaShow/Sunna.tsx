@@ -88,23 +88,23 @@ export default function Sunna({sunna,admin}:Props) {
              pt-2 border-t-2 border-gray-200
              transition-all delay-300 duration-300`}
             >
-                <form 
-                onSubmit={onSubmit}
-                className={`flex gap-2 items-center`}>
+            <form 
+            onSubmit={onSubmit}
+            className={`flex gap-2 w-full items-center`}>
                 <input 
                 onChange={(e)=>setComment(e.target.value)}
                 value={comment}
                 placeholder='أضف تعليقا'
                 className={`border-gray-200 rounded
-                    border text-gray-900 p-1
-                    focus:outline-none bg-gray-100`}/>
+                border text-gray-900 placeholder:text-gray-700 p-1 w-[90%]
+                focus:outline-none bg-white`}/>
                 <button
                 className='flex gap-1 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
                 type="submit"
                 >
-                 إرسال <Pencil className='size-5'/>
+                إرسال <Pencil className='size-5'/>
                 </button>
-                </form>
+            </form>
             </div>
             {!show&&<button 
             onClick={()=>{setShow(true);getComments(sunna.id)}}

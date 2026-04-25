@@ -6,7 +6,7 @@ type Props={
 export default function AllNames({searchedName}:Props) {
   return (
     <div className=' bg-white/70 relative flex-shrink-0 shadow-lg 
-    m-auto w-32 md:w-48 md:h-60 h-40
+    m-auto w-32 md:w-48 md:h-60 h-48
     border border-[#c9a24d] rounded-md p-2'>
         <img
           className='w-[100%] absolute inset-0 z-10 h-[100%] opacity-10'
