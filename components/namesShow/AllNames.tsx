@@ -6,7 +6,7 @@ type Props={
 export default function AllNames({searchedName}:Props) {
   return (
     <div className=' bg-white/70 relative flex-shrink-0 shadow-lg 
-    m-auto w-34 md:w-48 md:h-60 h-40
+    m-auto w-32 md:w-48 md:h-60 h-40
     border border-[#c9a24d] rounded-md p-2'>
         <img
           className='w-[100%] absolute inset-0 z-10 h-[100%] opacity-10'
@@ -18,7 +18,7 @@ export default function AllNames({searchedName}:Props) {
             {searchedName?.name} 
         </h2>
         <span className='text-gray-700 text-sm'>
-          {searchedName?.meaningSource}
+          {searchedName?.meaningSource?.slice(0,15)}...
         </span>
         <div className={`mt-1 h-22 w-28 md:w-40 overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
                 <div

@@ -17,7 +17,7 @@ export default function AllSunna({sunna}:Props) {
               </p>
               </div>
             <span className='text-gray-700 text-sm'>
-              {sunna?.sunnaSource}
+              {sunna?.sunnaSource.slice(0,15)}...
             </span>
             <div className={`mt-1 h-22 w-28 md:w-40 overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
                 <div
