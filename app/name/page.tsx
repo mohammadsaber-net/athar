@@ -1,13 +1,15 @@
 
 import NamesContent from '@/components/namesShow/NamesContent'
+import SearchInput from '@/components/search/SearchInput'
 import db from '@/db'
 import { namesTable } from '@/db/schema'
 export default async function NamePage() {
 const data = await db.select().from(namesTable)
   return (
     <section
-        className='bg-slate-100 px-6 min-h-screen md:pt-8 pt-20 max-w-7xl'>
-          <div className='mb-2 pb-2'>
+        className='bg-gray-100 px-6 min-h-screen md:pt-8 pt-16'>
+          <SearchInput />
+          <div className='mb-2 py-2 max-w-7xl'>
             <h1 className='text-2xl md:text-3xl text-[#0f3d2e] font-bold mb-2'>
               أسماء الله الحسنى ومعانيها
             </h1>

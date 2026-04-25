@@ -49,7 +49,8 @@ export async function POST(req:NextRequest){
             ...selectedUser
         })
         const response = NextResponse.json({
-            success: true
+            success: true,
+            role:body.role
         });
 
         response.cookies.set("token", token, {

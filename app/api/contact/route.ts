@@ -1,38 +1,35 @@
+import db from "@/db";
+import { messageTable, messageTableZodSchema } from "@/db/schema";
+import { isAdmin } from "@/lib/isAdmin";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
-
-
+export async function GET(req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const admin=await isAdmin() 
+    if(!admin){
+      return NextResponse.json({
+        success:false,
+        message:'غير مصرح'
+      },{status:401}) 
+    }
+   const data = await db.select().from(messageTable)
+    return NextResponse.json({ success: true, data });
+  } catch (err) {
+    console.error("FULL ERROR:", err);
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
+}
 export async function POST(req: Request) {
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const { name, email, message } = await req.json();
-
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { success: false },
-        { status: 400 }
-      );
-    }
-    console.log("Sending email with Resend:", { name, email, message });
-   await resend.emails.send({
-  from: "Contact Form <onboarding@resend.dev>",
-  to: "m4567s019283@gmail.com",
-  subject: `📩 رسالة من ${name}`,
-  html: `
-    <div style="font-family: Arial; line-height:1.6">
-      <h2>📩 رسالة جديدة من الموقع</h2>
-      <p><strong>الاسم:</strong> ${name}</p>
-      <p><strong>الإيميل:</strong> ${email}</p>
-      <hr/>
-      <p><strong>الرسالة:</strong></p>
-      <p>${message}</p>
-    </div>
-  `,
-});
-
+    const selectedData= messageTableZodSchema.omit({id:true}).parse(await req.json())
+    await db.insert(messageTable).values({
+      id:crypto.randomUUID(),
+      ...selectedData
+    })
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error(err);
+    console.error("FULL ERROR:", err);
     return NextResponse.json({ success: false }, { status: 500 });
   }
 }

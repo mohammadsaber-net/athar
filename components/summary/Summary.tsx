@@ -38,7 +38,7 @@ export default async function Summary() {
                 </div>
             </div>
             </div>
-            <div className="w-full border-t-2  relative z-10 border-zinc-300 pt-2 overflow-x-auto">
+            <div className="w-full relative z-10 overflow-x-auto border-t-2 border-zinc-300 pt-2">
             <div className="w-xl md:w-2xl m-auto flex gap-4 items-center justify-center mb-4">
                 {data?.wakafat?.map((aya:WakafatType)=>(
                   <AllWakafat key={aya.id} wakafat={aya}/>
@@ -53,7 +53,7 @@ export default async function Summary() {
                 </div>
                 </div>
             </div>
-            <div className="w-full border-t-2 relative z-10 border-zinc-300 pt-2 overflow-x-auto">
+            <div className="w-full relative z-10 overflow-x-auto border-t-2 border-zinc-300 pt-2">
             <div className="w-xl md:w-2xl m-auto flex gap-4 items-center justify-center mb-4">
                 {data?.sunna?.map((hadith:SunnaType)=>(
                     <AllSunna key={hadith.id} sunna={hadith}/>

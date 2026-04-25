@@ -79,14 +79,23 @@ body {
 }
 
 .animate-float {
-  animation: float 2.5s ease-in-out infinite;
+  animation: float 1.5s ease-in-out infinite;
 }
 @keyframes float {
   0% {
     transform: translateY(0px);
   }
-  50% {
+  10% {
     transform: translateY(-8px);
+  }
+  25% {
+    transform: translateY(0px);
+  }
+  45% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(0px);
   }
   100% {
     transform: translateY(0px);

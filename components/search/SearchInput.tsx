@@ -31,7 +31,7 @@ export default function SearchInput() {
         setLoading(false)
     };
   return (
-    <div className="max-w-xl p-1 md:p-3 shadow-md mx-auto rounded-lg 
+    <div className="max-w-xl md:p-3 shadow-md mx-auto rounded-lg 
     md:bg-white/30 bg-white/10">
       <form className="flex w-[90%] mx-auto items-center">
         <input type="text"
@@ -58,11 +58,14 @@ export default function SearchInput() {
             />
         ))}
         </div>}
-        <div className="bg-zinc-100 p-2">
+        <div className="bg-gray-100 p-2 border border-zinc-300 mt-3
+        w-[90%] mx-auto rounded">
             {data?.length>0&&data.map((item:any)=>(
                 <Link key={item.href} className="border-b py-2" 
                 href={`/${item.href}`}>
-                    <h3 className="font-bold border-b shadow rounded border-[#c9a24d] text-[#1a3636] text-lg">{item.title.slice(0,50)}...</h3>
+                    <h3 className="font-bold border-b shadow p-1 active:text-green-600
+                     rounded border-gray-300 text-[#1a3636] text-lg active:border-green-600
+                     ">{item.title.slice(0,50)}...</h3>
                 </Link>
             ))}
         </div>

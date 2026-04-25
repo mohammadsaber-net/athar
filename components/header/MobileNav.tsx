@@ -8,7 +8,7 @@ import FixedModal from "../animation/FixedModal";
 type Props={
     setOpenList: React.Dispatch<React.SetStateAction<boolean>>,
     openList: boolean
-    isLoggedIn:any
+    isLoggedIn:{admin:boolean,user:boolean},
     handleLogOut:()=>void
     setOpenLogout:React.Dispatch<React.SetStateAction<boolean>>
     openLogout:boolean
@@ -59,7 +59,7 @@ export default function MobileNav(
           features.map((item)=>(
             <Link 
             href={item.href} 
-            onClick={()=>setMobileMenuOpen(false)}
+            onClick={()=>{setMobileMenuOpen(false);setOpenList(false)}}
             key={item.name} 
             className="hover:bg-[#0f3d2e] px-2 rounded hover:text-white py-2">
               {item.name}
@@ -67,7 +67,7 @@ export default function MobileNav(
         ))}
       </div>
         {pages.map((item:any) =>{
-            if(item.href==="/signIn"&&isLoggedIn)
+            if(item.href==="/signIn"&&(isLoggedIn.admin||isLoggedIn.user))
                 {
                 return <div 
                 key={item.name}

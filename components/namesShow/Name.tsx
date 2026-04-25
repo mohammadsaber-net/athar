@@ -5,6 +5,7 @@ import {  Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from "react";
 import toast from 'react-hot-toast';
+import SharePopup from '../shareButton/ShareButton';
 type Props={
     searchedName:NamesType,
     admin?:any
@@ -66,11 +67,16 @@ export default function Name({searchedName,admin}:Props) {
         }
     }
   return (
-    <div className='w-fit md:max-w-2xl relative max-w-[90%] shadow relative z-10 p-3'>
-        <img
-        className='w-[100%] absolute inset-0 z-10 h-[100%] opacity-10'
-        src={searchedName?.image || undefined}
-        alt={typeof searchedName?.image === 'string' ? searchedName.image : ''}
+    <div className='m-auto relative max-w-[90%]  shadow relative z-10 p-3'>
+        <div className='absolute top-1 left-2 z-30'>
+            <SharePopup text={{name:searchedName.name, meaning:searchedName.meaning}}/>
+        </div>
+        <div
+        className="absolute inset-0 z-10 opacity-[0.05] bg-repeat bg-center"
+        style={{
+            backgroundImage: `url(${searchedName?.image})`,
+            backgroundSize: "150px"
+        }}
         />
         <div className="group relative z-20 transition">
             <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">
@@ -89,14 +95,14 @@ export default function Name({searchedName,admin}:Props) {
             >
                 <form 
                 onSubmit={onSubmit}
-                className={`flex gap-2 items-center`}>
+                className={`flex gap-2 w-full items-center`}>
                 <input 
                 onChange={(e)=>setComment(e.target.value)}
                 value={comment}
                 placeholder='أضف تعليقا'
                 className={`border-gray-200 rounded
-                    border text-gray-900 p-1
-                    focus:outline-none bg-gray-100`}/>
+                    border text-gray-900 placeholder:text-gray-700 p-1 w-[90%]
+                    focus:outline-none bg-white`}/>
                 <button
                 className='flex gap-1 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
                 type="submit"

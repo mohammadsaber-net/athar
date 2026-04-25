@@ -4,6 +4,7 @@ import { WakafatType, comments } from '@/lib/type'
 import {  Heart, Pencil } from 'lucide-react';
 import { useState } from "react";
 import toast from 'react-hot-toast';
+import SharePopup from '../shareButton/ShareButton';
 type Props={
     aya:WakafatType,
     admin?:any
@@ -67,6 +68,9 @@ export default function Aya({aya,admin}:Props) {
   return (
     <div className='md:max-w-xl max-w-[90%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
       overflow-hidden rounded-md p-3'>
+        <div className='absolute top-1 left-2 z-30'>
+            <SharePopup text={{aya:aya.aya, tafsir:aya.tafsir}}/>      
+        </div>
         <div className="group transition">
             <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">
                 {aya?.aya} 

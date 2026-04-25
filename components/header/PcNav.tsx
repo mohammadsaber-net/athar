@@ -6,7 +6,7 @@ type Props={
     Icon:any,
     openList:boolean,
     setOpenList:(open:boolean)=>void,
-    isLoggedIn:boolean | null,
+    isLoggedIn:{admin:boolean,user:boolean},
     openLogout:boolean,
     handleLogOut:()=>void,
     setOpenLogout:(open:boolean)=>void
@@ -35,6 +35,7 @@ export default function PcNav(
             {
                 features.map((item)=>(
                     <Link href={item.href} key={item.name} 
+                    onClick={()=>setOpenList(false)}
                     className="hover:bg-[#0f3d2e] px-1 rounded hover:text-white py-2">
                         {item.name}
                     </Link>
@@ -42,7 +43,7 @@ export default function PcNav(
             }
             </div>
             {pages.map((item:any) =>{
-            if(item.href==="/signIn"&&isLoggedIn)
+            if(item.href==="/signIn"&&(isLoggedIn.admin||isLoggedIn.user))
                 {
                 return <React.Fragment key={item.name}>
                 <div 

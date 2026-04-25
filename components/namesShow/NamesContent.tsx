@@ -5,6 +5,7 @@ import {  Moon} from "lucide-react";
 import Name from './Name';
 import Link from 'next/link';
 import AllNames from './AllNames';
+import SearchInput from '../search/SearchInput';
 type Props={
     content:NamesType[]
 }
@@ -24,7 +25,7 @@ export default function NamesContent({content}:Props) {
   },[])
   return (
     <div
-      className="pb-8 pt-3"
+      className="relative py-8"
     >
         {content.map((searchedName:NamesType)=>(
           <div className="mb-10 flex gap-2 max-w-2xl border-t-2 p-2 border-gray-300" key={searchedName.id}>

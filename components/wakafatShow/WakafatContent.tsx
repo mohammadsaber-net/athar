@@ -83,6 +83,7 @@ import { WakafatType } from "@/lib/type";
 import Aya from "./Aya";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import SearchInput from "../search/SearchInput";
 
 type Props = {
   content: WakafatType[];

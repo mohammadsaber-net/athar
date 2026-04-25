@@ -57,6 +57,13 @@
       "when": 1774472827147,
       "tag": "0007_salty_whiplash",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1777130876866,
+      "tag": "0008_acoustic_george_stacy",
+      "breakpoints": true
     }
   ]
 }
