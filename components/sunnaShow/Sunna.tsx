@@ -66,8 +66,8 @@ export default function Sunna({sunna,admin}:Props) {
         }
     }
   return (
-    <div className='md:max-w-xl max-w-[90%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
-      overflow-hidden rounded-md p-3'>
+    <div className='md:max-w-xl max-w-[96%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
+      overflow-hidden rounded-md p-3 pt-6'>
         <div className='absolute top-1 left-2 z-30'>
         <SharePopup text={{sunna:sunna.sunna, tafsir:sunna.tafsir}}/>      
         </div>
