@@ -19,7 +19,7 @@ export default function page() {
         <Link href={"/signUp"} className="bg-red-500 text-white active:bg-red-600 transition px-4 py-2 rounded-md">
           إضافة مستخدم جديد
         </Link>
-        <Link href={"/message"} className="bg-green-500 text-white active:bg-green-600 transition px-4 py-2 rounded-md">
+        <Link href={"/admin/messages"} className="bg-green-500 text-white active:bg-green-600 transition px-4 py-2 rounded-md">
           الاطلاع على الرسائل الجديدة
         </Link>
       </div>

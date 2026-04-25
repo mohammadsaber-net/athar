@@ -2,9 +2,7 @@ import db from "@/db";
 import { messageTable, messageTableZodSchema } from "@/db/schema";
 import { isAdmin } from "@/lib/isAdmin";
 import { NextResponse } from "next/server";
-export async function GET(req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(){
   try {
     const admin=await isAdmin() 
     if(!admin){

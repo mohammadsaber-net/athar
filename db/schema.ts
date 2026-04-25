@@ -132,7 +132,7 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
 export const messageTable=pgTable("messageTable",{
     id:text("id").primaryKey(),
     name:text("name").notNull(),
-    email:text("email").notNull().unique(),
+    email:text("email").notNull(),
     message:text("message").notNull(),
 })
 export const messageTableZodSchema=createSelectSchema(messageTable)

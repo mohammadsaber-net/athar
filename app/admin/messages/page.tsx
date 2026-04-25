@@ -4,6 +4,9 @@ export default async function page() {
   const data=await db.select().from(messageTable)
   return (
     <div className="w-full text-center overflow-x-auto">
+      <h2 className="text-2xl font-bold text-center text-emerald-900 mb-6">
+        رسائل العملاء
+      </h2>
           <table className="w-full rounded-lg overflow-hidden">
             <thead className="bg-gray-100 border border-gray-300 text-indigo-600">
               <tr>
