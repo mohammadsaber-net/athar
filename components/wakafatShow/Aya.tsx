@@ -66,17 +66,25 @@ export default function Aya({aya,admin}:Props) {
         }
     }
   return (
-    <div className='md:max-w-xl max-w-[90%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
-      overflow-hidden rounded-md p-3 pt-8'>
-        <div className='absolute top-1 left-2 z-30'>
+    // <div className='md:max-w-xl max-w-[90%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
+    //   overflow-hidden rounded-md p-3 pt-8'>
+    <div className='max-w-[90%] relative overflow-hidden p-3 pt-8'>
+        <div
+        className="absolute inset-0 z-10 opacity-[0.05] bg-repeat bg-center"
+        style={{
+            backgroundImage: `url(/pattern.png)`,
+            backgroundSize: "150px"
+        }}
+        />
+        <div className='absolute top-1 left-2 z-40'>
             <SharePopup text={`« ${aya.aya || "الايه"} »\n${aya.tafsir.slice(0, 50)}... || " التفسير"}`}/>     
         </div>
-        <div className="group transition">
+        <div className="group relative z-20 transition">
             <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">
                 {aya?.aya} 
             </h2>
             
-            <div className={`mt-2 border-t md:text-xl pt-2 border-gray-200 `}>
+            <div className={`mt-2 w-[90%] border-t md:text-xl pt-2 border-gray-200 `}>
                 <div
                 dangerouslySetInnerHTML={{ __html: aya?.tafsir||"" }} /> 
             </div>

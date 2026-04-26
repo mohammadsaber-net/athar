@@ -66,8 +66,7 @@ export default function Sunna({sunna,admin}:Props) {
         }
     }
   return (
-    <div className='md:max-w-xl max-w-[96%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
-      overflow-hidden rounded-md p-3 pt-8'>
+    <div className='max-w-[90%] relative overflow-hidden p-3 pt-8'>
         <div className='absolute top-1 left-2 z-30'>
          <SharePopup text={`« ${sunna.sunna || "السنه"} »\n${sunna.tafsir&&sunna.tafsir.slice(0, 50)}... || " التفسير"}`}/>        
         </div>
@@ -76,7 +75,7 @@ export default function Sunna({sunna,admin}:Props) {
                 {sunna?.sunna} 
             </h2>
             
-            <div className={`mt-2 border-t md:text-xl pt-2 border-gray-200 `}>
+            <div className={`mt-2 w-[90%] border-t md:text-xl pt-2 border-gray-200 `}>
                 <div
                 dangerouslySetInnerHTML={{ __html: sunna?.tafsir||"" }} /> 
             </div>
