@@ -67,9 +67,9 @@ export default function Sunna({sunna,admin}:Props) {
     }
   return (
     <div className='md:max-w-xl max-w-[96%] relative z-10 mx-auto bg-white/70 shadow-lg border border-blue-100
-      overflow-hidden rounded-md p-3 pt-6'>
+      overflow-hidden rounded-md p-3 pt-8'>
         <div className='absolute top-1 left-2 z-30'>
-        <SharePopup text={{sunna:sunna.sunna, tafsir:sunna.tafsir}}/>      
+         <SharePopup text={`« ${sunna.sunna || "السنه"} »\n${sunna.tafsir&&sunna.tafsir.slice(0, 50)}... || " التفسير"}`}/>        
         </div>
         <div className="group transition">
             <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">

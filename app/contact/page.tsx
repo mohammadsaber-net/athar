@@ -3,9 +3,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 export default function Contact() {
   const [loading, setLoading] = useState(false);
+  const [mobile, setMobile] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
   const handleChange = (e: any) => {
@@ -13,7 +15,7 @@ export default function Contact() {
   };
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) {
+    if (!form.name || !form.message || ( !form.email &&  !form.phone )) {
       return toast.error("من فضلك أكمل البيانات");
     }
     setLoading(true);
@@ -25,7 +27,7 @@ export default function Contact() {
       const data = await res.json();
       if (data.success) {
         toast.success("تم إرسال رسالتك بنجاح ✨");
-        setForm({ name: "", email: "", message: "" });
+        setForm({ name: "", email: "", phone: "", message: "" });
       } else {
         toast.error("حدث خطأ، حاول مرة أخرى");
       }
@@ -54,6 +56,7 @@ export default function Contact() {
             <input
               type="text"
               name="name"
+              placeholder="الاسم من فضلك"
               value={form.name}
               onChange={handleChange}
               className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2
@@ -61,17 +64,34 @@ export default function Contact() {
             />
           </div>
           <div>
-            <label className="block text-sm text-emerald-800 mb-1">
-              البريد الإلكتروني
+            {!mobile&&<><label
+            onClick={()=>setMobile(true)}
+            className="block text-sm text-emerald-800 mb-1">
+              تريد التواصل عبر الواتساب؟ اضغط هنا
             </label>
             <input
               type="email"
               name="email"
+              placeholder="البريد الالكتروني"
               value={form.email}
               onChange={handleChange}
               className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2
               focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600"
-            />
+            /></>}
+            {mobile&&<><label
+            onClick={()=>setMobile(false)}
+            className="block text-sm text-emerald-800 mb-1">
+              تريد التواصل عبر البريد الالكتروني؟ اضغط هنا
+            </label>
+            <input
+              type="phone"
+              name="phone"
+              placeholder="رقم الهاتف"
+              value={form.phone}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2
+              focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600"
+            /></>}
           </div>
           <div>
             <label className="block text-sm text-emerald-800 mb-1">
@@ -82,6 +102,7 @@ export default function Contact() {
               value={form.message}
               onChange={handleChange}
               rows={5}
+              placeholder="اكتب رسالتك هنا"
               className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2
               focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 resize-none"
             />

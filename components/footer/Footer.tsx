@@ -28,8 +28,8 @@ export default function Footer() {
         <div className='flex gap-2'>
             <a 
             href="https://wa.me/+201023966702" 
-                target="_blank" 
-                rel="noopener noreferrer"
+            target="_blank" 
+            rel="noopener noreferrer"
             className="transition w-fit p-1 rounded-full hover:bg-green-600">
               <FaWhatsapp size={28} />
             </a>

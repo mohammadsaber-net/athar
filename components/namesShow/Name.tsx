@@ -67,9 +67,9 @@ export default function Name({searchedName,admin}:Props) {
         }
     }
   return (
-    <div className='m-auto relative max-w-[90%] pt-6 shadow relative z-10 p-3'>
+    <div className='m-auto relative max-w-[90%] pt-8 shadow relative z-10 p-3'>
         <div className='absolute top-1 left-2 z-30'>
-            <SharePopup text={{name:searchedName.name, meaning:searchedName.meaning}}/>
+            <SharePopup text={`« ${searchedName.name || "الاسم"} »\n${searchedName.meaning.slice(0, 50)}... || " المعنى"}`}/>      
         </div>
         <div
         className="absolute inset-0 z-10 opacity-[0.05] bg-repeat bg-center"

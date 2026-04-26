@@ -6,7 +6,7 @@ import Link from "next/link";
 import SharePopup from "../shareButton/ShareButton";
 import SearchInput from "../search/SearchInput";
 export default function Hero() {
-  const [tableData, setTableData] = useState<HeroType|null>(null)
+  const [tableData, setTableData] = useState<any|null>(null)
   const fetchData=async()=>{
       try {
         const res=await fetch("/api/hero")
@@ -65,28 +65,42 @@ export default function Hero() {
       <div className="relative z-20 m-auto space-y-8">
         {tableData?
         <>
-        <div className="bg-white/30 max-w-xl mt-5 p-2 mx-auto md:p-6 md:mt-10 mb-4 rounded-2xl text-center shadow-lg border border-white/80">
-          <p className="text-white text-lg font-bold leading-relaxed">
-            ﴿ {tableData?.aya || "الآية"} ﴾
-          </p>
+        <div className="bg-white/30 max-w-xl mt-6 p-2 mx-auto md:p-3 mb-4 rounded-2xl text-center shadow-lg border border-white/80">
+          <h2 className="text-white text-lg font-bold leading-relaxed">
+            ﴿ {tableData?.wakfa?.aya || "الآية"} ﴾
+          </h2>
           <span className="text-sm block text-left italic text-white">
-           {tableData?.ayaSource || "مصدر الآية"}
+           {tableData?.wakfa?.ayaSource || "مصدر الآية"}
           </span>
-          <SharePopup text={`« ${tableData?.aya || "الآية"} »\n${tableData?.ayaSource || "مصدر الآية"}`}/>
+          <div className="flex justify-between items-center mt-2">
+            <SharePopup text={`« ${tableData?.wakfa?.aya || "الآية"} »\n${tableData?.wakfa?.ayaSource || "مصدر الآية"}`}/>
+            <Link 
+            className="bg-[#0f3d2e] relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
+            href={`/wakafat/${tableData?.wakfa?.id}`}>
+                اقرأ المزيد
+            </Link>
+          </div>
         </div>
-        <div className="bg-white/30 max-w-xl p-2 mx-auto md:p-6 rounded-2xl text-center shadow-lg border border-white/80">
-          <p className="text-white text-lg font-bold leading-relaxed">
-            « {tableData?.hadith || "الحديث"} »
-          </p>
+        <div className="bg-white/30 max-w-xl p-2 mx-auto md:p-3 rounded-2xl text-center shadow-lg border border-white/80">
+          <h2 className="text-white text-lg font-bold leading-relaxed">
+            « {tableData?.hadith?.sunna || "الحديث"} »
+          </h2>
           <span className="text-sm block text-left italic text-white">
-           {tableData?.hadithSource || "مصدر الحديث"}
+           {tableData?.hadith?.sunnaSource || "مصدر الحديث"}
           </span>
-          <SharePopup text={`« ${tableData?.hadith || "الحديث"} »\n${tableData?.hadithSource || "مصدر الحديث"}`}/>
+          <div className="flex justify-between items-center mt-2">
+            <SharePopup text={`« ${tableData?.hadith?.sunna || "الحديث"} »\n${tableData?.hadith?.sunnaSource || "مصدر الحديث"}`}/>
+            <Link 
+            className="bg-[#0f3d2e] relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
+            href={`/sunna/${tableData?.hadith?.id}`}>
+                اقرأ المزيد
+            </Link>
+          </div>
         </div>
         </>:
         <>
-        <p className="h-20 animate-pulse mx-4 rounded pt-4 bg-white/40 max-w-4xl" />
-        <p className="animate-pulse h-20 mx-4 rounded py-4 bg-white/40 max-w-4xl" />
+        <p className="h-20 animate-pulse mx-auto rounded pt-4 bg-white/40 max-w-2xl" />
+        <p className="animate-pulse h-20 mx-auto rounded py-4 bg-white/40 max-w-2xl" />
         </>
         }
         <div className="overflow-hidden md:w-fit pb-16 m-auto w-[90%] whitespace-nowrap">

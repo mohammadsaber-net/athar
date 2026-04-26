@@ -71,6 +71,20 @@
       "when": 1777137623147,
       "tag": "0009_common_agent_brand",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1777215561270,
+      "tag": "0010_red_wendell_rand",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1777216493030,
+      "tag": "0011_abandoned_pyro",
+      "breakpoints": true
     }
   ]
 }

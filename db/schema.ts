@@ -133,6 +133,7 @@ export const messageTable=pgTable("messageTable",{
     id:text("id").primaryKey(),
     name:text("name").notNull(),
     email:text("email").notNull(),
+    phone: text("phone"),
     message:text("message").notNull(),
 })
 export const messageTableZodSchema=createSelectSchema(messageTable)

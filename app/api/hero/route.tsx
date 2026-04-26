@@ -1,14 +1,24 @@
 import db from "@/db";
-import { heroTable, heroTableZodSchema } from "@/db/schema";
+import { heroTable, heroTableZodSchema, sunnaTable, wakafatTable } from "@/db/schema";
 import { sql } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(req:NextRequest) {
     try {
-        const [data]=await db.select().from(heroTable)
+        const [wakfa]=await db.select({
+            aya:wakafatTable.aya,
+            id:wakafatTable.id,
+            ayaSource:wakafatTable.ayaSource
+        }).from(wakafatTable)
+        .orderBy(sql`RANDOM()`).limit(1)
+        const [hadith]=await db.select({
+            sunna:sunnaTable.sunna,
+            id:sunnaTable.id,
+            sunnaSource:sunnaTable.sunnaSource
+        }).from(sunnaTable)
         .orderBy(sql`RANDOM()`).limit(1)
         return NextResponse.json({
             success:true,
-            data
+            data:{wakfa,hadith}
         })
     } catch (error) {
         return NextResponse.json({

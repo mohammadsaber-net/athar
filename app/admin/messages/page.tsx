@@ -1,5 +1,6 @@
 import db from '@/db'
 import { messageTable } from '@/db/schema'
+import Link from 'next/link'
 export default async function page() {
   const data=await db.select().from(messageTable)
   return (
@@ -12,6 +13,7 @@ export default async function page() {
               <tr>
                 <th className="p-3 border border-gray-300">المستخدم</th>
                 <th className="p-3 border border-gray-300"> الايميل</th>
+                <th className="p-3 border border-gray-300"> الفون</th>
                 <th className="p-3 border border-gray-300">الرسالة</th>
               </tr>
             </thead>
@@ -22,11 +24,24 @@ export default async function page() {
                   className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition"
                 >
                   <td className="p-3 border border-gray-300">{item.name}</td>
-                  <td className="p-3 border border-gray-300">
-                    <a href={`mailto:${item.email}`} className="text-blue-500 hover:underline">
-                      {item.email}
-                    </a>
-                  </td>
+                  {item.email ? (
+                    <td className="p-3 border border-gray-300">
+                      <a href={`mailto:${item.email}`} className="text-blue-500 hover:underline">
+                        {item.email}
+                      </a>
+                    </td>
+                  ):<td className="p-3 border border-gray-300">---</td>}
+                  {item.phone ? (
+                    <td className="p-3 border border-gray-300">
+                      <a 
+                      href={`https://wa.me/${item.phone}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-blue-500 hover:underline">
+                        {item.phone}
+                      </a>
+                    </td>
+                  ):<td className="p-3 border border-gray-300">---</td>}
                   <td className="p-3 border border-gray-300">
                     {item.message}
                   </td>

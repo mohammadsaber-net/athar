@@ -36,14 +36,14 @@ export default function SearchInput() {
       <form className="flex w-[90%] mx-auto items-center">
         <input type="text"
         onChange={(e)=>setSearchTerm(e.target.value)} 
-        placeholder="ابحث عن أسماء الله, آيات من كتاب الله, سنن مهجورة"
+        placeholder="ابحث عن اسم لله , آيه ( مُشََكلَة ), سنه للنبي ﷺ"
          className="px-2 md:px-6 bg-white outline-none w-[100%] 
          rounded-md py-2 placeholder:font-normal
          placeholder:text-[#1a3636] md:placeholder:font-semibold"/>
         <button 
         onClick={handleSearch}
         className="bg-[#1a3636] cursor-pointer px-3 md:px-6 py-2 rounded-md 
-        -ms-2 text-white flex items-center md:gap-2"
+        -ms-2 text-white flex items-center relative overflow-hidden shine-btn md:gap-2"
         type="button">
              بحث <Search />
         </button>

@@ -40,7 +40,7 @@ export default function SharePopup({ text }: Props) {
     <>
       <button
         onClick={handleShareClick}
-        className="bg-[#B89B5E] text-white px-4 py-1 rounded-full text-xs hover:scale-105 transition"
+        className="bg-[#B89B5E] text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
       >
         مشاركة
       </button>

@@ -16,7 +16,7 @@ export default function FixedModal({isOpen,onClose,children}:ModalProps) {
             exit={{opacity:0}}
             transition={{duration:0.25}}
             onClick={onClose}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-[99999999999999] flex items-center justify-center bg-black/40 backdrop-blur-sm"
             >
                 <motion.div 
                 initial={{ scale: 0.85, y: -40 }}

@@ -1,1 +1,0 @@
-ALTER TABLE "messageTable" DROP CONSTRAINT "messageTable_email_unique";
