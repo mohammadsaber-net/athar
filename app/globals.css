@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@custom-variant dark (&:where(.dark, .dark *));
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -12,12 +12,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
   background: var(--background);
@@ -119,4 +113,20 @@ body {
   100% {
     left: 125%;
   }
+}
+.night-bg {
+  /* background: linear-gradient(
+    to bottom,
+    #0b1220,
+    #0f1a2b,
+    #05070f
+  );
+  color: white; */
+  background: linear-gradient(
+    to bottom,
+    #0b1220 0%,
+    #0f1a2b 50%,
+    #05070f 100%
+  );
+  color: white;
 }

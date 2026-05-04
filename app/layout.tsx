@@ -11,6 +11,7 @@ import Footer from "@/components/footer/Footer";
 import MainNav from "@/components/header/MainNav";
 import { FaWhatsapp } from "react-icons/fa";
 import AdminLogged from "@/components/admin/AdminLogged";
+import ThemeToggle from "@/components/dark-mode/DarkMode";
 const AmiriSans = Amiri({
   weight: "400",
   variable: "--font-amiri",
@@ -38,13 +39,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className="dark">
       <body
         className={`${AmiriSans.variable} ${geistMono.variable} relative antialiased`}
       >
         <ReduxProvider>
         <Toaster position="top-center"/>
         <MainNav />
+        <ThemeToggle />
         <a 
           href="https://wa.me/+201023966702" 
           target="_blank" 

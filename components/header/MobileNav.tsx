@@ -25,7 +25,7 @@ export default function MobileNav(
     <div className="md:hidden">
     <Menu 
       onClick={()=>setMobileMenuOpen(true)}
-      className={`text-cyan-700
+      className={`text-cyan-700 dark:text-white
       cursor-pointer ${mobileMenuOpen&&"hidden"}
       p-1 size-10 font-bold rounded `} />
     <header className={`bg-black/30 absolute inset-0

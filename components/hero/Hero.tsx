@@ -40,20 +40,20 @@ export default function Hero() {
   }, []);
   return (
     <>
-    <section className="relative px-4 text-center pt-2 text-gray-900">
+    <section className="relative night-bg px-4 text-center pt-2 text-gray-900">
         <picture>
           <source media="(max-width: 768px)" srcSet="/hero-mobile.png" />
           <img 
             loading="lazy"
             src="/hero-desktop.jpg"
-            className="absolute inset-0 w-full h-full object-cover object-top"
+            className="absolute inset-0 dark:hidden w-full h-full object-cover object-top"
           />
         </picture>
          {stars.map((star, i) => (
         <Star
           key={i}
           size={star.size}
-          className="absolute text-[#c9a24d] animate-star pointer-events-none z-0"
+          className="absolute dark:text-white text-[#c9a24d] animate-star pointer-events-none z-0"
           style={{
             top: `${star.top}%`,
             left: `${star.left}%`,
@@ -65,7 +65,7 @@ export default function Hero() {
       <div className="relative z-20 m-auto space-y-8">
         {tableData?
         <>
-        <div className="bg-white/30 max-w-xl mt-6 p-2 mx-auto md:p-3 mb-4 rounded-2xl text-center shadow-lg border border-white/80">
+        <div className="bg-white/30 dark:bg-black/30 max-w-xl mt-6 p-2 mx-auto md:p-3 mb-4 rounded-2xl text-center shadow-lg border border-white/80">
           <h2 className="text-white text-lg font-bold leading-relaxed">
             ﴿ {tableData?.wakfa?.aya || "الآية"} ﴾
           </h2>
@@ -75,13 +75,13 @@ export default function Hero() {
           <div className="flex justify-between items-center mt-2">
             <SharePopup text={`« ${tableData?.wakfa?.aya || "الآية"} »\n${tableData?.wakfa?.ayaSource || "مصدر الآية"}`}/>
             <Link 
-            className="bg-[#0f3d2e] relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
+            className="bg-[#0f3d2e] dark:bg-cyan-600 relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
             href={`/wakafat/${tableData?.wakfa?.id}`}>
                 اقرأ المزيد
             </Link>
           </div>
         </div>
-        <div className="bg-white/30 max-w-xl p-2 mx-auto md:p-3 rounded-2xl text-center shadow-lg border border-white/80">
+        <div className="bg-white/30 dark:bg-black/30 max-w-xl p-2 mx-auto md:p-3 rounded-2xl text-center shadow-lg border border-white/80">
           <h2 className="text-white text-lg font-bold leading-relaxed">
             « {tableData?.hadith?.sunna || "الحديث"} »
           </h2>
@@ -91,7 +91,7 @@ export default function Hero() {
           <div className="flex justify-between items-center mt-2">
             <SharePopup text={`« ${tableData?.hadith?.sunna || "الحديث"} »\n${tableData?.hadith?.sunnaSource || "مصدر الحديث"}`}/>
             <Link 
-            className="bg-[#0f3d2e] relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
+            className="bg-[#0f3d2e] dark:bg-cyan-600 relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
             href={`/sunna/${tableData?.hadith?.id}`}>
                 اقرأ المزيد
             </Link>
