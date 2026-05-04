@@ -5,8 +5,6 @@ import {  Pencil } from 'lucide-react';
 import { useState } from "react";
 import toast from 'react-hot-toast';
 import SharePopup from '../shareButton/ShareButton';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
 type Props={
     searchedName:NamesType,
     logged?:any
@@ -23,6 +21,7 @@ export default function Name({searchedName,logged}:Props) {
             const data=await res.json()
             if(data.success){
                 setfetchComments(data.data)
+                console.log(data.data)
             }else{
                 toast.error(data.message||"خطأ في جلب التعليقات")
             }
@@ -134,8 +133,7 @@ export default function Name({searchedName,logged}:Props) {
                         <span>
                             {comment.createdAt ? handleDate(comment.createdAt) : ""}
                         </span>
-
-                        {comment.userId === logged.id && (
+                        {comment?.userId === logged?.id && (
                             <button
                             onClick={()=>deleteComment(comment.id)}
                             className='text-red-500 hover:text-red-700 transition'

@@ -135,7 +135,7 @@ export default function Aya({aya,logged}:Props) {
                             {comment.createdAt ? handleDate(comment.createdAt) : ""}
                         </span>
 
-                        {comment.userId === logged.id && (
+                        {comment?.userId === logged?.id && (
                             <button
                             onClick={()=>deleteComment(comment.id)}
                             className='text-red-500 hover:text-red-700 transition'
