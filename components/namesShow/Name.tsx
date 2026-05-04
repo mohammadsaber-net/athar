@@ -2,15 +2,16 @@
 import { handleDate } from '@/lib/handleDate';
 import { NamesType, comments } from '@/lib/type'
 import {  Pencil } from 'lucide-react';
-import Link from 'next/link';
 import { useState } from "react";
 import toast from 'react-hot-toast';
 import SharePopup from '../shareButton/ShareButton';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 type Props={
     searchedName:NamesType,
-    admin?:any
+    logged?:any
 }
-export default function Name({searchedName,admin}:Props) {
+export default function Name({searchedName,logged}:Props) {
     const [show,setShow]=useState(false)
     const [comment,setComment]=useState<string>("")
     const [fetchComments,setfetchComments]=useState<any>(null)
@@ -67,26 +68,19 @@ export default function Name({searchedName,admin}:Props) {
         }
     }
   return (
-    <div className='m-auto relative max-w-[90%] pt-8 shadow relative z-10 p-3'>
-        <div className='absolute top-1 left-2 z-30'>
+    <div className='pt-8 p-3 max-w-4xl'>
+        <div className='mb-2 relative z-50'>
             <SharePopup text={`« ${searchedName.name || "الاسم"} »\n${searchedName.meaning.slice(0, 50)}... || " المعنى"}`}/>      
         </div>
-        <div
-        className="absolute inset-0 z-10 opacity-[0.05] bg-repeat bg-center"
-        style={{
-            backgroundImage: `url(${searchedName?.image})`,
-            backgroundSize: "150px"
-        }}
-        />
-        <div className="group relative z-20 transition">
-            <h2 className=" text-xl md:text-3xl mb-0 mt-2 text-blue-900">
+        <div className="relative z-20 transition">
+            <h2 className=" text-2xl md:text-5xl text-center mb-0 mt-2 text-blue-900">
                 {searchedName?.name} 
             </h2>
             <div className={`mt-2 border-t md:text-xl pt-2 border-gray-200 `}>
                 <div
                 dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} /> 
             </div>
-            <span className='text-end'>
+            <span className='text-start text-sm text-gray-600 mt-2 block'>
                 {searchedName?.meaningSource}
             </span>
             <div
@@ -95,73 +89,76 @@ export default function Name({searchedName,admin}:Props) {
             >
                 <form 
                 onSubmit={onSubmit}
-                className={`flex gap-2 w-full items-center`}>
-                <input 
-                onChange={(e)=>setComment(e.target.value)}
-                value={comment}
-                placeholder='أضف تعليقا'
-                className={`border-gray-200 rounded
-                    border text-gray-900 placeholder:text-gray-700 p-1 w-[90%]
-                    focus:outline-none bg-white`}/>
-                <button
-                className='flex gap-1 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
-                type="submit"
+                className="flex gap-2 w-full items-center bg-white p-2 rounded-lg shadow-sm border border-gray-200"
                 >
-                 إرسال <Pencil className='size-5'/>
+                <input 
+                    onChange={(e)=>setComment(e.target.value)}
+                    value={comment}
+                    placeholder='أضف تعليق...'
+                    className="flex-1 border border-gray-200 rounded-md px-3 py-2 text-sm
+                    focus:outline-none focus:ring-2 focus:ring-gray-300"
+                />
+                <button
+                    className='flex gap-1 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
+                    type="submit"
+                >
+                    إرسال <Pencil className='size-4'/>
                 </button>
-                </form>
-            </div>
-            <div className={` mt-2 transition-all delay-300 duration-300`}>
-
-            {!show&&<button 
-            onClick={()=>{setShow(true);getComments(searchedName.id)}}
-            className='text-indigo-600 cursor-pointer'
-            >
-                عرض التعليقات
-            </button>}
-            {show&&<button 
-            onClick={()=>setShow(false)}
-            className='text-indigo-600 cursor-pointer'
-            >
-               إخفاء التعليقات
-            </button>}
+            </form>
+            <button 
+                onClick={()=>{
+                    if(!show){ getComments(searchedName.id) }
+                    setShow(!show)
+                }}
+                className='text-indigo-600 text-sm mt-2 active:underline hover:underline'
+                >
+                {show ? "إخفاء التعليقات" : "عرض التعليقات"}
+            </button>
             <div
-            className={`transition-all duration-400 overflow-hidden ${show?"max-h-[700vh]":"max-h-0"}`}
-            >
-                {
-                    fetchComments&&fetchComments.map((comment:comments)=>(
-                        <div
+                className={`transition-all duration-500 overflow-hidden 
+                ${show ? "max-h-[1000px] mt-3" : "max-h-0"}`}
+                >
+                <div className="flex flex-col gap-3">
+                    {fetchComments && fetchComments.map((comment: comments) => (
+                    <div    
                         key={comment.id}
-                        className='border shadow border-gray-200 bg-zinc-100 mb-2 px-2 py-1 rounded-md'
-                        >
-                            <div className='text-blue-700'>
-                                {`${comment.user?.firstName}
-                                 ${comment.user?.lastName}` }
-                            </div>
-                            <div className='flex justify-between'>
-                                <span className='text-zinc-600 text-sm'>
-                                    {comment.createdAt
-                                        ?handleDate(comment.createdAt)
-                                        : ""}
-                                </span>
-                                {comment.userId===admin.id&&<button
-                                onClick={()=>deleteComment(comment.id)}
-                                className='text-red-500'>حذف</button>}
-                                <span className='text-gray-900'>{comment.comment}</span>
-                            </div>
+                        className='bg-white border border-gray-200 rounded-lg p-2 shadow-sm hover:shadow-md transition'
+                    >
+                        <div className='text-indigo-700 font-medium text-sm mb-1'>
+                        {comment.user?.firstName} {comment.user?.lastName}
                         </div>
-                    ))
-                }
-                {loading&&<div className='flex justify-center gap-1'>
-                {[0, 1, 2].map((i) => (
-                    <span
-                    key={i}
-                    className="size-3 bg-blue-500 rounded-full animate-pulse"
-                    style={{ animationDelay: `${i * 0.2}s` }}
-                    />
-                ))}
-                </div>
-                }  
+                        <div className='text-gray-800 text-sm mb-2 break-words'>
+                        {comment.comment}
+                        </div>
+                        <div className='flex justify-between items-center text-xs text-gray-500'>
+                        <span>
+                            {comment.createdAt ? handleDate(comment.createdAt) : ""}
+                        </span>
+
+                        {comment.userId === logged.id && (
+                            <button
+                            onClick={()=>deleteComment(comment.id)}
+                            className='text-red-500 hover:text-red-700 transition'
+                            >
+                            حذف
+                            </button>
+                        )}
+                        </div>
+                    </div>
+                    ))}
+            </div>
+
+            {loading && (
+                    <div className='flex justify-center gap-1 mt-2'>
+                    {[0, 1, 2].map((i) => (
+                        <span
+                        key={i}
+                        className="size-2 bg-indigo-500 rounded-full animate-bounce"
+                        style={{ animationDelay: `${i * 0.2}s` }}
+                        />
+                    ))}
+                    </div>
+                )}
             </div>
         </div>
         </div>

@@ -55,9 +55,9 @@ export async function DELETE(req:NextRequest
         if(!data){
             return NextResponse.json({
                 success:false,
-                message:'غير مصرح'
-            },{status:401}) 
-        }
+                message:'غير متوفر'
+                },{status:404}) 
+            }
         return NextResponse.json({
             success:true,
         }) 

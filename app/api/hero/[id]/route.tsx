@@ -1,5 +1,6 @@
 import db from "@/db";
 import { heroTable, heroTableZodSchema } from "@/db/schema";
+import { isAdmin } from "@/lib/isAdmin";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,6 +13,13 @@ export async function DELETE(req:NextRequest,
                 success:false,
                 message:'الداتا المطلوب حذفها غير متوفرة'
             },{status:404}) 
+        }
+        const admin=await isAdmin()
+        if(!admin){
+            return NextResponse.json({
+                success:false,
+                message:'غير مصرح'
+            },{status:401}) 
         }
         await db.delete(heroTable).where(eq(heroTable.id,id))
         return NextResponse.json({
@@ -27,6 +35,13 @@ export async function DELETE(req:NextRequest,
 export async function PATCH(req:NextRequest,
     { params }: { params: Promise<{ id: string }> }){
     try {
+        const admin=await isAdmin()
+        if(!admin){
+            return NextResponse.json({
+                success:false,
+                message:'غير مصرح'
+            },{status:401}) 
+        }
        const {id}=await params 
        if(!id){
            return NextResponse.json({

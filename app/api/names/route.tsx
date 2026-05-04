@@ -1,5 +1,6 @@
 import db from "@/db";
 import { namesTable, namesTableZodSchema } from "@/db/schema";
+import { isAdmin } from "@/lib/isAdmin";
 import cloudinary from "@/lib/utls";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(req:NextRequest) {
@@ -18,14 +19,20 @@ export async function GET(req:NextRequest) {
 }
 export async function POST(req:NextRequest){
     try {
+        const admin=await isAdmin()
+        if(!admin){
+        return NextResponse.json({
+            success:false,
+            message:'غير مصرح'
+        },{status:401}) 
+        }
         const formData = await req.formData();
         const imageFile = formData.get("image") as File;
         if (!imageFile || imageFile.size === 0) {
-                return NextResponse.json(
-                    { success: false, message: "الصورة مطلوبة" },
-                    { status: 400 }
-                );
-                }
+            return NextResponse.json(
+                { success: false, message: "الصورة مطلوبة" },
+                { status: 400 });
+            }
         let uploadedImages: string = "";
         if(imageFile && imageFile.size > 0){
             const buffering = await imageFile.arrayBuffer();

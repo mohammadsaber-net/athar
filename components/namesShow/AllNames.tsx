@@ -21,9 +21,9 @@ export default function AllNames({searchedName}:Props) {
           {searchedName?.meaningSource?.slice(0,15)}...
         </span>
         <div className={`mt-1 h-22 w-28 md:w-40 overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
-                <div
-                dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} 
-                />
+          <div
+            dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} 
+          />
           </div> 
             <Link
                className='text-green-700 text-sm md:text-base active:text-red-600 inline'

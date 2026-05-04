@@ -4,8 +4,16 @@ import jwt from "jsonwebtoken";
 import { usersTable, userTableZodSchema } from "@/db/schema";
 import db from "@/db";
 import { eq } from "drizzle-orm";
+import { isAdmin } from "@/lib/isAdmin";
 export async function GET(req:NextRequest) {
     try {
+        const admin=await isAdmin()
+        if(!admin){
+            return NextResponse.json({
+            success:false,
+            message:'غير مصرح'
+            },{status:401}) 
+        }
         const data=await db.select().from(usersTable)
         return NextResponse.json({
             success:true,

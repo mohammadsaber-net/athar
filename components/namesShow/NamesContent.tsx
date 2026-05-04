@@ -1,28 +1,9 @@
-"use client"
-import { NamesType, SunnaType} from '@/lib/type'
-import { useEffect, useRef, useState } from "react";
-import {  Moon} from "lucide-react";
-import Name from './Name';
+import { NamesType} from '@/lib/type'
 import Link from 'next/link';
-import AllNames from './AllNames';
-import SearchInput from '../search/SearchInput';
 type Props={
     content:NamesType[]
 }
 export default function NamesContent({content}:Props) {
-  const [admin,setAdmin]=useState<any>(null)
-  useEffect(()=>{
-    const isAdminClient = async () => {
-      const res = await fetch("/api/users/isLogged", {
-        method: "GET",
-        credentials: "include",
-        cache: "no-store"
-      });
-      const data = await res.json();
-      if (data.user) return setAdmin(data.user);
-    };
-    isAdminClient()
-  },[])
   return (
     <div
       className="relative py-8"

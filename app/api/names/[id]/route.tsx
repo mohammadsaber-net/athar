@@ -1,10 +1,18 @@
 import db from "@/db";
 import { namesTable, namesTableZodSchema } from "@/db/schema";
+import { isAdmin } from "@/lib/isAdmin";
 import cloudinary from "@/lib/utls";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(req:NextRequest,{ params }: { params: Promise<{ id: string }> }) {
     try {
+        const admin=await isAdmin()
+        if(!admin){
+            return NextResponse.json({
+                success:false,
+                message:'غير مصرح'
+            },{status:401}) 
+        }
         const {id}=await params
         if(!id){
            return NextResponse.json({
@@ -25,6 +33,13 @@ export async function DELETE(req:NextRequest,{ params }: { params: Promise<{ id:
 }
 export async function PATCH(req:NextRequest,{ params }: { params: Promise<{ id: string }> }){
     try {
+        const admin=await isAdmin()
+        if(!admin){
+            return NextResponse.json({
+                success:false,
+                message:'غير مصرح'
+            },{status:401}) 
+        }
        const {id}=await params 
        if(!id){
            return NextResponse.json({

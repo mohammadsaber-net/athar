@@ -11,19 +11,6 @@ type Props={
 export default function SunnanContent({content}:Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [stars, setStars] = useState<any[]>([]);
-  const [admin,setAdmin]=useState<any>(null)
-  useEffect(()=>{
-    const isAdminClient = async () => {
-      const res = await fetch("/api/users/isLogged", {
-        method: "GET",
-        credentials: "include",
-        cache: "no-store"
-      });
-      const data = await res.json();
-      if (data.user) return setAdmin(data.user);
-    };
-    isAdminClient()
-  },[])
   useEffect(() => {
   if (!containerRef.current) return;
 

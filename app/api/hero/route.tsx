@@ -1,5 +1,6 @@
 import db from "@/db";
 import { heroTable, heroTableZodSchema, sunnaTable, wakafatTable } from "@/db/schema";
+import { isAdmin } from "@/lib/isAdmin";
 import { sql } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(req:NextRequest) {
@@ -29,6 +30,13 @@ export async function GET(req:NextRequest) {
 }
 export async function POST(req:NextRequest){
     try {
+        const admin=await isAdmin()
+        if(!admin){
+            return NextResponse.json({
+                success:false,
+                message:'غير مصرح'
+            },{status:401}) 
+        }
         const selectedHero=heroTableZodSchema.omit({id:true}).parse(await req.json())
         const [data]=await db.insert(heroTable).values({
             id:crypto.randomUUID(),
