@@ -32,17 +32,18 @@ export default function SearchInput() {
     };
   return (
     <div className="max-w-xl md:p-3 shadow-md mx-auto rounded-lg 
-    md:bg-white/30 bg-white/10">
+    md:bg-white/30 dark:bg-black/30 bg-white/10">
       <form className="flex w-[90%] mx-auto items-center">
         <input type="text"
         onChange={(e)=>setSearchTerm(e.target.value)} 
         placeholder="ابحث عن اسم لله , آيه ( مُشََكلَة ), سنه للنبي ﷺ"
          className="px-2 md:px-6 bg-white outline-none w-[100%] 
-         rounded-md py-2 placeholder:font-normal
+         rounded-md py-2 placeholder:font-normal dark:placeholder:text-gray-300
+         dark:placeholder:font-semibold dark:placeholder:text-gray-400
          placeholder:text-[#1a3636] md:placeholder:font-semibold"/>
         <button 
         onClick={handleSearch}
-        className="bg-[#1a3636] cursor-pointer px-3 md:px-6 py-2 rounded-md 
+        className="bg-[#1a3636] dark:bg-cyan-900 cursor-pointer px-3 md:px-6 py-2 rounded-md 
         -ms-2 text-white flex items-center relative overflow-hidden shine-btn md:gap-2"
         type="button">
              بحث <Search />
@@ -58,13 +59,14 @@ export default function SearchInput() {
             />
         ))}
         </div>}
-        <div className="bg-gray-100 p-2 border border-zinc-300 mt-3
+        <div className="bg-gray-100 dark:bg-gray-700 
+         p-2 border border-zinc-300 mt-3
         w-[90%] mx-auto rounded">
             {data?.length>0&&data.map((item:any)=>(
                 <Link key={item.href} className="border-b py-2" 
                 href={`/${item.href}`}>
                     <h3 className="font-bold border-b shadow p-1 active:text-green-600
-                     rounded border-gray-300 text-[#1a3636] text-lg active:border-green-600
+                     rounded border-gray-300 text-[#1a3636] dark:text-white text-lg active:border-green-600
                      ">{item.title.slice(0,50)}...</h3>
                 </Link>
             ))}

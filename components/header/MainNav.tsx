@@ -69,11 +69,11 @@ export default function MainNav() {
     </section>
   ): (
     <section className="bg-[#c9a24d]/40 dark:bg-[#0d1117] justify-between md:justify-center font-bold p-2 flex 
-    items-center gap-12 text-[#1a3636] shadow">
+    items-center gap-12 dark:text-white text-[#1a3636] shadow">
     <Link href={"/"} className=' flex items-center'>
       <span className="text-2xl md:text-4xl font-extrabold 
     text-transparent bg-clip-text drop-shadow-lg bg-gradient-to-r from-[#0f3d2e] 
-    to-[#f59e0b] dark:from-cyan-400 dark:to-cyan-600">
+    to-[#f59e0b]">
          أَثَارَ 
       </span>
      <img src={"/athar-logo.png"} className="size-10" alt="athar-logo"/>

@@ -14,9 +14,9 @@ export default async function page({params}:Props) {
     const [content]=await db.select().from(sunnaTable)
     .where(eq(sunnaTable.id,id))
   return (
-    <div className='relative min-h-screen'>
+    <div className='relative dark:bg-[#0d0d1f] dark:text-white min-h-screen'>
     <div
-        className="absolute inset-0 z-10 opacity-[0.08] bg-repeat bg-center"
+        className="absolute inset-0 z-10 dark:opacity-10 opacity-30 bg-repeat bg-center"
         style={{
         backgroundImage: `url(/pattern1.png)`,
         backgroundSize: "150px"

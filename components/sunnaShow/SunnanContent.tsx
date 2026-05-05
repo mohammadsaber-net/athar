@@ -48,7 +48,7 @@ export default function SunnanContent({content}:Props) {
     {stars.map((star, i) => (
         <Moon
         key={i}
-        className="absolute z-10 rounded-full text-indigo-400"
+        className="absolute z-10 rounded-full dark:text-cyan-200 text-indigo-400"
         style={{
             top: star.top,
             left: star.left,
@@ -61,18 +61,17 @@ export default function SunnanContent({content}:Props) {
     </div>
       {content.map((sunna:SunnaType)=>(
         <div className="mb-10 border-t-2 p-2 bg-transparent relative z-20 border-gray-300" key={sunna.id}>
-          <h2 className="text-xl md:max-w-xl max-w-md text-indigo-900 md:text-2xl">
+          <h2 className="text-xl md:max-w-xl max-w-md dark:text-white text-indigo-900 md:text-2xl">
             {sunna.sunna}
           </h2>
           <div className="mt-2 text-gray-700 max-w-2xl 
           ">
-            <div dangerouslySetInnerHTML={{__html:(sunna.tafsir || "").slice(0,200)}}/>
-            <Link className="text-blue-600 active:text-blue-800" href={`sunna/${sunna.id}`}>
+            <div className="dark:text-white" dangerouslySetInnerHTML={{__html:(sunna.tafsir || "").slice(0,200)}}/>
+            <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`sunna/${sunna.id}`}>
              عرض المزيد...
             </Link>
           </div>
         </div>
-        // <AllSunna key={sunna.id} sunna={sunna}/>
       )) }
   </div>
   )

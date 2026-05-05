@@ -12,14 +12,14 @@ export default async function Summary() {
   });
   const {data} = await res.json();
   return (
-    <div className="min-h-screen bg-[#f9f8f3] pt-10">
+    <div className="dark:bg-[#0d0d1f] dark:text-white bg-[#f9f8f3]">
       <div className="max-w-6xl pb-10 px-6">
         <h1 className="text-2xl md:text-4xl pt-4 mb-3 font-bold ">
             عرض ملخص لبعض ما تجدونه في هذا الموقع بإذن الله تعالي
         </h1>
         <p className="max-w-2xl text-lg">
-            يمكنكم تصفح المزيد والمشاركة بتعليقاتكم وملاحظاتكم في كل قسم من أقسام الموقع, <span className="text-cyan-600 font-bold">فكل ما هو موجود في هذا الموقع هو من أجل الإفادة العامة,</span>
-            لذلك لا تبخلوا علينا بملاحظاتكم وتعليقاتكم,
+            يمكنكم تصفح المزيد والمشاركة بتعليقاتكم وملاحظاتكم في كل قسم من أقسام الموقع , <span className="text-cyan-500 font-bold">فكل ما هو موجود في هذا الموقع هو من أجل الإفادة العامة, </span> 
+            لذلك لا تبخلوا علينا بملاحظاتكم وتعليقاتكم.
         </p>
         <div 
         className="pb-5 pt-2 border-t-2 border-zinc-300">
@@ -31,7 +31,8 @@ export default async function Summary() {
                 <div className='whitespace-nowrap flex items-center justify-center 
                  h-70 p-1'>
                 <Link
-                  className='text-[#1a3636] active:text-green-600 font-semibold inline'
+                  className='text-[#1a3636] active:text-green-600 font-semibold 
+                  dark:text-cyan-500 active:text-green-300 inline'
                   href={`/name`}>
                 عرض المزيد من <br /> أسماء الله الحسني <br /> <ArrowBigLeft className="m-auto"/>
                 </Link>
@@ -46,7 +47,8 @@ export default async function Summary() {
                 <div className='whitespace-nowrap flex items-center justify-center 
                  h-70 p-1'>
                 <Link
-                  className='text-[#1a3636] active:text-green-600 font-semibold inline'
+                  className='text-[#1a3636] active:text-green-600 
+                  dark:text-cyan-500 active:text-green-300 font-semibold inline'
                   href={`/wakafat`}>
                 عرض المزيد من <br /> الوقفات القرآنية<br /> <ArrowBigLeft className="m-auto"/>
                 </Link>
@@ -61,7 +63,9 @@ export default async function Summary() {
                 <div className='whitespace-nowrap flex items-center justify-center 
                   h-70 p-1'>
                 <Link
-                  className='text-[#1a3636] active:text-green-600 font-semibold inline'
+                  className='text-[#1a3636] active:text-green-600 
+                  dark:text-cyan-500 active:text-green-300
+                  font-semibold inline'
                   href={`/sunna`}>
                 عرض المزيد من <br /> السنن المهجورة<br /> <ArrowBigLeft className="m-auto"/>
                 </Link>

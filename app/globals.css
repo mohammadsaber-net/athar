@@ -114,19 +114,28 @@ body {
     left: 125%;
   }
 }
-.night-bg {
-  /* background: linear-gradient(
-    to bottom,
-    #0b1220,
-    #0f1a2b,
-    #05070f
-  );
-  color: white; */
+/* .night-bg{
   background: linear-gradient(
     to bottom,
     #0b1220 0%,
     #0f1a2b 50%,
     #05070f 100%
   );
+  color: white;
+} */
+/* الوضع الافتراضي (Light) */
+.night-bg {
+  background-color: #f9f8f3;
+  color: black;
+}
+
+/* لما يكون الـ Dark Mode شغال */
+.dark .night-bg {
+  background: linear-gradient(
+    to bottom,
+    #0b1220 0%,
+    #0f1a2b 50%,
+    #05070f 100%
+  ) !important; /* الـ important هنا عشان نضمن إنه يغلب أي لون خلفية تاني */
   color: white;
 }

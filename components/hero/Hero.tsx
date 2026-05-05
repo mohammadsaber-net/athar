@@ -33,14 +33,14 @@ export default function Hero() {
       left: Math.random() * 100,
       delay: Math.random() * 5,
       duration: Math.random() * 6 + 4,
-      size: Math.random() * 10 + 10,
+      size: Math.random() * 10 + 5 ,
     }));
 
     setStars(generatedStars);
   }, []);
   return (
     <>
-    <section className="relative night-bg px-4 text-center pt-2 text-gray-900">
+    <section className="relative min-h-[80vh] night-bg px-4 text-center pt-2 text-gray-900">
         <picture>
           <source media="(max-width: 768px)" srcSet="/hero-mobile.png" />
           <img 
@@ -53,7 +53,8 @@ export default function Hero() {
         <Star
           key={i}
           size={star.size}
-          className="absolute dark:text-white text-[#c9a24d] animate-star pointer-events-none z-0"
+          className="absolute
+          dark:text-white text-[#c9a24d] animate-star pointer-events-none z-0"
           style={{
             top: `${star.top}%`,
             left: `${star.left}%`,
@@ -75,7 +76,7 @@ export default function Hero() {
           <div className="flex justify-between items-center mt-2">
             <SharePopup text={`« ${tableData?.wakfa?.aya || "الآية"} »\n${tableData?.wakfa?.ayaSource || "مصدر الآية"}`}/>
             <Link 
-            className="bg-[#0f3d2e] dark:bg-cyan-600 relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
+            className="bg-[#0f3d2e] dark:bg-cyan-900 relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
             href={`/wakafat/${tableData?.wakfa?.id}`}>
                 اقرأ المزيد
             </Link>
@@ -91,7 +92,7 @@ export default function Hero() {
           <div className="flex justify-between items-center mt-2">
             <SharePopup text={`« ${tableData?.hadith?.sunna || "الحديث"} »\n${tableData?.hadith?.sunnaSource || "مصدر الحديث"}`}/>
             <Link 
-            className="bg-[#0f3d2e] dark:bg-cyan-600 relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
+            className="bg-[#0f3d2e] dark:bg-cyan-900 relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
             href={`/sunna/${tableData?.hadith?.id}`}>
                 اقرأ المزيد
             </Link>
@@ -120,7 +121,7 @@ export default function Hero() {
         </div>
     </div>
     </section>
-    <div className="relative -mt-14 md:-mt-8 z-30">
+    <div className="relative dark:bg-[#0d0d1f] bg-[#f9f8f3] -mt-14 md:-mt-8 z-30">
       <SearchInput />
     </div>
     </>

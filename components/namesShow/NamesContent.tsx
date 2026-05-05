@@ -16,13 +16,14 @@ export default function NamesContent({content}:Props) {
               alt={typeof searchedName?.image === 'string' ? searchedName.image : ''}
             />
             <div className=''>
-            <h2 className="text-xl md:max-w-xl max-w-md text-indigo-900 md:text-2xl">
+            <h2 className="text-xl md:max-w-xl max-w-md dark:text-white text-indigo-900 md:text-2xl">
                 {searchedName.name}
             </h2>
-            <div className="mt-2 text-gray-700 max-w-2xl 
-            ">
-            <div dangerouslySetInnerHTML={{__html:searchedName.meaning.slice(0,200)}}/>
-            <Link className="text-blue-600 active:text-blue-800" href={`name/${searchedName.id}`}>
+            <div className="mt-2 text-gray-700 max-w-2xl ">
+            <div className='dark:text-white'>
+              <div dangerouslySetInnerHTML={{__html:searchedName.meaning.slice(0,200)}}/>
+            </div>
+            <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`name/${searchedName.id}`}>
                عرض المزيد...
             </Link>
             </div>

@@ -6,19 +6,19 @@ export default async function sunnaPage() {
   const data = await db.select().from(sunnaTable)
   return (
     <section
-    className='bg-zinc-100 px-6 min-h-screen md:pt-8 pt-16'>
+    className='bg-zinc-100 dark:bg-[#0d0d1f] dark:text-white px-6 min-h-screen md:pt-8 pt-16'>
       <SearchInput />
       <div className='mb-2 py-2 max-w-7xl'>
-        <h1 className='text-2xl md:text-3xl text-[#0f3d2e] font-bold mb-2'>
+        <h1 className='text-2xl dark:text-white md:text-3xl text-[#0f3d2e] font-bold mb-2'>
           السنن المهجورة من هدي النبي ﷺ
         </h1>
         <p className='max-w-md'>
-          في هذا القسم سنعرض بعون الله مجموعة من السنن المهجورة التي وردت عن النبي ﷺ، 
-          محاولين إحياءها في حياتنا اليومية، وبيان فضلها وأثرها على المسلم في دنياه وآخرته، 
-          <span className='text-cyan-600'>
+          في هذا القسم سنعرض بعون الله مجموعة من السنن المهجورة التي وردت عن النبي ﷺ， 
+          محاولين إحياءها في حياتنا اليومية، وبيان فضلها وأثرها على المسلم في دنياه وآخرته， 
+          <span className='text-cyan-600 dark:text-cyan-400'>
             وذلك بالاعتماد على الأحاديث الصحيحة وشرح أهل العلم بإذن الله تعالى.
           </span>
-          <span className='text-blue-600 block'>
+          <span className='block'>
             يمكنك التعليق أسفل كل سنة ومشاركتنا تجربتك في تطبيقها
           </span>
         </p>

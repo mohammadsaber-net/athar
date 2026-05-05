@@ -16,18 +16,18 @@ export default function PcNav(
     : Props) {
   return (
       <nav 
-        className="md:flex gap-6 hidden text-[#1a3636] items-center relative">
+        className="md:flex gap-6 hidden text-[#1a3636] dark:text-white items-center relative">
             <div 
             onClick={()=>setOpenList(!openList)}
             className="cursor-pointer 
             flex items-center 
-            hover:text-gray-900 transition">
+            hover:text-gray-900 dark:hover:text-gray-200 transition">
                 الاقسام
                 <Icon />
             </div>
             <div 
-            className={`flex absolute right-0 top-12 w-48 p-2 flex-col 
-            bg-white/60 backdrop-blur-sm transform transition shadow-lg
+            className={`flex absolute right-0 top-[44px] w-48 p-2 flex-col 
+            bg-white/60 dark:bg-black/30 backdrop-blur transform transition shadow-lg
             ${openList?
             "opacity-100 z-50 -translate-y-1":
             "opacity-0 pointer-events-none translate-y-8"} rounded-b-lg `}
@@ -47,7 +47,7 @@ export default function PcNav(
                 {
                 return <React.Fragment key={item.name}>
                 <div 
-                className="cursor-pointer hover:text-gray-900 transition"
+                className="cursor-pointer hover:text-gray-900 dark:hover:text-gray-200 transition"
                 onClick={()=>setOpenLogout(true)}
                 >
                     تسجيل خروج
@@ -70,7 +70,7 @@ export default function PcNav(
                 return(
                 <Link key={item.name} 
                 href={item.href}
-                className="cursor-pointer hover:text-gray-900 transition">
+                className="cursor-pointer dark:hover:text-gray-300 hover:text-gray-900 transition">
                     {item.name}
                 </Link>
                 )

@@ -50,7 +50,7 @@ export default function MobileNav(
     </div>
     <div 
       className={`flex absolute left-4 top-16 w-40 p-2 flex-col 
-      bg-white/60 backdrop-blur-sm transform transition shadow-lg
+      bg-white/60 dark:bg-black/30 backdrop-blur-sm transform transition shadow-lg
       ${openList?
       "opacity-100 translate-y-0":
       "opacity-0 pointer-events-none translate-y-8"} rounded-lg `}

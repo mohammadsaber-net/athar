@@ -14,10 +14,10 @@ export default async function page({params}:Props) {
     const [content]=await db.select().from(namesTable)
     .where(eq(namesTable.id,id))
   return (
-    <div className='relative min-h-screen'>
+    <div className='relative dark:bg-[#0d0d1f] dark:text-white min-h-screen'>
         <Name logged={logged} searchedName={content}/>
         <div
-        className="absolute inset-0 z-0 opacity-[0.05] bg-repeat bg-center"
+        className="absolute inset-0 z-0 dark:opacity-10 opacity-5 bg-repeat bg-center"
         style={{
             backgroundImage: `url(${content?.image})`,
             backgroundSize: "150px"
