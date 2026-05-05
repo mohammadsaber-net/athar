@@ -16,14 +16,14 @@ export default function FixedModal({isOpen,onClose,children}:ModalProps) {
             exit={{opacity:0}}
             transition={{duration:0.25}}
             onClick={onClose}
-            className="fixed inset-0 z-[99999999999999] flex items-center justify-center bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-[99999999999999] flex items-center dark:bg-white/20 justify-center bg-black/40 backdrop-blur-sm"
             >
                 <motion.div 
                 initial={{ scale: 0.85, y: -40 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.85, y: -40 }}
                 transition={{ duration: 0.25 }}
-                className="bg-white rounded-2xl shadow-xl p-6 w-[90%] max-w-md"
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 w-[90%] max-w-md"
                 onClick={(e) => e.stopPropagation()}
                 >
                     {children}

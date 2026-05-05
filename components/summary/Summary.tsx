@@ -31,8 +31,8 @@ export default async function Summary() {
                 <div className='whitespace-nowrap flex items-center justify-center 
                  h-70 p-1'>
                 <Link
-                  className='text-[#1a3636] active:text-green-600 font-semibold 
-                  dark:text-cyan-500 active:text-green-300 inline'
+                  className='text-emerald-700 active:text-green-600 font-semibold 
+                  dark:text-emerald-400 active:text-emerald-300 inline'
                   href={`/name`}>
                 عرض المزيد من <br /> أسماء الله الحسني <br /> <ArrowBigLeft className="m-auto"/>
                 </Link>
@@ -47,8 +47,8 @@ export default async function Summary() {
                 <div className='whitespace-nowrap flex items-center justify-center 
                  h-70 p-1'>
                 <Link
-                  className='text-[#1a3636] active:text-green-600 
-                  dark:text-cyan-500 active:text-green-300 font-semibold inline'
+                  className='text-emerald-700 active:text-green-600 
+                  dark:text-emerald-400 active:text-emerald-300 font-semibold inline'
                   href={`/wakafat`}>
                 عرض المزيد من <br /> الوقفات القرآنية<br /> <ArrowBigLeft className="m-auto"/>
                 </Link>
@@ -63,9 +63,8 @@ export default async function Summary() {
                 <div className='whitespace-nowrap flex items-center justify-center 
                   h-70 p-1'>
                 <Link
-                  className='text-[#1a3636] active:text-green-600 
-                  dark:text-cyan-500 active:text-green-300
-                  font-semibold inline'
+                  className='text-emerald-700 active:text-green-600 font-semibold 
+                  dark:text-emerald-400 active:text-emerald-300 inline'
                   href={`/sunna`}>
                 عرض المزيد من <br /> السنن المهجورة<br /> <ArrowBigLeft className="m-auto"/>
                 </Link>
