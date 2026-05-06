@@ -9,7 +9,7 @@ export default function AllNames({searchedName}:Props) {
     m-auto w-32 md:w-48 md:h-60 h-48
     border border-[#c9a24d] rounded-md p-2'>
         <img
-          className='w-[100%] absolute inset-0 z-10 h-[100%] opacity-10'
+          className='w-[100%] absolute dark:opacity-20 inset-0 z-10 h-[100%] opacity-10'
           src={searchedName?.image || undefined}
           alt={typeof searchedName?.image === 'string' ? searchedName.image : ''}
         />

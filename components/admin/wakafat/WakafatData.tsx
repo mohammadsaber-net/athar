@@ -12,7 +12,8 @@ export default function WakafatData({tableData}:Props) {
     <>
      <div className="w-full text-center overflow-x-auto">
       <table className="w-full rounded-lg overflow-hidden">
-        <thead className="bg-gray-100 border border-gray-300 text-indigo-600">
+        <thead className="bg-gray-100 dark:bg-[#0d0d1f]
+         border border-gray-300 text-indigo-600 dark:text-emerald-400">
           <tr>
             <th className="p-3 border border-gray-300">الآية</th>
             <th className="p-3 border border-gray-300">مصدر الآية</th>
@@ -22,11 +23,11 @@ export default function WakafatData({tableData}:Props) {
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className='dark:text-white'>
           {tableData&&tableData.map((item:WakafatType) => (
             <tr
               key={item.id}
-              className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition"
+              className="bg-white dark:bg-zinc-900 odd:bg-white odd:dark:bg-zinc-900 even:bg-gray-50 even:dark:bg-zinc-800/50 hover:bg-gray-100 hover:dark:bg-zinc-800 transition-colors duration-200"
             >
               <td className="p-3 border border-gray-300 min-w-[250px]">{item.aya}</td>
               <td className="p-3 border border-gray-300 whitespace-nowrap">
@@ -41,10 +42,12 @@ export default function WakafatData({tableData}:Props) {
               <td className="p-3 flex flex-col gap-2 border border-gray-300 whitespace-nowrap">
                 <button 
                 onClick={()=>setEdit(item)}
-                className="text-blue-500 cursor-pointer hover:text-blue-700">تعديل</button>
+                className="text-blue-500 cursor-pointer hover:text-blue-700
+                dark:hover:text-emerald-300 dark:text-emerald-400">تعديل</button>
                 <button 
                 onClick={()=>setDelete(item)}
-                className="text-red-500 cursor-pointer hover:text-red-700">حذف</button>
+                className="text-red-500 cursor-pointer hover:text-red-700
+                dark:hover:text-red-300 dark:text-red-400">حذف</button>
               </td>
             </tr>
           ))}

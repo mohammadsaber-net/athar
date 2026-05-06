@@ -64,12 +64,12 @@ export default function MainNav() {
   const Icon=openList?ArrowUp:ArrowDown
   return loading?(
     <section className="bg-[#c9a24d]/40 dark:bg-[#0d1117] justify-center font-bold p-2 flex 
-    items-center gap-12 text-[#1a3636] dark:text-white shadow">
+    items-center gap-12 text-[#1a3636] transition-colors duration-300 dark:text-white shadow">
       <Loader2 className="animate-spin transition"/>
     </section>
   ): (
     <section className="bg-[#c9a24d]/40 dark:bg-[#0d1117] justify-between md:justify-center font-bold p-2 flex 
-    items-center gap-12 dark:text-white text-[#1a3636] shadow">
+    items-center gap-12 dark:text-white text-[#1a3636] shadow transition-colors duration-300">
     <Link href={"/"} className=' flex items-center'>
       <span className="text-2xl md:text-4xl font-extrabold 
     text-transparent bg-clip-text drop-shadow-lg bg-gradient-to-r from-[#0f3d2e] 

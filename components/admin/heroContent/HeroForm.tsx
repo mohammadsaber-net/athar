@@ -78,16 +78,18 @@ export default function HeroForm({setCreate,setEdit,create,edit}:Props) {
     <FixedModal isOpen={!!edit || !!create} onClose={()=>{setEdit?.(null);setCreate?.(false)}}>
     <form
       onSubmit={handleSubmit}
-      className="max-w-xl bg-white text-indigo-600 mx-auto space-y-4 relative"
+      className="max-w-xl p-1 mx-auto space-y-4 relative "
     >
-      <h2 className="text-center text-xl md:text-2xl mb-4 text-blue-800 font-bold">{edit?"تعديل":"إضافة"} محتوى</h2>
-      <textarea
+      <h2 className="text-center text-xl md:text-2xl mb-4
+      dark:text-emerald-400 text-blue-800 font-bold">{edit?"تعديل":"إضافة"} محتوى</h2>
+      <input
         name="aya"
         placeholder="الآية"
         value={formData.aya}
         onChange={handleChange}
         required
-        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 resize-none rounded min-h-[80px]"
+        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded
+        dark:bg-gray-700 dark:text-white dark:focus:border-emerald-400"
       />
 
       <input
@@ -97,16 +99,18 @@ export default function HeroForm({setCreate,setEdit,create,edit}:Props) {
         value={formData.ayaSource}
         onChange={handleChange}
         required
-        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded"
+        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded
+        dark:bg-gray-700 dark:text-white dark:focus:border-emerald-400"
         />
 
-      <textarea
+      <input
         name="hadith"
         placeholder="الحديث"
         value={formData.hadith}
         onChange={handleChange}
         required
-        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 resize-none min-h-[80px]"
+        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded
+        dark:bg-gray-700 dark:text-white dark:focus:border-emerald-400"
       />
 
       <input
@@ -116,7 +120,8 @@ export default function HeroForm({setCreate,setEdit,create,edit}:Props) {
         value={formData.hadithSource}
         onChange={handleChange}
         required
-        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded"
+        className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded
+        dark:bg-gray-700 dark:text-white dark:focus:border-emerald-400"
       />
       <div className="flex gap-4 justify-start items-center">
       <button

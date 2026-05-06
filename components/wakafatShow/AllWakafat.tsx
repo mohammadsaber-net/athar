@@ -11,7 +11,7 @@ export default function AllWakafat({wakafat}:Props) {
                  border border-[#c9a24d] dark:border-[#c9a24d]/50
                 rounded-lg shadow-lg flex items-center justify-center
                 text-center p-1 md:p-2'>
-              <div className='absolute z-20 inset-0 opacity-50 dark:opacity-20 bg-[url("/pattern.png")] bg-cover'></div>
+              <div className='absolute z-20 inset-0 opacity-40 dark:opacity-15 bg-[url("/pattern.png")] bg-cover'></div>
               <p className='text-xs md:text-sm dark:text-white text-[#1a3636] leading-relaxed'>
                 {wakafat?.aya}
               </p>

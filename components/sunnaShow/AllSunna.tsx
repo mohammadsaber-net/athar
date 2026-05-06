@@ -11,7 +11,7 @@ export default function AllSunna({sunna}:Props) {
                  border border-[#1a3636] 
                 rounded-lg shadow-lg flex items-center justify-center
                 text-center p-1 md:p-2'>
-              <div className='absolute z-20 inset-0 opacity-20 dark:opacity-10 bg-[url("/pattern1.png")] bg-cover'></div>
+              <div className='absolute z-20 inset-0 opacity-15 dark:opacity-10 bg-[url("/pattern1.png")] bg-cover'></div>
               <p className='text-xs md:text-sm dark:text-white text-black leading-relaxed'>
                 {sunna?.sunna}
               </p>

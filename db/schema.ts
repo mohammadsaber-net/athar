@@ -1,6 +1,7 @@
 
 import { relations } from "drizzle-orm";
-import { text, timestamp } from "drizzle-orm/pg-core";
+// import { integer } from "drizzle-orm/gel-core";
+import { text,integer, timestamp } from "drizzle-orm/pg-core";
 import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 export const heroTable=pgTable("hero",{
@@ -33,6 +34,7 @@ export const wakafatTableZodSchema=createSelectSchema(wakafatTable)
 export const wakafatCommentTable=pgTable("wakafatComment",{
     id:text("id").primaryKey(),
     comment:text("comment").notNull(),
+    likes: integer("likes").default(0),
     createdAt:timestamp("created_at").defaultNow(),
     wakafatId: text("wakafat_id").references(()=>wakafatTable.id,{
         onDelete:"cascade"
@@ -68,6 +70,7 @@ export const sunnaTable=pgTable("sunna",{
 export const sunnaTableZodSchema=createSelectSchema(sunnaTable)
 export const sunnaCommentTable=pgTable("sunnaComment",{
     id:text("id").primaryKey(),
+    likes: integer("likes").default(0),
     comment:text("comment").notNull(),
     createdAt:timestamp("created_at").defaultNow(),
     sunnaId: text("sunna").references(()=>sunnaTable.id,{
@@ -102,6 +105,7 @@ export const namesTableZodSchema=createSelectSchema(namesTable)
 export const namesCommentTable=pgTable("namesComment",{
     id:text("id").primaryKey(),
     comment:text("comment").notNull(),
+    likes: integer("likes").default(0),
     createdAt:timestamp("created_at").defaultNow(),
     nameId: text("nameId").references(()=>namesTable.id,{
         onDelete:"cascade"
@@ -137,3 +141,10 @@ export const messageTable=pgTable("messageTable",{
     message:text("message").notNull(),
 })
 export const messageTableZodSchema=createSelectSchema(messageTable)
+export const likesTable = pgTable("likes", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  targetId: text("target_id").notNull(), 
+  targetType: text("target_type").notNull(), 
+})
+export const likesTableZodSchema=createSelectSchema(likesTable)

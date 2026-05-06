@@ -29,7 +29,7 @@ export default function ConfirmDelete({setDelete,deletion}:Props) {
     }
   return (
     <FixedModal isOpen={!!deletion} onClose={()=>setDelete(null)}>
-        <h2 className="text-xl text-gray-800 mb-4 md-text-2xl">
+        <h2 className="text-xl dark:text-white text-gray-800 mb-4 md-text-2xl">
             تأكيد حذف {deletion?.ayaSource} و  التفسير - { deletion?.tafsir.slice(0,30)}... ؟
         </h2>
         <div className="flex gap-4 justify-start items-center">

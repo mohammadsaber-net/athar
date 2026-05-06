@@ -11,7 +11,8 @@ export default async function layout({
     redirect("/");
   }
   return (
-    <section className='bg-gray-100 max-w-7xl min-h-screen py-6 px-4'>
+    <section className='bg-gray-100 dark:bg-[#0d0d1f] min-h-screen py-6 px-4
+     transition-colors duration-300'>
       {children}
     </section>
   )
