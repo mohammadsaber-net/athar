@@ -1,52 +1,59 @@
 "use client"
 import { handleDate } from '@/lib/handleDate';
 import { SunnaType, comments } from '@/lib/type'
-import {  Pencil } from 'lucide-react';
+import {  Heart, Pencil } from 'lucide-react';
 import { useState } from "react";
 import toast from 'react-hot-toast';
 import SharePopup from '../shareButton/ShareButton';
+import { toggleLike } from '@/redux/slice/togleLike';
+import { AppDispatch } from '@/redux/store';
+import { useDispatch } from 'react-redux';
 type Props={
     sunna:SunnaType,
     logged?:any
 }
 export default function Sunna({sunna,logged}:Props) {
     const [show,setShow]=useState(false)
+    const dispatch=useDispatch<AppDispatch>()
     const [comment,setComment]=useState<string>("")
     const [fetchComments,setfetchComments]=useState<any>(null)
     const [loading,setLoading]=useState(false)
-    const getComments=async(id:string)=>{
+        const getComments=async(id:string)=>{
         setLoading(true)
-        try {
+        try{
             const res=await fetch(`/api/comments/sunna/${id}`)
-            const data=await res.json()
-            if(data.success){
-                setfetchComments(data.data)
-            }else{
-                toast.error(data.message||"خطأ في جلب التعليقات")
+             const data=await res.json()
+             if(data.success){
+                 setfetchComments(data.data)
+             }else{
+                toast.error(data.message || "خطأ في جلب التعليقات");
+             }
+            }catch(err){
+                toast.error((err as Error).message||"خطأ في جلب التعليقات")
             }
-        } catch (error) {
-            toast.error((error as Error).message||"خطأ في جلب التعليقات")
-        }
-        setLoading(false)
+            setLoading(false)
     }
     const deleteComment=async(id:string)=>{
-        try {
+        toast.promise(
+            (async()=>{
             const res=await fetch(`/api/comments/sunna/${id}`,{method:"DELETE"})
             const data=await res.json()
             if(data.success){
                 getComments(sunna.id)
-                toast.success("تم الحذف")
             }else{
-                toast.error(data.message||"لم يتم الحذف")
-            }
-        } catch (error) {
-            toast.error((error as Error).message||"لم يتم الحذف")
-        }
+                throw new Error(data.message || "لم يتم الحذف ");
+             }
+        })(),{
+            loading:"يرجي الانتظار",
+            success:" تم الحذف",
+            error:(e:any) => (e?.message || "حدث خطأ غير متوقع") as string
+        })
     }
     const onSubmit=async(e:any)=>{
         e.preventDefault()
-        if(!comment) return toast.error("من فضلك أضف تعليقا")
-        try {
+        toast.promise(
+            (async()=>{
+            if(!comment) throw new Error("من فضلك اضف تعليقا");
             const res=await fetch("/api/comments/sunna",{
                 method:"POST",
                 credentials:"include",
@@ -55,15 +62,16 @@ export default function Sunna({sunna,logged}:Props) {
             const data=await res.json()
             if(data.success){
                 setComment("")
-                toast.success("تم إضافة تعليقك 👍")
                 getComments(sunna.id)
                 setShow(true)
-            }else{
-                toast.error(data.message||"خطأ في التعليق")
+           }else{
+                throw new Error(data.message || "خطأ في التعليق");
             }
-        } catch (error) {
-            toast.error((error as Error).message||"خطأ في التعليق")
-        }
+        })(),{
+            loading:"يرجي الانتظار",
+            success:" تم اضافة التعليق",
+            error:(e:any) => ((e as Error).message || "حدث خطأ غير متوقع")
+        })
     }
   return (
     <div className='pt-8 p-3 max-w-4xl'>
@@ -114,21 +122,23 @@ export default function Sunna({sunna,logged}:Props) {
                 >
                 {show ? "إخفاء التعليقات" : "عرض التعليقات"}
             </button>
-<div
+                <div
                 className={`transition-all duration-500 overflow-hidden ${
                     show ? "max-h-[1000px] mt-4 opacity-100" : "max-h-0 opacity-0"
                 }`}
                 >
                 <div className="flex flex-col gap-3 p-1"> {/* p-1 عشان الظل ميتجمعش عند الحواف */}
                     {fetchComments && fetchComments.length > 0 ? (
-                    fetchComments.map((comment: comments) => (
+                    fetchComments.map((comment: comments) => {
+                        const liked = comment.likes?.some(l => l.userId === logged?.id);
+                            return(
                         <div
                         key={comment.id}
                         className="bg-white dark:bg-[#161b22] p-3 border border-gray-100 dark:border-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
                         >
                         <div className="flex justify-between items-start mb-1">
                             <div className="text-indigo-600 dark:text-indigo-400 font-semibold text-sm">
-                            {comment.user?.firstName} {comment.user?.lastName}
+                            {comment.user?.userName}
                             </div>
                             <span className="text-[10px] text-gray-400 dark:text-gray-200">
                             {comment.createdAt ? handleDate(comment.createdAt) : ""}
@@ -137,18 +147,47 @@ export default function Sunna({sunna,logged}:Props) {
                         <div className="text-gray-700 dark:text-white text-sm leading-relaxed break-words">
                             {comment.comment}
                         </div>
-                        {comment?.userId === logged?.id && (
-                            <div className="flex justify-end mt-2 pt-2 border-t border-gray-50 dark:border-gray-800/50">
-                            <button
+                        <div className="flex justify-between mt-2 pt-2 border-t border-gray-50 dark:border-gray-800/50">
+                            <div className='flex gap-1 items-center'>
+                                <Heart 
+                                onClick={() => {
+                                    dispatch(toggleLike({
+                                        commentId: comment.id,
+                                        targetType: "sunna",
+                                        articleId: sunna.id
+                                    }));
+                                    setfetchComments((prev: any[]) =>
+                                        prev.map((c) =>
+                                        c.id === comment.id
+                                            ? {
+                                                ...c,
+                                                likes: c.likes?.some((i:any) => i.userId === logged?.id)
+                                                ? c.likes.filter((i:any)  => i.userId !== logged?.id)
+                                                : [...(c.likes || []), { userId: logged?.id }]
+                                            }
+                                            : c
+                                        )
+                                    );
+                                    }}
+                                className={`cursor-pointer size-5
+                                ${liked
+                                ? "text-rose-600 fill-rose-600"
+                                : "fill-gray-500 text-gray-600"}`}
+                                />
+                                <span className='text-gray-500 text-sm'>
+                                    {comment.likes.length>0 &&
+                                     comment.likes.length}
+                                </span>
+                            </div>
+                            {comment?.userId === logged?.id && (<button
                                 onClick={() => deleteComment(comment.id)}
                                 className="text-red-400 hover:text-red-600 dark:hover:text-red-500 text-xs font-medium transition-colors flex items-center gap-1"
                             >
-                                <span>حذف</span>
-                            </button>
+                                حذف
+                            </button>)}
                             </div>
-                        )}
                         </div>
-                    ))
+                    )})
                     ) : (
                     <p className="text-center text-gray-400 text-sm py-4">لا توجد تعليقات بعد.</p>
                     )}

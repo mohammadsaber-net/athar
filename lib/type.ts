@@ -12,9 +12,15 @@ export type comments={
   createdAt:Date|null,
   comment:String,
   user:{
-    firstName:string,
-    lastName:string,
+    userName:string
   }|null
+  likes:{
+    id: string;
+    userId: string;
+    commentId: string;
+    articleId: string;
+    targetType: string;
+  }[]|[]
 }
 export type WakafatTypeWithComments =WakafatType & { comments:comments[] }
 export type HeroFormData = {

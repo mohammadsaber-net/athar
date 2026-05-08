@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { usersTable, userTableZodSchema } from "@/db/schema";
 import db from "@/db";
-import { eq } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
 import { isAdmin } from "@/lib/isAdmin";
 export async function GET(req:NextRequest) {
     try {
@@ -30,11 +30,14 @@ export async function POST(req:NextRequest){
     try {
         const body =await req.json() as any;
         const [existingUser]=await db.select()
-        .from(usersTable).where(eq(usersTable.email,body.email))
+        .from(usersTable).where(or( 
+            eq(usersTable.email,body.email),
+            eq(usersTable.userName,body.userName)
+        ))
         if(existingUser){
             return NextResponse.json({
                 success:false,
-                message:"البريد الإلكتروني مستخدم بالفعل"
+                message:"البريد الإلكتروني او الاسم مستخدم بالفعل"
             })
         }
         const userId = crypto.randomUUID()

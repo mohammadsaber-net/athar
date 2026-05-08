@@ -5,85 +5,50 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1772053359058,
-      "tag": "0000_nice_toxin",
+      "when": 1778252028415,
+      "tag": "0000_secret_cloak",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1772211654168,
-      "tag": "0001_military_living_mummy",
+      "when": 1778252794017,
+      "tag": "0001_unique_nightmare",
       "breakpoints": true
     },
     {
       "idx": 2,
       "version": "7",
-      "when": 1772569165213,
-      "tag": "0002_slimy_freak",
+      "when": 1778252860963,
+      "tag": "0002_furry_namora",
       "breakpoints": true
     },
     {
       "idx": 3,
       "version": "7",
-      "when": 1772806916164,
-      "tag": "0003_amusing_joshua_kane",
+      "when": 1778253089797,
+      "tag": "0003_overconfident_rhino",
       "breakpoints": true
     },
     {
       "idx": 4,
       "version": "7",
-      "when": 1774126221395,
-      "tag": "0004_unknown_rage",
+      "when": 1778253159741,
+      "tag": "0004_abandoned_sabra",
       "breakpoints": true
     },
     {
       "idx": 5,
       "version": "7",
-      "when": 1774286291970,
-      "tag": "0005_living_peter_quill",
+      "when": 1778253649897,
+      "tag": "0005_windy_hedge_knight",
       "breakpoints": true
     },
     {
       "idx": 6,
       "version": "7",
-      "when": 1774471356635,
-      "tag": "0006_unique_venom",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1774472827147,
-      "tag": "0007_salty_whiplash",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "7",
-      "when": 1777130876866,
-      "tag": "0008_acoustic_george_stacy",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "7",
-      "when": 1777137623147,
-      "tag": "0009_common_agent_brand",
-      "breakpoints": true
-    },
-    {
-      "idx": 10,
-      "version": "7",
-      "when": 1777215561270,
-      "tag": "0010_red_wendell_rand",
-      "breakpoints": true
-    },
-    {
-      "idx": 11,
-      "version": "7",
-      "when": 1777216493030,
-      "tag": "0011_abandoned_pyro",
+      "when": 1778253674421,
+      "tag": "0006_mushy_bedlam",
       "breakpoints": true
     }
   ]

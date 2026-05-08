@@ -1,1 +1,0 @@
-ALTER TABLE "messageTable" ALTER COLUMN "phone" DROP NOT NULL;

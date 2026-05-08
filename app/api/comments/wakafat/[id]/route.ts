@@ -1,7 +1,7 @@
 import db from "@/db"
-import { wakafatCommentTable } from "@/db/schema"
+import { likesTable, wakafatCommentTable } from "@/db/schema"
 import { isLogged } from "@/lib/logged"
-import { and, eq } from "drizzle-orm"
+import { and, eq, inArray } from "drizzle-orm"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(req:NextRequest,
@@ -14,14 +14,23 @@ export async function GET(req:NextRequest,
                 message:'الداتا غير متوفرة'
             },{status:404}) 
         }
-        const data=await db.query.wakafatCommentTable.findMany({
+        const result=await db.query.wakafatCommentTable.findMany({
             where:(eq(wakafatCommentTable.wakafatId,id)),
             with:{
                 user:{
-                    columns:{firstName:true , lastName:true}
+                    columns:{userName:true}
                 }
             }
         })
+        const commentIds = result.map((c) => c.id);
+        const likes=await db.select().from(likesTable)
+        .where(inArray(likesTable.commentId,commentIds))
+        const data = result.map((comment) => {
+            return {
+                ...comment,
+                likes: likes.filter((l) => l.commentId === comment.id),
+            };
+        });
         return NextResponse.json({
             success:true,
             data

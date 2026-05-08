@@ -1,0 +1,1 @@
+ALTER TABLE "wakafatComment" ADD COLUMN "any" text NOT NULL;

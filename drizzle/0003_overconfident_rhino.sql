@@ -1,0 +1,1 @@
+ALTER TABLE "wakafat" ALTER COLUMN "any" DROP NOT NULL;
