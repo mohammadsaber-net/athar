@@ -14,6 +14,7 @@ export const heroTableZodSchema=createSelectSchema(heroTable)
 export const usersTable=pgTable("users",{
     id:text("id").primaryKey(),
     userName:text("user_name").notNull().unique(),
+    displayName:text("display_name").notNull(),
     password:text("password").notNull(),
     email:text("email").notNull().unique(),
     phone:text("phone").notNull(),
@@ -32,6 +33,7 @@ export const wakafatTableZodSchema=createSelectSchema(wakafatTable)
 export const wakafatCommentTable=pgTable("wakafatComment",{
     id:text("id").primaryKey(),
     comment:text("comment").notNull(),
+    parentCommentId:text("parent_comment_id"),
     likes: integer("likes").default(0),
     createdAt:timestamp("created_at").defaultNow(),
     wakafatId: text("wakafat_id").references(()=>wakafatTable.id,{
@@ -69,6 +71,7 @@ export const sunnaTableZodSchema=createSelectSchema(sunnaTable)
 export const sunnaCommentTable=pgTable("sunnaComment",{
     id:text("id").primaryKey(),
     likes: integer("likes").default(0),
+    parentCommentId:text("parent_comment_id"),
     comment:text("comment").notNull(),
     createdAt:timestamp("created_at").defaultNow(),
     sunnaId: text("sunna").references(()=>sunnaTable.id,{
@@ -103,6 +106,7 @@ export const namesTableZodSchema=createSelectSchema(namesTable)
 export const namesCommentTable=pgTable("namesComment",{
     id:text("id").primaryKey(),
     comment:text("comment").notNull(),
+    parentCommentId:text("parent_comment_id"),
     likes: integer("likes").default(0),
     createdAt:timestamp("created_at").defaultNow(),
     nameId: text("nameId").references(()=>namesTable.id,{
@@ -147,3 +151,26 @@ export const likesTable = pgTable("likes", {
   targetType: text("target_type").notNull(), 
 })
 export const likesTableZodSchema=createSelectSchema(likesTable)
+
+
+
+export const mentionsTable = pgTable("mentions", {
+  id: text("id").primaryKey(),
+  commentId: text("comment_id")
+    .references(() => wakafatCommentTable.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+  mentionedUserId: text("mentioned_user_id")
+    .references(() => usersTable.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+export const usersAndCommentsMentionsTable = relations(mentionsTable, ({ many }) => ({
+  wakafatComments: many(wakafatCommentTable),
+  sunnaComments: many(sunnaCommentTable),
+  namesComments: many(namesCommentTable),
+  mentionedUserId: many(usersTable),
+}));

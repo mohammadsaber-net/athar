@@ -1,19 +1,25 @@
 "use client"
 import { handleDate } from '@/lib/handleDate';
 import { WakafatType, comments } from '@/lib/type'
-import {  Heart, Pencil } from 'lucide-react';
+import {  Heart, MessageCircle, Pencil, Reply } from 'lucide-react';
 import { useState } from "react";
 import toast from 'react-hot-toast';
 import SharePopup from '../shareButton/ShareButton';
 import { useDispatch } from 'react-redux';
 import { AppDispatch} from '@/redux/store';
 import { toggleLike } from '@/redux/slice/togleLike';
+import FormatingText from '../animation/FormatingText';
+import FormatingMention from '../animation/FormatingMention';
 type Props={
     aya:WakafatType,
     logged?:any
 }
 export default function Aya({aya,logged}:Props) {
     const [show,setShow]=useState(false)
+    const [replyTo, setReplyTo] = useState<{
+        userName: string;
+        commentId: string;
+        } | null>(null);
     const [comment,setComment]=useState<string>("")
     const dispatch=useDispatch<AppDispatch>()
     const [fetchComments,setfetchComments]=useState<any>(null)
@@ -76,16 +82,15 @@ export default function Aya({aya,logged}:Props) {
   return (
     <div className='pt-8 p-3 max-w-4xl'>
         <div className='mb-2 relative z-50'>
-                <SharePopup text={`« ${aya.aya || "الاسم"} »\n${aya.tafsir.slice(0, 50)}... || " المعنى"}`}/>      
+                <SharePopup text={`\n« ${aya.aya || "الاسم"} »\n${aya.tafsir.slice(0, 200)}... || " المعنى"}\n`}/>      
         </div>
         <div className="relative z-20 transition">
             <h2 className=" text-2xl md:text-5xl dark:text-white text-center mb-0 mt-2 text-blue-900">
                 {aya?.aya} 
             </h2>
             
-            <div className={`mt-2 border-t md:text-xl pt-2 border-gray-200 `}>
-                <div
-                dangerouslySetInnerHTML={{ __html: aya?.tafsir||"" }} /> 
+            <div className={`mt-2 border-t pt-2 border-gray-200 `}>
+                <FormatingText text={aya.tafsir}/> 
             </div>
             <span className='text-start dark:text-white text-sm text-gray-600 mt-2 block'>
                 {aya?.ayaSource}
@@ -95,24 +100,6 @@ export default function Aya({aya,logged}:Props) {
              pt-2 border-t-2 border-gray-200
              transition-all delay-300 duration-300`}
             >
-            <form 
-                onSubmit={onSubmit}
-                className="flex gap-2 w-full dark:bg-white/20 items-center bg-white p-2 rounded-lg shadow-sm border border-gray-200"
-                >
-                <input 
-                    onChange={(e)=>setComment(e.target.value)}
-                    value={comment}
-                    placeholder='أضف تعليق...'
-                    className="flex-1 border border-gray-200 rounded-md px-3 py-2 text-sm
-                    focus:outline-none focus:ring-2 focus:ring-gray-300"
-                />
-                <button
-                    className='flex gap-1 dark:bg-gray-500 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
-                    type="submit"
-                >
-                    إرسال <Pencil className='size-4'/>
-                </button>
-            </form>
             <button 
                 onClick={()=>{
                     if(!show){ getComments(aya.id) }
@@ -137,17 +124,38 @@ export default function Aya({aya,logged}:Props) {
                         className="bg-white dark:bg-[#161b22] p-3 border border-gray-100 dark:border-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
                         >
                         <div className="flex justify-between items-start mb-1">
-                            <div className="text-indigo-600 dark:text-indigo-400 font-semibold text-sm">
-                            {comment.user?.userName}
+                            <div>
+                                <div className='text-sm text-gray-900 mb-0 dark:text-gray-100 font-semibold'>
+                                {comment.user?.displayName}
+                                </div>
+                                <div className='text-xs text-gray-600 mb-0 dark:text-gray-400 font-semibold'>
+                                {comment.user?.userName||""}@
+                                </div>
                             </div>
                             <span className="text-[10px] text-gray-400 dark:text-gray-200">
                             {comment.createdAt ? handleDate(comment.createdAt) : ""}
                             </span>
                         </div>
                         <div className="text-gray-700 dark:text-white text-sm leading-relaxed break-words">
-                            {comment.comment}
+                            <FormatingMention text={comment.comment}/>
                         </div>
                             <div className="flex justify-between mt-2 pt-2 border-t border-gray-50 dark:border-gray-800/50">
+                            <div className='flex items-center gap-4'>
+                            <button
+                                className="cursor-pointer"
+                                onClick={() => {
+                                    setReplyTo({
+                                    userName: comment.user?.userName||"",
+                                    commentId: comment.id,
+                                    });
+                                    setComment(`@${comment.user?.userName} `);
+                                    setTimeout(() => {
+                                    document.getElementById("wakafat-input")?.focus();
+                                    }, 100);
+                                }}
+                                >
+                                <Reply />
+                            </button>
                             <div className='flex gap-1 items-center'>
                                 <Heart 
                                 onClick={() => {
@@ -168,16 +176,17 @@ export default function Aya({aya,logged}:Props) {
                                             : c
                                         )
                                     );
-                                    }}
+                                }}
                                 className={`cursor-pointer size-5
-                                ${liked
-                                ? "text-rose-600 fill-rose-600"
-                                : "fill-gray-500 text-gray-600"}`}
-                                />
+                                    ${liked
+                                        ? "text-rose-600 fill-rose-600"
+                                        : "fill-gray-500 text-gray-600"}`}
+                                        />
                                 <span className='text-gray-500 text-sm'>
                                     {comment.likes.length>0 &&
                                      comment.likes.length}
                                 </span>
+                            </div>
                             </div>
                             {comment?.userId === logged?.id && (<button
                                 onClick={() => deleteComment(comment.id)}
@@ -204,6 +213,25 @@ export default function Aya({aya,logged}:Props) {
                     </div>
                 )}
             </div>
+            <form 
+                onSubmit={onSubmit}
+                className="flex gap-2 w-full  dark:bg-white/20 items-center bg-white p-2 rounded-lg shadow-sm border border-gray-200"
+                >
+                <input 
+                    id="wakafat-input"
+                    onChange={(e)=>setComment(e.target.value)}
+                    value={comment}
+                    placeholder='أضف تعليق...'
+                    className="flex-1 border border-gray-200 rounded-md px-3 py-2 text-sm
+                    focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    />
+                <button
+                    className='flex gap-1 dark:bg-gray-500 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
+                    type="submit"
+                >
+                    إرسال <Pencil className='size-4'/>
+                </button>
+            </form>
             </div>
         </div>
         </div>

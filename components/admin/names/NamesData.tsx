@@ -3,6 +3,7 @@ import { useState } from 'react'
 import ConfirmDelete from '../names/ConfirmDelete'
 import NamesForm from './NamesForm'
 import { NamesType } from '@/lib/type'
+import FormatingText from '@/components/animation/FormatingText'
 type Props={
     tableData:NamesType[]|null
 }
@@ -39,7 +40,7 @@ export default function NamesData({tableData}:Props) {
                 alt={item.name} />}
               </td>
               <td className="p-3 border border-gray-300 min-w-[250px]">
-                <div dangerouslySetInnerHTML={{ __html: item.meaning.slice(0,100) }} />
+                <FormatingText text={item.meaning?.slice(0,100)||""}/>
                 </td>
               <td className="p-3 border border-gray-300 whitespace-nowrap">
                 {item.meaningSource}

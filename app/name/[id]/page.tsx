@@ -16,13 +16,13 @@ export default async function page({params}:Props) {
   return (
     <div className='relative dark:bg-[#0d0d1f] dark:text-white min-h-screen'>
         <Name logged={logged} searchedName={content}/>
-        <div
+        {/* <div
         className="absolute inset-0 z-0 dark:opacity-10 opacity-5 bg-repeat bg-center"
         style={{
             backgroundImage: `url(${content?.image})`,
             backgroundSize: "150px"
         }}
-        />
+        /> */}
     </div>
   )
 }

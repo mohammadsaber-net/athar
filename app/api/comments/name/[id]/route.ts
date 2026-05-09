@@ -19,7 +19,7 @@ export async function GET(req:NextRequest,
             where:(eq(namesCommentTable.nameId,id)),
             with:{
                 user:{
-                    columns:{userName:true}
+                    columns:{userName:true,displayName:true}
                 }
             }
         })

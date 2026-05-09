@@ -1,10 +1,11 @@
 "use client"
 import { SunnaType} from '@/lib/type'
 import { useEffect, useRef, useState } from "react";
-import {  Moon} from "lucide-react";
+import {  Moon, Star} from "lucide-react";
 import Sunna from './Sunna';
 import AllSunna from './AllSunna';
 import Link from 'next/link';
+import FormatingText from '../animation/FormatingText';
 type Props={
     content:SunnaType[]
 }
@@ -46,7 +47,7 @@ export default function SunnanContent({content}:Props) {
     >
     <div className="absolute inset-0 overflow-hidden">
     {stars.map((star, i) => (
-        <Moon
+        <Star
         key={i}
         className="absolute z-10 rounded-full dark:text-cyan-200 text-indigo-400"
         style={{
@@ -66,7 +67,9 @@ export default function SunnanContent({content}:Props) {
           </h2>
           <div className="mt-2 text-gray-700 max-w-2xl 
           ">
-            <div className="dark:text-white" dangerouslySetInnerHTML={{__html:(sunna.tafsir || "").slice(0,200)}}/>
+            <div>
+              <FormatingText text={sunna?.tafsir?.slice(0,100)||""}/>
+            </div>
             <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`sunna/${sunna.id}`}>
              عرض المزيد...
             </Link>

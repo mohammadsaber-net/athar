@@ -1,14 +1,11 @@
 "use client";
 import FixedModal from "@/components/animation/FixedModal";
-// @ts-ignore
-import "quill/dist/quill.snow.css";
 import { NamesFormData, NamesType } from "@/lib/type";
 import { fetchNames } from "@/redux/slice/namesData";
 import { AppDispatch } from "@/redux/store";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast"
 import { useDispatch } from "react-redux";
-import { useQuill } from "react-quilljs";
 type Props={
   setCreate?:(value:boolean)=>void|undefined,
   setEdit?:(value:NamesType|null)=>void,
@@ -85,32 +82,6 @@ export default function NamesForm({setCreate,setEdit,edit,create}:Props) {
   }
   setLoading(false)
   }
-  const { quill, quillRef } = useQuill({
-    modules: {
-      toolbar: [
-        ["bold", "italic", "underline"],
-        [{ color: [] }],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["link"],
-        ["clean"],
-      ],
-    },
-  });
-  useEffect(() => {
-  if (quill) {
-    quill.on("text-change", () => {
-      setFormData((prev) => ({
-        ...prev,
-        meaning: quill.root.innerHTML,
-      }));
-    });
-  }
-}, [quill]);
-  useEffect(() => {
-    if (quill && edit?.meaning) {
-      quill.clipboard.dangerouslyPasteHTML(edit.meaning);
-    }
-  }, [quill, edit]);
   return (
     <FixedModal isOpen={!!edit || !!create} onClose={()=>{setEdit?.(null);setCreate?.(false)}}>
     <form
@@ -138,11 +109,14 @@ export default function NamesForm({setCreate,setEdit,edit,create}:Props) {
         className="w-full p-2 focus:border-blue-500 outline-none border border-gray-300 rounded
         dark:bg-gray-700 dark:text-white dark:focus:border-emerald-400"
       />
-        <div className="border rounded-md bg-white">
-          <div className="h-[200px] overflow-y-auto">
-            <div ref={quillRef} />
-          </div>
-        </div>
+      <textarea
+          name="tafsir"
+          placeholder="اكتب التفسير هنا (Markdown مدعوم: **bold** - `code` - https://...)"
+          value={formData.meaning}
+          onChange={handleChange}
+          rows={8}
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+        />
       <input
         type="text"
         name="meaningSource"

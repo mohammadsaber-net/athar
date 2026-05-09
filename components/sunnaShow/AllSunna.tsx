@@ -1,5 +1,6 @@
 import { SunnaType } from '@/lib/type'
 import Link from 'next/link'
+import FormatingText from '../animation/FormatingText'
 type Props={
     sunna:SunnaType
 }
@@ -19,10 +20,8 @@ export default function AllSunna({sunna}:Props) {
             <span className='text-gray-700 dark:text-white text-sm'>
               {sunna?.sunnaSource.slice(0,15)}...
             </span>
-            <div className={`mt-1 h-22 w-28 md:w-40 overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
-                <div
-                dangerouslySetInnerHTML={{ __html: sunna?.tafsir||""}} 
-                />
+            <div className={`mt-1 h-22 w-28 md:w-40 border-t pt-1 border-[#c9a24d]`}>
+                <FormatingText text={sunna?.tafsir?.slice(0,100)||""}/>
           </div>  
           <Link
           className='text-green-700 text-sm md:text-base 

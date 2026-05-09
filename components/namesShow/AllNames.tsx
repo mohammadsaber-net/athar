@@ -1,5 +1,6 @@
 import { NamesType } from '@/lib/type'
 import Link from 'next/link'
+import FormatingText from '../animation/FormatingText'
 type Props={
     searchedName:NamesType
 }
@@ -17,13 +18,11 @@ export default function AllNames({searchedName}:Props) {
           <h2 className=" text-xl italic dark:text-white text-center md:text-3xl mb-0 text-blue-900">
             {searchedName?.name} 
         </h2>
-        <span className='text-gray-700 dark:text-white text-sm'>
-          {searchedName?.meaningSource?.slice(0,15)}...
+        <span className="text-end block mt-0 dark:text-white text-italic text-sm text-gray-800">
+          {searchedName?.meaningSource}
         </span>
         <div className={`mt-1 h-22 w-28 md:w-40 overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
-          <div
-            dangerouslySetInnerHTML={{ __html: searchedName?.meaning }} 
-          />
+          <FormatingText text={searchedName.meaning.slice(0,100)}/>
           </div> 
             <Link
                className='text-green-700 dark:text-green-400 text-sm md:text-base 

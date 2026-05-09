@@ -1,5 +1,6 @@
 import { WakafatType } from "@/lib/type";
 import Link from "next/link";
+import FormatingText from "../animation/FormatingText";
 
 type Props = {
   content: WakafatType[];
@@ -19,8 +20,8 @@ export default function WakafatContent({ content }: Props) {
             </h2>
             <div className="mt-2 text-gray-700 max-w-2xl 
             ">
-             <div className="dark:text-white">
-               <div dangerouslySetInnerHTML={{__html:aya.tafsir.slice(0,200)}}/>
+             <div>
+               <FormatingText text={aya.tafsir.slice(0,100)} />
              </div>
               <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`wakafat/${aya.id}`}>
               عرض المزيد...

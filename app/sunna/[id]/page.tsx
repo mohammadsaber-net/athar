@@ -15,13 +15,13 @@ export default async function page({params}:Props) {
     .where(eq(sunnaTable.id,id))
   return (
     <div className='relative dark:bg-[#0d0d1f] dark:text-white min-h-screen'>
-    <div
+    {/* <div
         className="absolute inset-0 z-10 dark:opacity-5 opacity-20 bg-repeat bg-center"
         style={{
         backgroundImage: `url(/pattern1.png)`,
         backgroundSize: "150px"
         }}
-      />
+      /> */}
         <Sunna logged={logged} sunna={content}/>
     </div>
   )

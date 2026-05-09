@@ -1,5 +1,6 @@
 import { WakafatType } from '@/lib/type'
 import Link from 'next/link'
+import FormatingText from '../animation/FormatingText'
 type Props={
     wakafat:WakafatType
 }
@@ -21,9 +22,7 @@ export default function AllWakafat({wakafat}:Props) {
             </span>
             
             <div className={`mt-1 h-22 w-28 md:w-40 overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
-                <div
-                dangerouslySetInnerHTML={{ __html: wakafat?.tafsir}} 
-                />
+                <FormatingText text={wakafat?.tafsir.slice(0,100)}/>
           </div> 
           <Link
           className='text-green-700 dark:text-green-400 active:text-green-300

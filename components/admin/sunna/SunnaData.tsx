@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ConfirmDelete from './ConfirmDelete'
 import { SunnaType} from '@/lib/type'
 import SunnaForm from './SunnaForm'
+import FormatingText from '@/components/animation/FormatingText'
 type Props={
     tableData:SunnaType[]|null
 }
@@ -30,7 +31,7 @@ export default function SunnaData({tableData}:Props) {
             >
               <td className="p-3 border border-gray-300 min-w-[250px]">{item.sunna}</td>
               <td className="p-3 border border-gray-300 min-w-[250px]">
-                <div dangerouslySetInnerHTML={{ __html: item.tafsir?.slice(0,100)||"" }} />
+                <FormatingText text={item.tafsir?.slice(0,100)||""}/>
               </td>
               <td className="p-3 border border-gray-300 whitespace-nowrap">
                 {item.sunnaSource}

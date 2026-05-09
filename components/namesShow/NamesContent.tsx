@@ -1,5 +1,6 @@
 import { NamesType} from '@/lib/type'
 import Link from 'next/link';
+import FormatingText from '../animation/FormatingText';
 type Props={
     content:NamesType[]
 }
@@ -20,8 +21,8 @@ export default function NamesContent({content}:Props) {
                 {searchedName.name}
             </h2>
             <div className="mt-2 text-gray-700 max-w-2xl ">
-            <div className='dark:text-white'>
-              <div dangerouslySetInnerHTML={{__html:searchedName.meaning.slice(0,200)}}/>
+            <div >
+              <FormatingText text={searchedName.meaning.slice(0,100)}/>
             </div>
             <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`name/${searchedName.id}`}>
                عرض المزيد...

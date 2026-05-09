@@ -29,6 +29,7 @@ export async function GET(req:NextRequest) {
 export async function POST(req:NextRequest){
     try {
         const body =await req.json() as any;
+        console.log(body)
         const [existingUser]=await db.select()
         .from(usersTable).where(or( 
             eq(usersTable.email,body.email),
@@ -37,7 +38,7 @@ export async function POST(req:NextRequest){
         if(existingUser){
             return NextResponse.json({
                 success:false,
-                message:"البريد الإلكتروني او الاسم مستخدم بالفعل"
+                message:"البريد الإلكتروني او اسم مستخدم موجود بالفعل"
             })
         }
         const userId = crypto.randomUUID()
@@ -73,6 +74,7 @@ export async function POST(req:NextRequest){
         });
         return response;
     } catch (error) {
+        console.log(error)
         return NextResponse.json({
             success:false,
             message:(error as Error).message

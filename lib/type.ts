@@ -12,7 +12,8 @@ export type comments={
   createdAt:Date|null,
   comment:String,
   user:{
-    userName:string
+    userName:string,
+    displayName:string
   }|null
   likes:{
     id: string;

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ConfirmDelete from './ConfirmDelete'
 import HeroForm from './WakafatForm'
 import { WakafatType } from '@/lib/type'
+import FormatingText from '@/components/animation/FormatingText'
 type Props={
     tableData:WakafatType[]|null
 }
@@ -34,7 +35,7 @@ export default function WakafatData({tableData}:Props) {
                 {item.ayaSource}
               </td>
               <td className="p-3 border border-gray-300 min-w-[250px]">
-                <div dangerouslySetInnerHTML={{ __html: item.tafsir.slice(0,100) }} />
+                <FormatingText text={item.tafsir.slice(0,100)}/>
               </td>
               <td className="p-3 border border-gray-300 whitespace-nowrap">
                 {item.tafsirSource}

@@ -19,6 +19,7 @@ export default function UserForm() {
   const { admin, user } = useSelector((state: RootState) => state.loggedData);
   const [formData, setFormData] = useState({
     userName: "",
+    displayName :"",
     email: "",
     password: "",
     phone: "",
@@ -32,7 +33,12 @@ export default function UserForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    if (!usernameRegex.test(formData.userName)) {
+      toast.error("استخدم الحروف aBcK او الارقام 1234 او _ فقط من فضلك");
+      setLoading(false)
+      return;
+    }
     try {
       const res = await fetch("/api/users", {
         method: "POST",
@@ -63,7 +69,6 @@ export default function UserForm() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#fdfaf3] dark:bg-zinc-950 transition-colors duration-300 overflow-hidden">
-      {/* background pattern */}
       <div className="absolute inset-0 opacity-5 dark:opacity-10 bg-[url('/pattern1.png')] bg-repeat"></div>
 
       <motion.form
@@ -77,8 +82,6 @@ export default function UserForm() {
         <h2 className="text-2xl font-bold text-center text-emerald-900 dark:text-emerald-400 mb-6">
           إنشاء حساب
         </h2>
-
-        {/* First Name */}
         <div className="relative mb-4">
           <input
             name="userName"
@@ -91,22 +94,18 @@ export default function UserForm() {
             اسم المستخدم(يجب ان يكون غير مكرر)
           </label>
         </div>
-
-        {/* Last Name */}
-        {/* <div className="relative mb-4">
+        <div className="relative mb-4">
           <input
-            name="lastName"
-            value={formData.lastName}
+            name="displayName"
+            value={formData.displayName }
             onChange={handleChange}
             required
-            className="peer p-2 w-full border-b-2 border-gray-300 dark:border-zinc-700 bg-transparent text-gray-800 dark:text-gray-100 focus:outline-none focus:border-emerald-600 dark:focus:border-emerald-500"
+            className="peer p-2 w-full border-b-2 border-gray-300 dark:border-zinc-700 bg-transparent rounded text-gray-800 dark:text-gray-100 focus:outline-none focus:border-emerald-600 dark:focus:border-emerald-500"
           />
           <label className="absolute right-0 top-2 text-gray-500 dark:text-gray-400 text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-emerald-700 dark:peer-focus:text-emerald-400 peer-valid:-top-4 peer-valid:text-xs">
-            اسم العائلة
+            اضف اسمك
           </label>
-        </div> */}
-
-        {/* Email */}
+        </div>
         <div className="relative mb-4">
           <input
             type="email"
@@ -120,8 +119,6 @@ export default function UserForm() {
             البريد الإلكتروني
           </label>
         </div>
-
-        {/* Password */}
         <div className="relative mb-4">
           <input
             type={showPassword ? "text" : "password"}
@@ -142,8 +139,6 @@ export default function UserForm() {
             كلمة المرور
           </label>
         </div>
-
-        {/* Phone */}
         <div className="relative mb-4">
           <input
             type="tel"
@@ -159,7 +154,7 @@ export default function UserForm() {
         </div>
 
         {/* Role (for Admin) */}
-        {/* {admin && ( */}
+        {admin && (
           <div className="relative mb-4">
             <input
               name="role"
@@ -171,7 +166,7 @@ export default function UserForm() {
               الدور
             </label>
           </div>
-        {/* )} */}
+        )} 
 
         <motion.button
           whileTap={{ scale: 0.96 }}
