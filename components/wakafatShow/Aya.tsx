@@ -63,7 +63,11 @@ export default function Aya({aya,logged}:Props) {
             const res=await fetch("/api/comments/wakafat",{
                 method:"POST",
                 credentials:"include",
-                body:JSON.stringify({comment,wakafatId:aya.id})
+                body:JSON.stringify({
+                    comment,
+                    wakafatId:aya.id,
+                    parentCommentId:replyTo?.commentId
+                })
             })
             const data=await res.json()
             if(data.success){

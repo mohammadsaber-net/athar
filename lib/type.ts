@@ -22,6 +22,7 @@ export type comments={
     articleId: string;
     targetType: string;
   }[]|[]
+  parentCommentId:string|null
 }
 export type WakafatTypeWithComments =WakafatType & { comments:comments[] }
 export type HeroFormData = {
