@@ -1,4 +1,5 @@
 import Hero from "@/components/hero/Hero";
+
 import Summary from "@/components/summary/Summary";
 import { SummarySkeleton } from "@/components/summary/SummarySkeleton";
 import { Suspense } from "react";

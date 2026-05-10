@@ -1,5 +1,5 @@
 import db from "@/db";
-import { likesTable, likesTableZodSchema } from "@/db/schema";
+import { commentsTable, likesTable, likesTableZodSchema, notificationsTable } from "@/db/schema";
 import { isLogged } from "@/lib/logged";
 import { and, eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
@@ -26,18 +26,44 @@ export async function PATCH(req:NextRequest) {
                 eq(likesTable.targetType,selectedLike.targetType)
             ))
         if(existingLike){
-            await db.delete(likesTable).where(
+            const [like]=await db.delete(likesTable).where(
                 eq(likesTable.id, existingLike.id)
+            ).returning()
+            const [comment]=await db.select().from(commentsTable)
+            .where(eq(commentsTable.id,like.commentId))
+            await db.delete(notificationsTable).where(
+                and(
+                    eq(notificationsTable.receiverId,comment.userId),
+                    eq(notificationsTable.senderId,user.id),
+                    eq(notificationsTable.contentType,"comment"),
+                    eq(notificationsTable.contentId,comment.id),
+                    eq(notificationsTable.type,"like"),
+
+                )
             )
             return NextResponse.json({
                 success:true
             })
         }
-        await db.insert(likesTable).values({
+        const [like]=await db.insert(likesTable).values({
             id:crypto.randomUUID(),
             userId:user.id,
             ...selectedLike
-        })
+        }).returning()
+        const [comment]=await db.select().from(commentsTable)
+        .where(eq(commentsTable.id,like.commentId))
+        if(comment && comment.userId !== user.id){
+        await db.insert(notificationsTable).values({
+            id: crypto.randomUUID(),
+            receiverId:comment.userId,
+            senderId: user.id,
+            type: "like",
+            contentId: like.commentId,
+            contentType: "comment",
+            content: `${user.userName} قام بعمل اعجاب لك`,
+            isRead: false,
+            createdAt: new Date(),
+        })}
         return NextResponse.json({
             success:true,
         })

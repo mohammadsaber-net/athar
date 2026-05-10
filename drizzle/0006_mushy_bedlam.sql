@@ -1,1 +1,0 @@
-ALTER TABLE "wakafat" DROP COLUMN "any";

@@ -2,18 +2,25 @@
 import { handleDate } from '@/lib/handleDate';
 import { WakafatType, comments } from '@/lib/type'
 import {  Heart, MessageCircle, Pencil, Reply } from 'lucide-react';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
 import SharePopup from '../shareButton/ShareButton';
-import { useDispatch } from 'react-redux';
-import { AppDispatch} from '@/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState} from '@/redux/store';
 import { toggleLike } from '@/redux/slice/togleLike';
 import FormatingText from '../animation/FormatingText';
 import FormatingMention from '../animation/FormatingMention';
+import { fetchSendComments } from '@/redux/slice/sendComments';
+import { fetchGetComments } from '@/redux/slice/getComments';
+import { fetchDeleteComments } from '@/redux/slice/deleteComments';
 type Props={
     aya:WakafatType,
     logged?:any
 }
+export const extractMentions = (text: string) => {
+  const matches = text.match(/@[\w\d_]+/g);
+  return matches ? matches.map(m => m.replace("@", "")) : [];
+};
 export default function Aya({aya,logged}:Props) {
     const [show,setShow]=useState(false)
     const [replyTo, setReplyTo] = useState<{
@@ -23,70 +30,27 @@ export default function Aya({aya,logged}:Props) {
     const [comment,setComment]=useState<string>("")
     const dispatch=useDispatch<AppDispatch>()
     const [fetchComments,setfetchComments]=useState<any>(null)
-    const [loading,setLoading]=useState(false)
-        const getComments=async(id:string)=>{
-            setLoading(true)
-        try{
-            const res=await fetch(`/api/comments/wakafat/${id}`)
-             const data=await res.json()
-             if(data.success){
-                 setfetchComments(data.data)
-             }else{
-                toast.error(data.message || "خطأ في جلب التعليقات");
-             }
-            }catch(err){
-                toast.error((err as Error).message||"خطأ في جلب التعليقات")
-            }
-            setLoading(false)
-    }
-    const deleteComment=async(id:string)=>{
-        toast.promise(
-            (async()=>{
-            const res=await fetch(`/api/comments/wakafat/${id}`,{method:"DELETE"})
-            const data=await res.json()
-            if(data.success){
-                getComments(aya.id)
-            }else{
-                throw new Error(data.message || "لم يتم الحذف ");
-             }
-        })(),{
-            loading:"يرجي الانتظار",
-            success:" تم الحذف",
-            error:(e:any) => (e?.message || "حدث خطأ غير متوقع") as string
-        })
-    }
-    const onSubmit=async(e:any)=>{
-        e.preventDefault()
-        toast.promise(
-            (async()=>{
-            if(!comment) throw new Error("من فضلك اضف تعليقا");
-            const res=await fetch("/api/comments/wakafat",{
-                method:"POST",
-                credentials:"include",
-                body:JSON.stringify({
-                    comment,
-                    wakafatId:aya.id,
-                    parentCommentId:replyTo?.commentId
-                })
-            })
-            const data=await res.json()
-            if(data.success){
-                setComment("")
-                getComments(aya.id)
-                setShow(true)
-            }else{
-                throw new Error(data.message || "خطأ في التعليق");
-            }
-        })(),{
-            loading:"يرجي الانتظار",
-            success:" تم اضافة التعليق",
-            error:(e:any) => ((e as Error).message || "حدث خطأ غير متوقع")
-        })
-    }
+    const {sendError,sendLoading,sendData}=useSelector((state:RootState)=>state.sendComments)
+    const {getData,getError,getLoading}=useSelector((state:RootState)=>state.getComments)
+    const {deleteData,deleteError,deleteLoading}=useSelector((state:RootState)=>state.deleteComments)
+    useEffect(()=>{
+        if(sendData?.success||deleteData?.success){
+            setComment("")
+            dispatch(fetchGetComments({
+                targetId:aya.id,targetType:"wakafat"
+            }))
+        }
+    },[sendData,deleteData])
+    useEffect(()=>{
+        if(getData?.success){
+            setfetchComments(getData.data)
+        }
+    },[getData])
+    console.log(getData)
   return (
     <div className='pt-8 p-3 max-w-4xl'>
         <div className='mb-2 relative z-50'>
-                <SharePopup text={`\n« ${aya.aya || "الاسم"} »\n${aya.tafsir.slice(0, 200)}... || " المعنى"}\n`}/>      
+                <SharePopup text={`\n« ${aya.aya || "الاسم"} »\n\n${aya.tafsir.slice(0, 200)}...\n\n\n`}/>      
         </div>
         <div className="relative z-20 transition">
             <h2 className=" text-2xl md:text-5xl dark:text-white text-center mb-0 mt-2 text-blue-900">
@@ -106,7 +70,9 @@ export default function Aya({aya,logged}:Props) {
             >
             <button 
                 onClick={()=>{
-                    if(!show){ getComments(aya.id) }
+                    if(!show){ dispatch(fetchGetComments({
+                        targetId:aya.id,targetType:"wakafat"}))
+                     }
                     setShow(!show)
                 }}
                 className='text-indigo-600 dark:text-cyan-500 text-sm mt-2 active:underline hover:underline'
@@ -143,7 +109,7 @@ export default function Aya({aya,logged}:Props) {
                         <div className="text-gray-700 dark:text-white text-sm leading-relaxed break-words">
                             <FormatingMention text={comment.comment}/>
                         </div>
-                            <div className="flex justify-between mt-2 pt-2 border-t border-gray-50 dark:border-gray-800/50">
+                            <div className="flex justify-between mt-2 pt-2 border-t border-gray-200 dark:border-gray-500">
                             <div className='flex items-center gap-4'>
                             <button
                                 className="cursor-pointer"
@@ -187,13 +153,22 @@ export default function Aya({aya,logged}:Props) {
                                         : "fill-gray-500 text-gray-600"}`}
                                         />
                                 <span className='text-gray-500 text-sm'>
-                                    {comment.likes.length>0 &&
-                                     comment.likes.length}
+                                    {comment?.likes?.length>0 &&
+                                     comment?.likes?.length}
                                 </span>
                             </div>
                             </div>
                             {comment?.userId === logged?.id && (<button
-                                onClick={() => deleteComment(comment.id)}
+                                onClick={() => {
+                                    toast.promise(dispatch(fetchDeleteComments({
+                                        commentId:comment.id,targetType:"wakafat"
+                                    })).unwrap(),
+                                    {
+                                        loading: "جاري الحذف...",
+                                        success: "تم حذف التعليق",
+                                        error: (err) => err || "خطأ",
+                                    })
+                                }}
                                 className="text-red-400 hover:text-red-600 dark:hover:text-red-500 text-xs font-medium transition-colors flex items-center gap-1"
                             >
                                 حذف
@@ -205,7 +180,7 @@ export default function Aya({aya,logged}:Props) {
                     <p className="text-center text-gray-400 text-sm py-4">لا توجد تعليقات بعد.</p>
                     )}
                 </div>
-            {loading && (
+            {getLoading && (
                     <div className='flex justify-center gap-1 mt-2'>
                     {[0, 1, 2].map((i) => (
                         <span
@@ -218,8 +193,7 @@ export default function Aya({aya,logged}:Props) {
                 )}
             </div>
             <form 
-                onSubmit={onSubmit}
-                className="flex gap-2 w-full  dark:bg-white/20 items-center bg-white p-2 rounded-lg shadow-sm border border-gray-200"
+                 className="flex gap-2 w-full  dark:bg-white/20 items-center bg-white p-2 rounded-lg shadow-sm border border-gray-200"
                 >
                 <input 
                     id="wakafat-input"
@@ -230,8 +204,23 @@ export default function Aya({aya,logged}:Props) {
                     focus:outline-none focus:ring-2 focus:ring-gray-300"
                     />
                 <button
-                    className='flex gap-1 dark:bg-gray-500 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
-                    type="submit"
+                onClick={()=>{
+                    if(!comment) return toast.error("من فضلك اضف تعليقا");
+                    const mentions =extractMentions(comment)
+                    toast.promise(dispatch(fetchSendComments({
+                        comment,targetId:aya.id,targetType:"wakafat",
+                        parentCommentId:replyTo?.commentId,mentions 
+                    })).unwrap(),
+                    {
+                        loading: "جاري الإرسال...",
+                        success: "تم إرسال التعليق",
+                        error: (err) => err || "خطأ",
+                    })
+                }}
+                disabled={sendLoading}
+                    className='flex gap-1 dark:bg-gray-500 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded
+                    disabled:cursor-pointer-none disabled:opacity-50'
+                    type="button"
                 >
                     إرسال <Pencil className='size-4'/>
                 </button>

@@ -47,7 +47,8 @@ export async function POST(req:NextRequest){
             {
                 email:body.email,
                 id:userId,
-                role:body.role
+                role:body.role,
+                userName:body.userName
             },
             process.env.JWT_SECRET_KEY as string,
             {

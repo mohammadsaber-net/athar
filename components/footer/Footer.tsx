@@ -9,16 +9,16 @@ export default function Footer() {
       <div>
         <h3 className='font-semibold mb-3 text-gray-100 text-xl md:text-2xl'>روابط سريعة</h3>
         <div className='flex flex-col text-cyan-300 space-y-2'>
-          <Link href={"/"}>
+          <Link href={"/#Hero"}>
             آيات و أحاديث مختارة
           </Link>
-          <Link href={"/#Wakafat"}>
+          <Link href={"/wakafat"}>
            وقفات قرأنية
           </Link>
-          <Link href={"/#Sunna"}>
+          <Link href={"/wunna"}>
            سنن مهجورة
           </Link>
-          <Link href={"/#Name"}>
+          <Link href={"/name"}>
            أسماء الله الحسني
           </Link>
         </div>

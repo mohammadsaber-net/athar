@@ -8,6 +8,7 @@ export const isLogged = async () => {
     const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY!) as {
       id: string;
       role: string;
+      userName:string
     };
     return decoded;
   } catch {

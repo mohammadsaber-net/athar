@@ -2,14 +2,18 @@
 import { handleDate } from '@/lib/handleDate';
 import { SunnaType, comments } from '@/lib/type'
 import {  Heart, Pencil, Reply } from 'lucide-react';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
 import SharePopup from '../shareButton/ShareButton';
 import { toggleLike } from '@/redux/slice/togleLike';
-import { AppDispatch } from '@/redux/store';
-import { useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '@/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 import FormatingText from '../animation/FormatingText';
 import FormatingMention from '../animation/FormatingMention';
+import { fetchGetComments } from '@/redux/slice/getComments';
+import { fetchDeleteComments } from '@/redux/slice/deleteComments';
+import { extractMentions } from '../wakafatShow/Aya';
+import { fetchSendComments } from '@/redux/slice/sendComments';
 type Props={
     sunna:SunnaType,
     logged?:any
@@ -20,69 +24,30 @@ export default function Sunna({sunna,logged}:Props) {
             userName: string;
             commentId: string;
             } | null>(null);
-    const dispatch=useDispatch<AppDispatch>()
     const [comment,setComment]=useState<string>("")
+    const dispatch=useDispatch<AppDispatch>()
     const [fetchComments,setfetchComments]=useState<any>(null)
-    const [loading,setLoading]=useState(false)
-        const getComments=async(id:string)=>{
-        setLoading(true)
-        try{
-            const res=await fetch(`/api/comments/sunna/${id}`)
-             const data=await res.json()
-             if(data.success){
-                 setfetchComments(data.data)
-             }else{
-                toast.error(data.message || "خطأ في جلب التعليقات");
-             }
-            }catch(err){
-                toast.error((err as Error).message||"خطأ في جلب التعليقات")
-            }
-            setLoading(false)
-    }
-    const deleteComment=async(id:string)=>{
-        toast.promise(
-            (async()=>{
-            const res=await fetch(`/api/comments/sunna/${id}`,{method:"DELETE"})
-            const data=await res.json()
-            if(data.success){
-                getComments(sunna.id)
-            }else{
-                throw new Error(data.message || "لم يتم الحذف ");
-             }
-        })(),{
-            loading:"يرجي الانتظار",
-            success:" تم الحذف",
-            error:(e:any) => (e?.message || "حدث خطأ غير متوقع") as string
-        })
-    }
-    const onSubmit=async(e:any)=>{
-        e.preventDefault()
-        toast.promise(
-            (async()=>{
-            if(!comment) throw new Error("من فضلك اضف تعليقا");
-            const res=await fetch("/api/comments/sunna",{
-                method:"POST",
-                credentials:"include",
-                body:JSON.stringify({comment,sunnaId:sunna.id})
-            })
-            const data=await res.json()
-            if(data.success){
-                setComment("")
-                getComments(sunna.id)
-                setShow(true)
-           }else{
-                throw new Error(data.message || "خطأ في التعليق");
-            }
-        })(),{
-            loading:"يرجي الانتظار",
-            success:" تم اضافة التعليق",
-            error:(e:any) => ((e as Error).message || "حدث خطأ غير متوقع")
-        })
-    }
+    const {sendError,sendLoading,sendData}=useSelector((state:RootState)=>state.sendComments)
+    const {getData,getError,getLoading}=useSelector((state:RootState)=>state.getComments)
+    const {deleteData,deleteError,deleteLoading}=useSelector((state:RootState)=>state.deleteComments)
+    useEffect(()=>{
+        if(sendData?.success||deleteData?.success){
+            setComment("")
+            dispatch(fetchGetComments({
+                targetId:sunna.id,targetType:"sunna"
+            }))
+        }
+    },[sendData,deleteData])
+    useEffect(()=>{
+        if(getData?.success){
+            setfetchComments(getData.data)
+        }
+    },[getData])
+    console.log(getData)
   return (
     <div className='pt-8 p-3 max-w-4xl'>
         <div className='mb-2 relative z-50'>
-            <SharePopup text={`\n« ${sunna.sunna || "السنه"} »\n${sunna.tafsir&&sunna.tafsir.slice(0, 200)}... || " التفسير"}\n`}/>      
+            <SharePopup text={`\n« ${sunna.sunna || "السنه"} »\n\n${sunna.tafsir&&sunna.tafsir.slice(0, 200)}...\n\n\n`}/>      
         </div>
         <div className="relative z-20 transition">
             <h2 className=" text-2xl md:text-5xl dark:text-white text-center mb-0 mt-2 text-blue-900">
@@ -100,28 +65,11 @@ export default function Sunna({sunna,logged}:Props) {
              pt-2 border-t-2 border-gray-200
              transition-all delay-300 duration-300`}
             >
-            <form 
-                onSubmit={onSubmit}
-                className="flex gap-2 w-full items-center dark:bg-white/20 bg-white p-2 rounded-lg shadow-sm border border-gray-200"
-                >
-                <input 
-                    id='sunna-input'
-                    onChange={(e)=>setComment(e.target.value)}
-                    value={comment}
-                    placeholder='أضف تعليق...'
-                    className="flex-1 border border-gray-200 rounded-md px-3 py-2 text-sm
-                    focus:outline-none focus:ring-2 focus:ring-gray-300"
-                />
-                <button
-                    className='flex gap-1 items-center dark:bg-gray-500 cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
-                    type="submit"
-                >
-                    إرسال <Pencil className='size-4'/>
-                </button>
-            </form>
             <button 
                 onClick={()=>{
-                    if(!show){ getComments(sunna.id) }
+                    if(!show){ dispatch(fetchGetComments({
+                        targetId:sunna.id,targetType:"sunna"}))
+                     }
                     setShow(!show)
                 }}
                 className='text-indigo-600 dark:text-cyan-500 text-sm mt-2 active:underline hover:underline'
@@ -208,7 +156,16 @@ export default function Sunna({sunna,logged}:Props) {
                             </div>
                             </div>
                             {comment?.userId === logged?.id && (<button
-                                onClick={() => deleteComment(comment.id)}
+                                onClick={() => {
+                                    toast.promise(dispatch(fetchDeleteComments({
+                                        commentId:comment.id,targetType:"sunna"
+                                    })).unwrap(),
+                                    {
+                                        loading: "جاري الحذف...",
+                                        success: "تم حذف التعليق",
+                                        error: (err) => err || "خطأ",
+                                    })
+                                }}
                                 className="text-red-400 hover:text-red-600 dark:hover:text-red-500 text-xs font-medium transition-colors flex items-center gap-1"
                             >
                                 حذف
@@ -221,7 +178,7 @@ export default function Sunna({sunna,logged}:Props) {
                     )}
                 </div>
 
-            {loading && (
+            {getLoading && (
                     <div className='flex justify-center gap-1 mt-2'>
                     {[0, 1, 2].map((i) => (
                         <span
@@ -235,7 +192,6 @@ export default function Sunna({sunna,logged}:Props) {
             </div>
             </div> 
             <form 
-                onSubmit={onSubmit}
                 className="flex gap-2 w-full items-center dark:bg-white/20 bg-white p-2 rounded-lg shadow-sm border border-gray-200"
                 >
                 <input 
@@ -247,8 +203,23 @@ export default function Sunna({sunna,logged}:Props) {
                     focus:outline-none focus:ring-2 focus:ring-gray-300"
                 />
                 <button
-                    className='flex gap-1 items-center dark:bg-gray-500 cursor-pointer bg-gray-800 text-white px-2 py-1 rounded'
-                    type="submit"
+                   onClick={()=>{
+                    if(!comment) return toast.error("من فضلك اضف تعليقا");
+                    const mentions =extractMentions(comment)
+                    toast.promise(dispatch(fetchSendComments({
+                        comment,targetId:sunna.id,targetType:"sunna",
+                        parentCommentId:replyTo?.commentId,mentions 
+                    })).unwrap(),
+                    {
+                        loading: "جاري الإرسال...",
+                        success: "تم إرسال التعليق",
+                        error: (err) => err || "خطأ",
+                    })
+                }}
+                disabled={sendLoading}
+                    className='flex gap-1 dark:bg-gray-500 items-center cursor-pointer bg-gray-800 text-white px-2 py-1 rounded
+                    disabled:cursor-pointer-none disabled:opacity-50'
+                    type="button"
                 >
                     إرسال <Pencil className='size-4'/>
                 </button>

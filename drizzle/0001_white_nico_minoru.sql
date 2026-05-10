@@ -1,0 +1,1 @@
+ALTER TABLE "commentsTable" DROP COLUMN "likes";

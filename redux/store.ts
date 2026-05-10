@@ -5,6 +5,9 @@ import { sliceNames } from "./slice/namesData"
 import { sliceSunna } from "./slice/sunnaData"
 import { sliceLogger } from "./slice/logger"
 import { likesTogleSlice } from "./slice/togleLike"
+import { sliceSendComments } from "./slice/sendComments"
+import { sliceGetComments } from "./slice/getComments"
+import { sliceDeleteComments } from "./slice/deleteComments"
 export const store=configureStore({
     reducer:{
         heroData:sliceHero.reducer,
@@ -12,7 +15,10 @@ export const store=configureStore({
         namesData:sliceNames.reducer,
         sunnaData:sliceSunna.reducer,
         loggedData:sliceLogger.reducer,
-        ToglelikeData:likesTogleSlice.reducer
+        ToglelikeData:likesTogleSlice.reducer,
+        sendComments:sliceSendComments.reducer,
+        getComments:sliceGetComments.reducer,
+        deleteComments:sliceDeleteComments.reducer,
     }
 })
 export type RootState=ReturnType<typeof store.getState>

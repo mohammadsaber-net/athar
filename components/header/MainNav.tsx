@@ -2,13 +2,14 @@
 import Link from "next/link";
 import MobileNav from "./MobileNav";
 import React, { useEffect, useState } from "react";
-import { ArrowDown, ArrowUp, Loader2, Menu } from "lucide-react";
+import { AlertCircle, ArrowDown, ArrowUp, Bell, Loader2, Menu } from "lucide-react";
 import FixedModal from "../animation/FixedModal";
 import toast from "react-hot-toast";
 import PcNav from "./PcNav";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { setAdmin, setUser } from "@/redux/slice/logger";
+import { FaRing } from "react-icons/fa";
 export const pages = [
     { name: "الصفحة الرئيسية", href: "/" },
     { name: "من نحن", href: "/about" },
@@ -78,6 +79,10 @@ export default function MainNav() {
       </span>
      <img src={"/athar-logo.png"} className="size-10" alt="athar-logo"/>
     </Link>
+    <div className="flex gap-6 items-center">
+      <Link href={"/notifications"}>
+        <Bell />
+      </Link>
     <PcNav 
     Icon={Icon}
     openList={openList}
@@ -95,6 +100,7 @@ export default function MainNav() {
     openLogout={openLogout}
     setOpenList={setOpenList}
     />
+    </div>
     </section>
   )
 }

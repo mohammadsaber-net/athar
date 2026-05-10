@@ -153,7 +153,6 @@ export default function UserForm() {
           </label>
         </div>
 
-        {/* Role (for Admin) */}
         {admin && (
           <div className="relative mb-4">
             <input

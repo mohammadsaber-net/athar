@@ -40,7 +40,9 @@ export default function Hero() {
   }, []);
   return (
     <>
-    <section className="relative min-h-[70vh] transition-colors duration-300 md:min-h-[80vh] night-bg px-4 text-center pt-2 text-gray-900">
+    <section
+    id="Hero"
+     className="relative min-h-[70vh] transition-colors duration-300 md:min-h-[80vh] night-bg px-4 text-center pt-2 text-gray-900">
         <picture>
           <source media="(max-width: 768px)" srcSet="/hero-mobile.png" />
           <img 

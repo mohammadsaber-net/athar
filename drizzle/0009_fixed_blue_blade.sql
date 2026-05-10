@@ -1,1 +1,0 @@
-ALTER TABLE "wakafatComment" ALTER COLUMN "comment" DROP NOT NULL;
