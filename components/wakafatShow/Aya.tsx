@@ -46,7 +46,6 @@ export default function Aya({aya,logged}:Props) {
             setfetchComments(getData.data)
         }
     },[getData])
-    console.log(getData)
   return (
     <div className='pt-8 p-3 max-w-4xl'>
         <div className='mb-2 relative z-50'>
@@ -80,12 +79,12 @@ export default function Aya({aya,logged}:Props) {
                 {show ? "إخفاء التعليقات" : "عرض التعليقات"}
             </button>
             <div
-                className={`transition-all duration-500 overflow-hidden ${
+                className={`transition-all duration-500 overflow-y-auto ${
                     show ? "max-h-[1000px] mt-4 opacity-100" : "max-h-0 opacity-0"
                 }`}
                 >
                 <div className="flex flex-col gap-3 p-1">
-                    {fetchComments && fetchComments.length > 0 ? (
+                    {fetchComments && fetchComments?.length > 0 ? (
                     fetchComments.map((comment: comments) => {
                         const liked = comment.likes?.some(l => l.userId === logged?.id);
                         return(
