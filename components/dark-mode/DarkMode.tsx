@@ -32,7 +32,7 @@ export default function ThemeToggle() {
   };
   return (
     <div className="flex gap-2 w-fit dark:bg-white bg-[#0d1117] dark:text-gray-800 text-gray-100 rounded-full
-     fixed top-14 left-4 z-[1000000000000] cursor-pointer dark:shadow-md shadow-gray-300/50">
+     fixed top-16 left-4 z-[1000000000000] cursor-pointer dark:shadow-md shadow-gray-300/50">
       {theme==="dark" && <Sun className="p-2 size-10" onClick={setLight}/>}
       {theme==="light" &&<Moon className="p-2 size-10" onClick={setDark}/>}
     </div>

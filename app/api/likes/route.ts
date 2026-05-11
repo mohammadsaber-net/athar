@@ -58,6 +58,8 @@ export async function PATCH(req:NextRequest) {
             receiverId:comment.userId,
             senderId: user.id,
             type: "like",
+            articleId:like.articleId,
+            articleType:comment.targetType,
             contentId: like.commentId,
             contentType: "comment",
             content: `${user.userName} قام بعمل اعجاب لك`,

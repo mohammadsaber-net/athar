@@ -25,3 +25,28 @@ export async function GET(req:NextRequest) {
         })
     }
 }
+
+
+
+export async function PATCH(req:NextRequest) {
+    try {
+        const user = await isLogged() 
+            if (!user) {
+                return NextResponse.json({
+                    success: false,
+                    message: "يرجي تسجيل الدخول أولا" 
+                }, { status: 401 });
+            }
+        await db.update(notificationsTable).set({
+            isRead:true
+        }).where(eq(notificationsTable.receiverId,user.id))
+        return NextResponse.json({
+            success:true,
+        })
+    } catch (error) {
+        return NextResponse.json({
+            success:false,
+            message:(error as Error).message
+        })
+    }
+}

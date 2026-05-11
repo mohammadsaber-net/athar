@@ -94,6 +94,8 @@ export async function POST(req:NextRequest) {
                 receiverId: u.id,
                 senderId: user.id,
                 type: "mention",
+                articleId:comment.targetId,
+                articleType:comment.targetType,
                 contentId: comment.id,
                 contentType: "comment",
                 content: `${user.userName} قام بعمل منشن لك`,

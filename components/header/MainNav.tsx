@@ -24,6 +24,7 @@ export const features=[
 export default function MainNav() {
   
   const [openList, setOpenList] = useState(false);
+  const [notiNumber, setNotiNumber] = useState(0);
   const [openLogout,setOpenLogout]=useState(false)
   const [loading, setLoading] = useState(true);
   const dispatch=useDispatch<AppDispatch>()
@@ -41,6 +42,11 @@ export default function MainNav() {
 
         if (data.user && data.user.role === "user") dispatch(setUser(true));
         if (data.user && data.user.role === "admin") dispatch(setAdmin(true));
+        if(data.user){
+          fetch("/api/notifications/number").then(res=>
+            res.json()
+          ).then(data=>setNotiNumber(data.number))
+        }
       } catch (error){
         console.log(error)
       }
@@ -80,8 +86,12 @@ export default function MainNav() {
      <img src={"/athar-logo.png"} className="size-10" alt="athar-logo"/>
     </Link>
     <div className="flex gap-6 items-center">
-      <Link href={"/notifications"}>
-        <Bell />
+      <Link className="relative" href={"/notifications"}>
+        <Bell /> 
+        {notiNumber>0&&<div 
+        className="absolute -top-2 right-0 z-10 text-xs size-4 p-1 rounded-full
+        text-rose-600 bg-white flex items-center justify-center"
+        >{notiNumber}</div>}
       </Link>
     <PcNav 
     Icon={Icon}

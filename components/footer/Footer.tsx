@@ -15,7 +15,7 @@ export default function Footer() {
           <Link href={"/wakafat"}>
            وقفات قرأنية
           </Link>
-          <Link href={"/wunna"}>
+          <Link href={"/sunna"}>
            سنن مهجورة
           </Link>
           <Link href={"/name"}>

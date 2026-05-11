@@ -45,3 +45,17 @@ export type SunnaFormData = {
   tafsir: string | null;
 };
 export type SunnaType =SunnaFormData &{id:string}
+
+export type NotificationType={
+    id: string;
+    receiverId: string;
+    senderId: string | null;
+    type: string;
+    contentId: string | null;
+    contentType: string | null;
+    articleId: string | null;
+    articleType: string | null;
+    content: string | null;
+    isRead: boolean | null;
+    createdAt: Date | null;
+}

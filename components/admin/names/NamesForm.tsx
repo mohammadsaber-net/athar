@@ -110,7 +110,7 @@ export default function NamesForm({setCreate,setEdit,edit,create}:Props) {
         dark:bg-gray-700 dark:text-white dark:focus:border-emerald-400"
       />
       <textarea
-          name="tafsir"
+          name="meaning"
           placeholder="اكتب التفسير هنا (Markdown مدعوم: **bold** - `code` - https://...)"
           value={formData.meaning}
           onChange={handleChange}

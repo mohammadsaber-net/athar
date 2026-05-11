@@ -4,33 +4,38 @@ import FormatingText from '../animation/FormatingText'
 type Props={
     searchedName:NamesType
 }
-export default function AllNames({searchedName}:Props) {
+export default function AllNames({ searchedName }: Props) {
   return (
-    <div className='bg-white/70 dark:bg-[#0f142ed9] relative flex-shrink-0 shadow-lg 
-    m-auto w-32 md:w-48 md:h-60 h-48
-    border border-[#c9a24d] rounded-md p-2'>
+    <div className="group relative w-40 md:w-56 snap-center shrink-0 bg-white dark:bg-zinc-900/80 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-2xl p-3 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+      {searchedName?.image && (
         <img
-          className='w-[100%] absolute dark:opacity-20 inset-0 z-10 h-[100%] opacity-10'
-          src={searchedName?.image || undefined}
-          alt={typeof searchedName?.image === 'string' ? searchedName.image : ''}
+          className="absolute inset-0 w-full h-full opacity-10 dark:opacity-20 grayscale pointer-events-none"
+          src={searchedName.image}
+          alt=""
         />
-        <div className='relative z-30'>
-          <h2 className=" text-xl italic dark:text-white text-center md:text-3xl mb-0 text-blue-900">
-            {searchedName?.name} 
+      )}
+      <div className="relative z-10 aspect-square mb-3 overflow-hidden rounded-xl border border-indigo-100 dark:border-indigo-900/30 bg-indigo-50/50 dark:bg-indigo-500/5 flex flex-col items-center justify-center p-3 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold text-indigo-900 dark:text-indigo-300 drop-shadow-sm font-amiri">
+          {searchedName?.name}
         </h2>
-        <span className="text-end block mt-0 dark:text-white text-italic text-sm text-gray-800">
-          {searchedName?.meaningSource}
+      </div>
+      <div className="mb-2 relative z-10 text-left">
+        <span className="text-[10px] md:text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 px-2 py-1 rounded-md italic">
+          {searchedName?.meaningSource || "المصدر"}
         </span>
-        <div className={`mt-1 h-22 w-28 md:w-40 overflow-hidden border-t md:text-xl pt-1 border-[#c9a24d]`}>
-          <FormatingText text={searchedName.meaning.slice(0,100)}/>
-          </div> 
-            <Link
-               className='text-green-700 dark:text-green-400 text-sm md:text-base 
-               active:text-red-600 active:text-green-300 inline'
-               href={`/name/${searchedName.id}`}>
-             قراءة المزيد
-        </Link>
-        </div>
+      </div>
+      <div className="h-16 md:h-20 overflow-hidden text-[11px] md:text-sm text-zinc-500 dark:text-zinc-400 leading-snug mb-3 relative z-10">
+        <FormatingText text={searchedName.meaning.slice(0, 80) + "..."} />
+      </div>
+
+      <Link
+        href={`/name/${searchedName.id}`}
+        className="block relative z-10 text-center py-2 text-xs md:text-sm font-bold bg-indigo-50 dark:bg-zinc-800 text-indigo-700
+        active:bg-indigo-700 active:text-white
+        dark:text-indigo-300 rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300"
+      >
+        تأمل الاسم
+      </Link>
     </div>
-  )
+  );
 }

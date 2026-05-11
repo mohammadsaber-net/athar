@@ -13,16 +13,17 @@ import toast from "react-hot-toast";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import { NotificationType } from "@/lib/type";
 
-type NotificationType = {
-  id: string;
-  type: string;
-  content: string;
-  isRead: boolean;
-  createdAt: string;
-  senderId?: string;
-  contentId?: string;
-};
+// type NotificationType = {
+//   id: string;
+//   type: string;
+//   content: string;
+//   isRead: boolean;
+//   createdAt: string;
+//   senderId?: string;
+//   contentId?: string;
+// };
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
@@ -55,7 +56,7 @@ export default function Notifications() {
 
   const markAllAsRead = async () => {
     try {
-      const res = await fetch("/api/notifications/read-all", {
+      const res = await fetch(`/api/notifications`, {
         method: "PATCH",
       });
 
@@ -76,7 +77,25 @@ export default function Notifications() {
       toast.error("حدث خطأ");
     }
   };
-
+  const handleReadNoti = async (id:string) => {
+    try {
+      const res = await fetch(`/api/notifications/${id}`, {
+        method: "PATCH",
+      });
+      const data = await res.json();
+      if (data.success) {
+        setNotifications((prev) =>
+          prev.map((n) => ({
+            ...n,
+            isRead: true,
+          }))
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("حدث خطأ");
+    }
+  };
   const getIcon = (type: string) => {
     switch (type) {
       case "like":
@@ -104,8 +123,6 @@ export default function Notifications() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0d1117] p-4">
       <div className="max-w-3xl mx-auto">
-
-        {/* Header */}
         <div
           className="
           flex items-center justify-between
@@ -143,11 +160,15 @@ export default function Notifications() {
           {notifications?.length > 0 && (
             <button
               type="button"
+              disabled={!notifications.find((noti:any)=>!noti.isRead)}
               onClick={markAllAsRead}
               className="
               flex items-center gap-2
               px-4 py-2
               rounded-2xl
+              disabled:bg-gray-600
+              disabled:pointer-events-none
+              cursor-pointer
               text-sm
               bg-indigo-600
               hover:bg-indigo-700
@@ -161,8 +182,6 @@ export default function Notifications() {
             </button>
           )}
         </div>
-
-        {/* Loading */}
         {loading && (
           <div className="flex justify-center items-center mt-24 gap-2">
             {[0, 1, 2].map((i) => (
@@ -181,18 +200,6 @@ export default function Notifications() {
             ))}
           </div>
         )}
-{/* 
-        {(!admin && !user)&&
-            <div className="text-center">
-              <div className="text-xl dark:text-gray-200 md:text-2xl font-semibold">
-                من فضلك قم <Link 
-                href={"/signIn"}
-                className="text-emerald-600 dark:text-emerald-400">
-                بتسجيل الدخول
-                </Link> لتحصل علي اشعاراتك
-              </div>
-            </div>
-          } */}
         {!loading && notifications?.length === 0 &&  (
           <div
             className="
@@ -222,12 +229,12 @@ export default function Notifications() {
             </p>
           </div>
         )}
-
-        {/* Notifications */}
         {!loading && notifications.length > 0 && (
           <div className="flex flex-col gap-4">
-            {notifications.map((noti:any) => (
-              <div
+            {notifications.map((noti:NotificationType) =>(
+              <Link
+              href={`/${noti.articleType}/${noti.articleId}`}
+              onClick={()=>handleReadNoti(noti.id)}
                 key={noti.id}
                 className={`
                   relative
@@ -273,7 +280,10 @@ export default function Notifications() {
                     flex items-center justify-center
                   "
                   >
-                    {getIcon(noti.type)}
+                    {noti.type==="like"?
+                    <Heart className="size-5 text-rose-500 fill-rose-500" />:
+                    <AtSign className="size-5 text-cyan-500" />
+                    }
                   </div>
 
                   <div className="flex-1">
@@ -296,11 +306,11 @@ export default function Notifications() {
                       block
                     "
                     >
-                      {handleDate(noti.createdAt)}
+                      {handleDate(noti.createdAt || new Date())}
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
