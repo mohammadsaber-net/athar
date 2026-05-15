@@ -3,6 +3,7 @@ export type WakafatFormData = {
   ayaSource: string;
   tafsir: string;
   tafsirSource?: string|null;
+  shortId?:string|null;
 };
 export type WakafatType =WakafatFormData &{id:string}
 export type comments={
@@ -37,10 +38,12 @@ export type NamesFormData = {
   image: File | string | null;
   meaning: string;
   meaningSource?: string | null;
+  shortId?:string|null;
 };
 export type NamesType =NamesFormData &{id:string}
 export type SunnaFormData = {
   sunna: string;
+  shortId?:string|null;
   sunnaSource: string;
   tafsir: string | null;
 };

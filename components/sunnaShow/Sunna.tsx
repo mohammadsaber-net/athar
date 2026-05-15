@@ -1,7 +1,7 @@
 "use client"
 import { handleDate } from '@/lib/handleDate';
 import { SunnaType, comments } from '@/lib/type'
-import {  Heart, Pencil, Reply } from 'lucide-react';
+import {  CopyCheck, CopyIcon, Heart, Pencil, Reply } from 'lucide-react';
 import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
 import SharePopup from '../shareButton/ShareButton';
@@ -30,6 +30,22 @@ export default function Sunna({sunna,logged}:Props) {
     const {sendError,sendLoading,sendData}=useSelector((state:RootState)=>state.sendComments)
     const {getData,getError,getLoading}=useSelector((state:RootState)=>state.getComments)
     const {deleteData,deleteError,deleteLoading}=useSelector((state:RootState)=>state.deleteComments)
+    const [copyData, setCopyData] = useState("");
+    const Copy = copyData ? CopyCheck : CopyIcon;
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(`
+            ${sunna.sunna}\n${sunna.tafsir}\n\n https://athar-123.vercel.app/sunna/${sunna?.shortId}   
+            `);
+            setCopyData("copied");
+
+            setTimeout(() => {
+            setCopyData("");
+            }, 2000);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     useEffect(()=>{
         if(sendData?.success||deleteData?.success){
             setComment("")
@@ -43,11 +59,15 @@ export default function Sunna({sunna,logged}:Props) {
             setfetchComments(getData.data)
         }
     },[getData])
-    console.log(getData)
   return (
     <div className='pt-8 p-3 max-w-4xl'>
-        <div className='mb-2 relative z-50'>
-            <SharePopup text={`\n« ${sunna.sunna || "السنه"} »\n\n${sunna.tafsir&&sunna.tafsir.slice(0, 200)}...\n\n\n`}/>      
+        <div className='mb-4 flex items-center justify-between relative z-50'>
+            <SharePopup text={`\n« ${sunna.sunna || "السنه"} »\n\n${sunna.tafsir&&sunna.tafsir.slice(0, 300)}...`}/>      
+            <div
+            onClick={handleCopy}
+            className='flex items-center font-semibold cursor-pointer'>
+            نسخ <Copy />     
+            </div>    
         </div>
         <div className="relative z-20 transition">
             <h2 className=" text-2xl md:text-5xl dark:text-white text-center mb-0 mt-2 text-blue-900">

@@ -19,6 +19,7 @@
     "framer-motion": "^12.34.5",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.575.0",
+    "nanoid": "^5.1.11",
     "next": "16.1.6",
     "nodemailer": "^8.0.5",
     "quill": "^2.0.3",

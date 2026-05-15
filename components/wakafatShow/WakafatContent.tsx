@@ -23,7 +23,7 @@ export default function WakafatContent({ content }: Props) {
              <div>
                <FormatingText text={aya.tafsir.slice(0,100)} />
              </div>
-              <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`wakafat/${aya.id}`}>
+              <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`wakafat/${aya?.shortId}`}>
               عرض المزيد...
               </Link>
             </div>

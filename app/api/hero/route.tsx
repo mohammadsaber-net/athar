@@ -7,13 +7,13 @@ export async function GET(req:NextRequest) {
     try {
         const [wakfa]=await db.select({
             aya:wakafatTable.aya,
-            id:wakafatTable.id,
+            shortId:wakafatTable.shortId,
             ayaSource:wakafatTable.ayaSource
         }).from(wakafatTable)
         .orderBy(sql`RANDOM()`).limit(1)
         const [hadith]=await db.select({
             sunna:sunnaTable.sunna,
-            id:sunnaTable.id,
+            shortId:sunnaTable.shortId,
             sunnaSource:sunnaTable.sunnaSource
         }).from(sunnaTable)
         .orderBy(sql`RANDOM()`).limit(1)

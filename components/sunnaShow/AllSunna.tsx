@@ -27,7 +27,7 @@ export default function AllSunna({ sunna }: Props) {
       </div>
 
       <Link
-        href={`/sunna/${sunna.id}`}
+        href={`/sunna/${sunna?.shortId}`}
         className="block text-center py-2 text-xs md:text-sm 
         active:bg-emerald-600 active:text-white
         font-bold bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-600 transition-colors"

@@ -70,7 +70,7 @@ export default function SunnanContent({content}:Props) {
             <div>
               <FormatingText text={sunna?.tafsir?.slice(0,100)||""}/>
             </div>
-            <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`sunna/${sunna.id}`}>
+            <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`sunna/${sunna?.shortId}`}>
              عرض المزيد...
             </Link>
           </div>

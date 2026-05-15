@@ -2,6 +2,7 @@ import db from "@/db";
 import { namesTable, namesTableZodSchema } from "@/db/schema";
 import { isAdmin } from "@/lib/isAdmin";
 import cloudinary from "@/lib/utls";
+import { nanoid } from "@reduxjs/toolkit";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(req:NextRequest,{ params }: { params: Promise<{ id: string }> }) {
@@ -64,7 +65,10 @@ export async function PATCH(req:NextRequest,{ params }: { params: Promise<{ id: 
             );
             uploadedImages = upload.secure_url;
         }
-        const selectedNames=namesTableZodSchema.omit({id:true}).parse({
+        const selectedNames=namesTableZodSchema.omit({
+                id:true,
+                shortId:true
+            }).parse({
             name:formData.get("name") as string,
             meaning:formData.get("meaning") as string,
             meaningSource:formData.get("meaningSource") as string,

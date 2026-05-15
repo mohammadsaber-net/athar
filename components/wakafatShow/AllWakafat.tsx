@@ -23,7 +23,7 @@ export default function AllWakafat({ wakafat }: Props) {
       </div>
 
       <Link
-        href={`/wakafat/${wakafat.id}`}
+        href={`/wakafat/${wakafat?.shortId}`}
         className="block text-center py-2 text-xs md:text-sm font-bold bg-zinc-100 
         active:bg-cyan-600 active:text-white
         dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-cyan-600 hover:text-white dark:hover:bg-cyan-600 transition-colors"

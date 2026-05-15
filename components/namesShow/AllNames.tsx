@@ -29,7 +29,7 @@ export default function AllNames({ searchedName }: Props) {
       </div>
 
       <Link
-        href={`/name/${searchedName.id}`}
+        href={`/name/${searchedName?.shortId}`}
         className="block relative z-10 text-center py-2 text-xs md:text-sm font-bold bg-indigo-50 dark:bg-zinc-800 text-indigo-700
         active:bg-indigo-700 active:text-white
         dark:text-indigo-300 rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300"

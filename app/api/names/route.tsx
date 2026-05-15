@@ -2,6 +2,7 @@ import db from "@/db";
 import { namesTable, namesTableZodSchema } from "@/db/schema";
 import { isAdmin } from "@/lib/isAdmin";
 import cloudinary from "@/lib/utls";
+import { nanoid } from "@reduxjs/toolkit";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(req:NextRequest) {
     try {
@@ -42,7 +43,10 @@ export async function POST(req:NextRequest){
             );
             uploadedImages = upload.secure_url;
         }
-        const selectedNames=namesTableZodSchema.omit({id:true}).parse({
+        const selectedNames=namesTableZodSchema.omit({
+                id:true,
+                shortId:true
+            }).parse({
             name:formData.get("name") as string,
             meaning:formData.get("meaning") as string,
             meaningSource:formData.get("meaningSource") as string,
@@ -50,6 +54,7 @@ export async function POST(req:NextRequest){
         })
         const [data]=await db.insert(namesTable).values({
             id:crypto.randomUUID(),
+            shortId:nanoid(3),
             ...selectedNames
         }).returning()
         return NextResponse.json({

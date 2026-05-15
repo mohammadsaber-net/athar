@@ -24,7 +24,7 @@ export default function NamesContent({content}:Props) {
             <div >
               <FormatingText text={searchedName.meaning.slice(0,100)}/>
             </div>
-            <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`name/${searchedName.id}`}>
+            <Link className="text-blue-600 dark:text-cyan-500 active:text-blue-800" href={`name/${searchedName?.shortId}`}>
                عرض المزيد...
             </Link>
             </div>

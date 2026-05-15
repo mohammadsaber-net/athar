@@ -10,17 +10,11 @@ type Props={
 export default async function page({params}:Props) {
     const logged=await isLogged()
     const {id}=await params
+    const shortId=id
     const [content]=await db.select().from(wakafatTable)
-    .where(eq(wakafatTable.id,id))
+    .where(eq(wakafatTable.shortId,shortId))
   return (
     <div className='relative dark:bg-[#0d0d1f] dark:text-white min-h-screen'>
-      {/* <div
-        className="absolute inset-0 z-10 dark:opacity-5 opacity-20 bg-repeat bg-center"
-        style={{
-        backgroundImage: `url(/pattern.png)`,
-        backgroundSize: "150px"
-        }}
-      /> */}
       <Aya logged={logged} aya={content}/>
     </div>
   )

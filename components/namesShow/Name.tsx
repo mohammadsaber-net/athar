@@ -1,7 +1,7 @@
 "use client"
 import { handleDate } from '@/lib/handleDate';
 import { NamesType, comments } from '@/lib/type'
-import {  Heart, Pencil, Reply } from 'lucide-react';
+import {  CopyCheck, CopyIcon, Heart, Pencil, Reply } from 'lucide-react';
 import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
 import SharePopup from '../shareButton/ShareButton';
@@ -30,6 +30,22 @@ export default function Name({searchedName,logged}:Props) {
     const {sendError,sendLoading,sendData}=useSelector((state:RootState)=>state.sendComments)
     const {getData,getError,getLoading}=useSelector((state:RootState)=>state.getComments)
     const {deleteData,deleteError,deleteLoading}=useSelector((state:RootState)=>state.deleteComments)
+    const [copyData, setCopyData] = useState("");
+        const Copy = copyData ? CopyCheck : CopyIcon;
+        const handleCopy = async () => {
+            try {
+                await navigator.clipboard.writeText(`
+                ${searchedName.name}\n${searchedName.meaning}\n\n https://athar-123.vercel.app/name/${searchedName?.shortId}   
+                `);
+                setCopyData("copied");
+    
+                setTimeout(() => {
+                setCopyData("");
+                }, 2000);
+            } catch (error) {
+                console.log(error);
+            }
+        };
     useEffect(()=>{
         if(sendData?.success||deleteData?.success){
             setComment("")
@@ -45,8 +61,13 @@ export default function Name({searchedName,logged}:Props) {
     },[getData])
   return (
     <div className='pt-8 p-3 max-w-4xl'>
-        <div className='mb-2 relative z-50'>
-            <SharePopup text={`\n« ${searchedName.name || "الاسم"} »\n${searchedName.meaning.slice(0, 50)}... || " المعنى"}\n`}/>      
+        <div className='mb-4 flex items-center justify-between relative z-50'>
+            <SharePopup text={`\n« ${searchedName.name || "الاسم"} »\n${searchedName.meaning.slice(0, 300)}...`}/>      
+            <div
+            onClick={handleCopy}
+            className='flex items-center font-semibold cursor-pointer'>
+            نسخ <Copy />     
+            </div>
         </div>
         <div className="relative z-20 transition">
             <h2 className="dark:text-white text-2xl md:text-5xl text-center mb-0 mt-2 text-blue-900">

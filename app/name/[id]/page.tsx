@@ -11,18 +11,12 @@ type Props={
 export default async function page({params}:Props) {
     const logged=await isLogged()
     const {id}=await params
+    const shortId=id
     const [content]=await db.select().from(namesTable)
-    .where(eq(namesTable.id,id))
+    .where(eq(namesTable.shortId,shortId))
   return (
     <div className='relative dark:bg-[#0d0d1f] dark:text-white min-h-screen'>
         <Name logged={logged} searchedName={content}/>
-        {/* <div
-        className="absolute inset-0 z-0 dark:opacity-10 opacity-5 bg-repeat bg-center"
-        style={{
-            backgroundImage: `url(${content?.image})`,
-            backgroundSize: "150px"
-        }}
-        /> */}
     </div>
   )
 }

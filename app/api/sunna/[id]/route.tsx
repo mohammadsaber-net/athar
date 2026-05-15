@@ -1,6 +1,7 @@
 import db from "@/db";
 import { sunnaTable, sunnaTableZodSchema } from "@/db/schema";
 import { isAdmin } from "@/lib/isAdmin";
+import { nanoid } from "@reduxjs/toolkit";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -47,7 +48,10 @@ export async function PATCH(req:NextRequest,{ params }: { params: Promise<{ id: 
                 message:'الداتا المطلوب حذفها غير متوفرة'
             },{status:404}) 
         }
-        const selectedWakafat=sunnaTableZodSchema.omit({id:true}).parse(await req.json())
+        const selectedWakafat=sunnaTableZodSchema.omit({
+                id:true,
+                shortId:true
+            }).parse(await req.json())
         await db.update(sunnaTable).set({
             ...selectedWakafat
         }).where(eq(sunnaTable.id,id))

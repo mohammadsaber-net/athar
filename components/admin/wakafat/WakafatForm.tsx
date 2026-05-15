@@ -42,13 +42,10 @@ export default function WakafatForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
     const url = edit
       ? `/api/wakafat/${edit.id}`
       : "/api/wakafat";
-
     const method = edit ? "PATCH" : "POST";
-
     try {
       const res = await fetch(url, {
         method,

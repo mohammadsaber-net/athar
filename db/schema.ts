@@ -27,6 +27,7 @@ export const userTableZodSchema=createSelectSchema(usersTable)
 // wakafat
 export const wakafatTable=pgTable("wakafat",{
     id:text("id").primaryKey(),
+    shortId:text("short_id").unique(),
     aya:text("aya").notNull(),
     ayaSource:text("aya_source").notNull(),
     tafsir:text("tafsir").notNull(),
@@ -37,6 +38,7 @@ export const wakafatTableZodSchema=createSelectSchema(wakafatTable)
 export const namesTable=pgTable("names",{
     id:text("id").primaryKey(),
     name:text("name").notNull(),
+    shortId:text("short_id").unique(),
     image:text("image").notNull(),
     meaning:text("meaning").notNull(),
     meaningSource:text("meaning_source")
@@ -45,6 +47,7 @@ export const namesTableZodSchema=createSelectSchema(namesTable)
 // sunna
 export const sunnaTable=pgTable("sunna",{
     id:text("id").primaryKey(),
+    shortId:text("short_id").unique(),
     sunna:text("sunna").notNull(),
     sunnaSource:text("sunna_source").notNull(),
     tafsir:text("tafsir")

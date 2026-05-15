@@ -2,7 +2,7 @@
 
 import FixedModal from "@/components/animation/FixedModal";
 import { SunnaFormData,SunnaType} from "@/lib/type";
-import { fetchWakafat } from "@/redux/slice/wakafatData";
+import { fetchSunna } from "@/redux/slice/sunnaData";
 import { AppDispatch } from "@/redux/store";
 import { useState } from "react";
 import toast from "react-hot-toast"
@@ -29,51 +29,36 @@ export default function SunnaForm({setCreate,setEdit,edit,create}:Props) {
       [name]: value,
     }));
   }
-  const dispatch=useDispatch<AppDispatch>()
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if(!edit){
+  const dispatch = useDispatch<AppDispatch>();
+   async function handleSubmit(e: React.FormEvent) {
+      e.preventDefault();
+      const url = edit
+        ? `/api/sunna/${edit.id}`
+        : "/api/sunna";
+      const method = edit ? "PATCH" : "POST";
       try {
-        const res=await fetch("/api/sunna",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify(formData)
-    }) 
-    const data=await res.json()
-    if(data.success){
-      setCreate?.(false)
-      setEdit?.(null)
-      dispatch(fetchWakafat())
-    }else{
-      toast.error(data.message||"خطأ في اضافة محتوي جديد")
-    }
-    } catch (error) {
-      toast.error((error as Error).message||"خطأ في اضافة محتوي جديد")
-    }
-  }else{
-    try {
-      const res=await fetch(`/api/sunna/${edit?.id}`,{
-        method:"PATCH",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify(formData)
-      })
-      const data=await res.json()
-      if(data.success){
-        setCreate?.(false)
-        setEdit?.(null)
-        dispatch(fetchWakafat())
-      }else{
-        toast.error(data.message||"خطأ في تعديل المحتوي")
+        const res = await fetch(url, {
+          method,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+  
+        const data = await res.json();
+  
+        if (data.success) {
+          setCreate?.(false);
+          setEdit?.(null);
+          dispatch(fetchSunna());
+        } else {
+          toast.error(data.message || "خطأ");
+        }
+      } catch (error) {
+        toast.error((error as Error).message || "خطأ");
       }
-    } catch (error) {
-      toast.error((error as Error).message||"خطأ في تعديل المحتوي")
     }
-  }
-  }
+  
   return (
     <FixedModal isOpen={!!edit || !!create} onClose={()=>{setEdit?.(null);setCreate?.(false)}}>
     <form
