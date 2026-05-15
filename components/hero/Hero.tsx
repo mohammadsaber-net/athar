@@ -76,7 +76,7 @@ export default function Hero() {
            {tableData?.wakfa?.ayaSource || "مصدر الآية"}
           </span>
           <div className="flex justify-between items-center mt-2">
-            <SharePopup text={`« ${tableData?.wakfa?.aya || "الآية"} »\n${tableData?.wakfa?.ayaSource || "مصدر الآية"}`}/>
+            <SharePopup text={`« ${tableData?.wakfa?.aya} »\n\n${tableData?.wakfa?.ayaSource}\n\n`}/>
             <Link 
             className="bg-[#0f3d2e] dark:bg-cyan-900 relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
             href={`/wakafat/${tableData?.wakfa?.shortId}`}>
@@ -92,7 +92,7 @@ export default function Hero() {
            {tableData?.hadith?.sunnaSource || "مصدر الحديث"}
           </span>
           <div className="flex justify-between items-center mt-2">
-            <SharePopup text={`« ${tableData?.hadith?.sunna} »\n\n\n${tableData?.hadith?.sunnaSource }\n\n\n`}/>
+            <SharePopup text={`« ${tableData?.hadith?.sunna} »\n\n${tableData?.hadith?.sunnaSource }\n\n`}/>
             <Link 
             className="bg-[#0f3d2e] dark:bg-cyan-900 relative overflow-hidden shine-btn text-white px-4 py-1 rounded-full text-xs active:scale-105 transition"
             href={`/sunna/${tableData?.hadith?.shortId}`}>
