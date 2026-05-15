@@ -38,7 +38,7 @@ export default function Aya({aya,logged}:Props) {
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(`
-            ${aya.aya}\n${aya.tafsir}\n\n https://athar-123.vercel.app/wakafat/${aya?.shortId}   
+            ${aya.aya}\n${aya.tafsir}\n\n https://athar-123.vercel.app/wakafat   
             `);
             setCopyData("copied");
 

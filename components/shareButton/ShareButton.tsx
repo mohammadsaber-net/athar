@@ -10,7 +10,6 @@ export default function SharePopup({ text }: Props) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const url = typeof window !== "undefined" ? window.location.href : "";
-
   const isMobile =
     typeof navigator !== "undefined" &&
     /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -20,7 +19,7 @@ export default function SharePopup({ text }: Props) {
       try {
         await navigator.share({
           title: "أَثَارَ",
-          text:text + "\n" +"للمزيد👇👇" +"\n" +url
+          text:text + " " +"للمزيد👇👇" +"\n\n" +url
         });
       } catch (e) {}
     } else {

@@ -35,7 +35,7 @@ export default function Sunna({sunna,logged}:Props) {
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(`
-            ${sunna.sunna}\n${sunna.tafsir}\n\n https://athar-123.vercel.app/sunna/${sunna?.shortId}   
+            ${sunna.sunna}\n${sunna.tafsir}\n\n https://athar-123.vercel.app/sunna   
             `);
             setCopyData("copied");
 

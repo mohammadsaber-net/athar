@@ -35,7 +35,7 @@ export default function Name({searchedName,logged}:Props) {
         const handleCopy = async () => {
             try {
                 await navigator.clipboard.writeText(`
-                ${searchedName.name}\n${searchedName.meaning}\n\n https://athar-123.vercel.app/name/${searchedName?.shortId}   
+                ${searchedName.name}\n${searchedName.meaning}\n\n https://athar-123.vercel.app/name   
                 `);
                 setCopyData("copied");
     
